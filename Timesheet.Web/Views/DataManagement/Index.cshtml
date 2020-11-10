@@ -1,0 +1,195 @@
+﻿@model Timesheet.Web.Models.DataManagementModel.SearchModel
+@{
+    ViewBag.Title = "DataManagement";
+}
+
+<style>
+    div.container {
+        max-width: 1200px;
+    }
+
+    .overlay {
+        background: #e9e9e9;
+        left: 0;
+        opacity: 0.5;
+    }
+
+    .radius5px {
+        border-radius: 5px;
+    }
+
+    .custom-header {
+        padding: 10px;
+        background-color: black;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .panel-body {
+        border: 1px solid rgba(128, 128, 128, 0.45);
+        border-radius: 5px;
+    }
+</style>
+<div class="container">
+    <div class="col-md-12" style="font-size: 30px;color: #f7a000;font-weight: bold;cursor: default;text-shadow: 2px 2px #ffa50045;text-align: center;margin: 2%;font-weight: unset;">DATA MANAGEMENT</div>
+    <div class="col-md-12" style="text-align: right;">
+        <button type="button" id="btnPullData" class="btn btn-success" style="padding: 4px 5px; width: 150px;"><i class="fa fa-download"></i>&nbsp;Pull Data</button>
+        <button type="button" id="btnExport" class="btn btn-success" style="padding: 4px 5px; width: 150px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export Excel</button>
+    </div>
+</div>
+<div class="container" style="margin-top: 1%;">
+    <div class="col-md-12">
+        <div class="panel-default">
+            <div class="panel-heading panel-custom" style="color: white; padding: 9px 15px 5px; background-color: #286090; border-radius: 5px;">
+                <div id="explain"><i class="fa fa-angle-right" style="font-weight: bold;"></i> &nbsp;SEARCH</div>
+                <div id="short"><i class="fa fa-angle-down" style="font-weight: bold;"></i> &nbsp;SEARCH</div>
+            </div>
+            <div class="panel-body" id="panelBody">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <label for="name" class="control-label">Name</label>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(i => i._Name, new { @class = "form-control", placeholder = "Enter Text", id = "_Name" })
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" id="btnSearch" class="btn btn-primary" style="padding: 4px 5px; width: 100px;"><i class="fa fa-search"></i>&nbsp;Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-default">
+            <div class="panel-heading" style="background-color: gray !important; color: white; padding: 9px 15px 5px; margin-top: 1.5%; border-radius: 5px;">
+                <i class="fa fa-list-ul"></i>&nbsp;LIST
+            </div>
+            <div class="panel-body">
+                <table id="tableManage" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ชื่อ - นามสกุล</th>
+                            <th>จำนวน Project</th>
+                            <th>Support</th>
+                            <th>Project</th>
+                            <th>Support (%)</th>
+                            <th>Project (%)</th>
+                            <th>Last Update Date</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            ExplainPanel();
+
+            var Table = $('#tableManage').DataTable({
+                data: [],
+                ajax: {
+                    url: '@Url.Action("List")',
+                    method: "POST",
+                    data: {
+                        Name: $('#_Name').val()
+                    },
+                    dataSrc: function (response) { return response; }
+                },
+                responsive: true,
+                filter: false,
+                retrieve: true,
+                columns: [
+                   {
+                       data: "EMPLOYEE_NAME"
+                   },
+                   {
+                       data: "COUNT_JOB_CODE_PROJECT"
+                   },
+                   {
+                       data: "HOUR_JOB_CODE_SUPPORT"
+                   },
+                   {
+                       data: "HOUR_JOB_CODE_PROJECT"
+                   },
+                   {
+                       data: "AVERAGE_JOB_CODE_SUPPORT"
+                   },
+                   {
+                       data: "AVERAGE_JOB_CODE_PROJECT"
+                   },
+                   {
+                       data: "LAST_UPDATE_DATE"
+                   }
+                ]
+            });
+
+            $("#btnExport").on('click', function (e) {
+                var urlReport = '@Url.Action("ExportExcel")?param=' + $('#_Name').val();
+                 window.open(urlReport, '_blank');
+            });
+
+            $("#btnPullData").on('click', function (e) {
+                 $.blockUI();
+                 $.ajax({
+                    url: '@Url.Action("InsertData")',
+                    type: 'POST',
+                    success: function (data) {
+                        console.log('data InsertData() ---------->', data)
+                        if (data.result == true)
+                        {
+                            $.unblockUI();
+                            $('#btnSearch').click();
+                        }
+                    }
+                 });
+
+            });
+
+            $('#btnSearch').on('click', function (e) {
+                e.preventDefault();
+                var param = {
+                    Name: $('#_Name').val()
+                }
+
+                $.ajax({
+                    url: '@Url.Action("List")',
+                    type: 'POST',
+                    data: param,
+                    success: function (data) {
+                        Table.clear();
+                        Table.rows.add(data).draw();
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+
+            });
+
+        })
+
+        function ExplainPanel() {
+            $('#short').hide();
+
+            $('#short').on('click', function () {
+                $('.panel-custom').removeClass('radius5px');
+                $('#short').hide();
+                $('#explain').show();
+                $('#panelBody').show();
+            });
+
+            $('#explain').on('click', function () {
+                $('.panel-custom').addClass('radius5px');
+                $('#explain').hide();
+                $('#short').show();
+                $('#panelBody').hide();
+            });
+
+        }
+
+
+    </script>
+}
+
