@@ -28,6 +28,13 @@ namespace Timesheet.Web.EF
         }
     
         public virtual DbSet<TB_WEEKLY_TIMESHEET> TB_WEEKLY_TIMESHEET { get; set; }
+        public virtual DbSet<TB_EMPLOYEE> TB_EMPLOYEE { get; set; }
+        public virtual DbSet<TB_EMPLOYEE_JOBCODE> TB_EMPLOYEE_JOBCODE { get; set; }
+        public virtual DbSet<TB_JOBCODE> TB_JOBCODE { get; set; }
+        public virtual DbSet<TB_POT> TB_POT { get; set; }
+        public virtual DbSet<TB_PROJECT> TB_PROJECT { get; set; }
+        public virtual DbSet<TB_TICKET> TB_TICKET { get; set; }
+        public virtual DbSet<TB_TIMESHEET> TB_TIMESHEET { get; set; }
     
         public virtual int SP_GET_LIST_TIMESHEET(string nAME)
         {

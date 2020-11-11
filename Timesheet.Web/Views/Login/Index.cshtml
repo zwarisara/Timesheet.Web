@@ -1,0 +1,61 @@
+﻿@model Timesheet.Web.Models.LoginView
+@{
+    ViewBag.Title = "Login";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Timesheet Web</title>
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        $(document).ready(function () {
+            $('.navbar-inverse').hide();
+
+        });
+    </script>
+
+</head>
+
+<body style="background:-webkit-linear-gradient(right,#94b0c8cf,white)">
+    <div class="wrapper" style="text-align: center; left: 17%; margin-left: 34%; margin-top: 6%;">
+        <div class="panel-body" style="width: 50%;
+        text-align: center;
+        margin-top: 0px;
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 35px;
+        background: -webkit-linear-gradient(white,#286090,white);
+        box-shadow: 5px 5px #88888840;">
+            @*#7579ff*@
+            <img src="~/Picture/ptt-logo-1.png" />
+            <h1 class="title"><span style="color:#2d3945"> TIMESHEET</span></h1>
+
+            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <form>
+                    <div class="input-container" style="margin-top: 20px; margin-left: 12px;">
+                        <label for="name" style="color:white;" class="control-label">@ViewBag.Result</label>
+                        @Html.TextBoxFor(i => i.Login_Name, new { required = "required", @class = "form-control", @placeholder = "UserName" })
+                        @Html.ValidationMessageFor(model => model.Login_Name)
+                    </div>
+                    <div class="input-container" style="        margin-top: 10px;
+        margin-left: 12px;">
+                        @Html.PasswordFor(model => model.Login_Password, new { required = "required", @class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(model => model.Login_Password)
+                    </div>
+                    <div class="input-container" style="margin-top: 30px;">
+                        <button class="btn btn-primary btn-block" type="submit">Login</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</body>
+<footer style="position: fixed; bottom: 0;">
+    <p>&copy; @DateTime.Now.Year - Timesheet Web</p>
+</footer>
+
+

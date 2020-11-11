@@ -17,6 +17,9 @@
     </style>
 </head>
 <body>
+    @{
+        var TimeSheetLoginUser = Timesheet.Web.Repositories.LoginRepo.GetOwnerUser();
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,12 +30,16 @@
                 </button>
                 @Html.ActionLink("TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="width: 120%;">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Daily", "Index", "Daily")</li>
                     <li>@Html.ActionLink("Monthly", "Index", "Monthly")</li>
                     <li>@Html.ActionLink("DataManagement", "Index", "DataManagement")</li>
+                </ul>
+                <ul class="nav navbar-nav" style="margin-left: 36%;">
+                    <li style="color:white; padding-top: 15px; padding-bottom: 15px;"><i class="fa fa-user"></i> @TimeSheetLoginUser.Full_Name_EN</li>
+                    <li style="color:white; padding-top: 15px; padding-bottom: 15px;left: 20px;"><a style="display: unset; color:white;" href=@Url.Action("Logout", "Login", new {Area = ""})><i class="fa fa-lg fa-sign-out" title="Log out"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -40,9 +47,9 @@
     <div class="container body-content">
         @RenderBody()
         @*<hr />
-        <footer style="position: fixed; bottom: 0;">
-            <p>&copy; @DateTime.Now.Year - Timesheet Application</p>
-        </footer>*@
+            <footer style="position: fixed; bottom: 0;">
+                <p>&copy; @DateTime.Now.Year - Timesheet Application</p>
+            </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")

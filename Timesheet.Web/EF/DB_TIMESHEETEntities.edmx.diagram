@@ -6,6 +6,13 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f517a42fe83d4b9d9ff3a2cb99694336" Name="Diagram1">
         <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_WEEKLY_TIMESHEET" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_EMPLOYEE" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_EMPLOYEE_JOBCODE" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_JOBCODE" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_POT" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_PROJECT" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_TICKET" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_TIMESHEET" Width="1.5" PointX="7.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

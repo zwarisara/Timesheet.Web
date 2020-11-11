@@ -4,7 +4,101 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_TIMESHEETModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_TIMESHEETModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="int" Nullable="false" />
+          <Property Name="FULLNAME_TH" Type="nvarchar" MaxLength="200" />
+          <Property Name="FULLNAME_EN" Type="nvarchar" MaxLength="200" />
+          <Property Name="NICKNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="BIRTH_DATE" Type="date" />
+          <Property Name="ZODIAC" Type="nvarchar" MaxLength="50" />
+          <Property Name="POSITION" Type="nvarchar" MaxLength="50" />
+          <Property Name="POSITION_LEVEL" Type="nvarchar" MaxLength="50" />
+          <Property Name="COMPANY" Type="nvarchar" MaxLength="200" />
+          <Property Name="MOBILE_NUMBER" Type="nvarchar" MaxLength="10" />
+          <Property Name="MAIL_PTT_DIGITAL" Type="nvarchar" MaxLength="255" />
+          <Property Name="MAIL_OTHER" Type="nvarchar" MaxLength="255" />
+          <Property Name="LINE_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="2000" />
+          <Property Name="INTERVIEW_DATE" Type="date" />
+          <Property Name="START_WORK_DATE" Type="date" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TB_EMPLOYEE_JOBCODE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMPLOYEE_ID" Type="int" />
+          <Property Name="JOBCODE_NO" Type="int" />
+          <Property Name="START_DATE" Type="date" />
+          <Property Name="END_DATE" Type="date" />
+        </EntityType>
+        <EntityType Name="TB_JOBCODE">
+          <Key>
+            <PropertyRef Name="JOBCODE_ID" />
+          </Key>
+          <Property Name="JOBCODE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JOBCODE_NO" Type="nvarchar" MaxLength="12" />
+          <Property Name="JOBCODE_PARENT" Type="nvarchar" MaxLength="12" />
+          <Property Name="JOBCODE_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="PM_NAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="CUSTOMER" Type="nvarchar" MaxLength="200" />
+          <Property Name="START_DATE" Type="date" />
+          <Property Name="END_DATE" Type="date" />
+          <Property Name="BUDGET_AMOUNT" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
+          <Property Name="REMARK" Type="nvarchar" MaxLength="2000" />
+          <Property Name="POT_NO" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TB_POT">
+          <Key>
+            <PropertyRef Name="POT_ID" />
+          </Key>
+          <Property Name="POT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="POT_NO" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="POT_NAME" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TB_PROJECT">
+          <Key>
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="PROJECT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROJECT_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="START_DATE" Type="date" />
+          <Property Name="END_DATE" Type="date" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="200" />
+          <Property Name="REMARK" Type="nvarchar" MaxLength="200" />
+          <Property Name="JOBCODE_NO" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="TB_TICKET">
+          <Key>
+            <PropertyRef Name="TICKET_NO" />
+          </Key>
+          <Property Name="TICKET_NO" Type="int" Nullable="false" />
+          <Property Name="START_DATE" Type="date" />
+          <Property Name="END_DATE" Type="date" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="200" />
+          <Property Name="REMARK" Type="nvarchar" MaxLength="500" />
+          <Property Name="JOBCODE_NO" Type="int" />
+        </EntityType>
+        <EntityType Name="TB_TIMESHEET">
+          <Key>
+            <PropertyRef Name="TIMESHEET_ID" />
+          </Key>
+          <Property Name="TIMESHEET_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TIMESHEET_DATE" Type="date" />
+          <Property Name="EMPLOYEE_ID" Type="int" />
+          <Property Name="JOBCODE_NO" Type="int" />
+          <Property Name="PROJECT_NAME" Type="nvarchar" MaxLength="500" />
+          <Property Name="TICKET_NO" Type="int" />
+          <Property Name="TIMESHEET_REMARK" Type="nvarchar" MaxLength="2000" />
+          <Property Name="WORK_HOUR" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="WORK_LOCATION" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="TB_WEEKLY_TIMESHEET">
           <Key>
             <PropertyRef Name="ID" />
@@ -35,10 +129,16 @@
           <Parameter Name="NAME" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="DB_TIMESHEETModelStoreContainer">
+          <EntitySet Name="TB_EMPLOYEE" EntityType="Self.TB_EMPLOYEE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_EMPLOYEE_JOBCODE" EntityType="Self.TB_EMPLOYEE_JOBCODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_JOBCODE" EntityType="Self.TB_JOBCODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_POT" EntityType="Self.TB_POT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PROJECT" EntityType="Self.TB_PROJECT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_TICKET" EntityType="Self.TB_TICKET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_TIMESHEET" EntityType="Self.TB_TIMESHEET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_TIMESHEETModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -71,9 +171,110 @@
         <EntityContainer Name="DB_TIMESHEETEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" />
           <FunctionImport Name="SP_GET_LIST_TIMESHEET">
-            <Parameter Name="NAME" Mode="In" Type="String" />
+          <Parameter Name="NAME" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="TB_EMPLOYEE" EntityType="DB_TIMESHEETModel.TB_EMPLOYEE" />
+          <EntitySet Name="TB_EMPLOYEE_JOBCODE" EntityType="DB_TIMESHEETModel.TB_EMPLOYEE_JOBCODE" />
+          <EntitySet Name="TB_JOBCODE" EntityType="DB_TIMESHEETModel.TB_JOBCODE" />
+          <EntitySet Name="TB_POT" EntityType="DB_TIMESHEETModel.TB_POT" />
+          <EntitySet Name="TB_PROJECT" EntityType="DB_TIMESHEETModel.TB_PROJECT" />
+          <EntitySet Name="TB_TICKET" EntityType="DB_TIMESHEETModel.TB_TICKET" />
+          <EntitySet Name="TB_TIMESHEET" EntityType="DB_TIMESHEETModel.TB_TIMESHEET" />
         </EntityContainer>
+        <EntityType Name="TB_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="FULLNAME_TH" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FULLNAME_EN" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NICKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BIRTH_DATE" Type="DateTime" Precision="0" />
+          <Property Name="ZODIAC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POSITION_LEVEL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COMPANY" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MOBILE_NUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL_PTT_DIGITAL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL_OTHER" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LINE_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="INTERVIEW_DATE" Type="DateTime" Precision="0" />
+          <Property Name="START_WORK_DATE" Type="DateTime" Precision="0" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_EMPLOYEE_JOBCODE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" />
+          <Property Name="JOBCODE_NO" Type="Int32" />
+          <Property Name="START_DATE" Type="DateTime" Precision="0" />
+          <Property Name="END_DATE" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TB_JOBCODE">
+          <Key>
+            <PropertyRef Name="JOBCODE_ID" />
+          </Key>
+          <Property Name="JOBCODE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JOBCODE_NO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="JOBCODE_PARENT" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="JOBCODE_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PM_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMER" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="START_DATE" Type="DateTime" Precision="0" />
+          <Property Name="END_DATE" Type="DateTime" Precision="0" />
+          <Property Name="BUDGET_AMOUNT" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARK" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="POT_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_POT">
+          <Key>
+            <PropertyRef Name="POT_ID" />
+          </Key>
+          <Property Name="POT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="POT_NO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="POT_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_PROJECT">
+          <Key>
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="PROJECT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROJECT_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="START_DATE" Type="DateTime" Precision="0" />
+          <Property Name="END_DATE" Type="DateTime" Precision="0" />
+          <Property Name="STATUS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="REMARK" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JOBCODE_NO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_TICKET">
+          <Key>
+            <PropertyRef Name="TICKET_NO" />
+          </Key>
+          <Property Name="TICKET_NO" Type="Int32" Nullable="false" />
+          <Property Name="START_DATE" Type="DateTime" Precision="0" />
+          <Property Name="END_DATE" Type="DateTime" Precision="0" />
+          <Property Name="STATUS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="REMARK" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="JOBCODE_NO" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_TIMESHEET">
+          <Key>
+            <PropertyRef Name="TIMESHEET_ID" />
+          </Key>
+          <Property Name="TIMESHEET_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TIMESHEET_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" />
+          <Property Name="JOBCODE_NO" Type="Int32" />
+          <Property Name="PROJECT_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TICKET_NO" Type="Int32" />
+          <Property Name="TIMESHEET_REMARK" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="WORK_HOUR" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="WORK_LOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -108,6 +309,107 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET" FunctionName="DB_TIMESHEETModel.Store.SP_GET_LIST_TIMESHEET" />
+          <EntitySetMapping Name="TB_EMPLOYEE">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_EMPLOYEE">
+              <MappingFragment StoreEntitySet="TB_EMPLOYEE">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="START_WORK_DATE" ColumnName="START_WORK_DATE" />
+                <ScalarProperty Name="INTERVIEW_DATE" ColumnName="INTERVIEW_DATE" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
+                <ScalarProperty Name="MAIL_OTHER" ColumnName="MAIL_OTHER" />
+                <ScalarProperty Name="MAIL_PTT_DIGITAL" ColumnName="MAIL_PTT_DIGITAL" />
+                <ScalarProperty Name="MOBILE_NUMBER" ColumnName="MOBILE_NUMBER" />
+                <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+                <ScalarProperty Name="POSITION_LEVEL" ColumnName="POSITION_LEVEL" />
+                <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+                <ScalarProperty Name="ZODIAC" ColumnName="ZODIAC" />
+                <ScalarProperty Name="BIRTH_DATE" ColumnName="BIRTH_DATE" />
+                <ScalarProperty Name="NICKNAME" ColumnName="NICKNAME" />
+                <ScalarProperty Name="FULLNAME_EN" ColumnName="FULLNAME_EN" />
+                <ScalarProperty Name="FULLNAME_TH" ColumnName="FULLNAME_TH" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_EMPLOYEE_JOBCODE">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_EMPLOYEE_JOBCODE">
+              <MappingFragment StoreEntitySet="TB_EMPLOYEE_JOBCODE">
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_JOBCODE">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_JOBCODE">
+              <MappingFragment StoreEntitySet="TB_JOBCODE">
+                <ScalarProperty Name="POT_NO" ColumnName="POT_NO" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="BUDGET_AMOUNT" ColumnName="BUDGET_AMOUNT" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="CUSTOMER" ColumnName="CUSTOMER" />
+                <ScalarProperty Name="PM_NAME" ColumnName="PM_NAME" />
+                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+                <ScalarProperty Name="JOBCODE_PARENT" ColumnName="JOBCODE_PARENT" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_POT">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_POT">
+              <MappingFragment StoreEntitySet="TB_POT">
+                <ScalarProperty Name="POT_NAME" ColumnName="POT_NAME" />
+                <ScalarProperty Name="POT_NO" ColumnName="POT_NO" />
+                <ScalarProperty Name="POT_ID" ColumnName="POT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PROJECT">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_PROJECT">
+              <MappingFragment StoreEntitySet="TB_PROJECT">
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="PROJECT_NAME" ColumnName="PROJECT_NAME" />
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_TICKET">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_TICKET">
+              <MappingFragment StoreEntitySet="TB_TICKET">
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="TICKET_NO" ColumnName="TICKET_NO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_TIMESHEET">
+            <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_TIMESHEET">
+              <MappingFragment StoreEntitySet="TB_TIMESHEET">
+                <ScalarProperty Name="WORK_LOCATION" ColumnName="WORK_LOCATION" />
+                <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
+                <ScalarProperty Name="TIMESHEET_REMARK" ColumnName="TIMESHEET_REMARK" />
+                <ScalarProperty Name="TICKET_NO" ColumnName="TICKET_NO" />
+                <ScalarProperty Name="PROJECT_NAME" ColumnName="PROJECT_NAME" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="TIMESHEET_DATE" ColumnName="TIMESHEET_DATE" />
+                <ScalarProperty Name="TIMESHEET_ID" ColumnName="TIMESHEET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

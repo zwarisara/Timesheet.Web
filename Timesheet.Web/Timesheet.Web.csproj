@@ -131,27 +131,50 @@
     <Compile Include="Controllers\DailyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DataManagementController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MonthlyController.cs" />
-    <Compile Include="Repositories\DailyRepo.cs" />
-    <Compile Include="Repositories\DatabaseHelper.cs" />
-    <Compile Include="EF\Model1.Context.cs">
+    <Compile Include="EF\DB_TIMESHEETEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>DB_TIMESHEETEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\Model1.cs">
+    <Compile Include="EF\DB_TIMESHEETEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\DB_TIMESHEETEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DB_TIMESHEETEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="EF\TB_WEEKLY_TIMESHEET.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="EF\TB_EMPLOYEE.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\TB_EMPLOYEE_JOBCODE.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_JOBCODE.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_POT.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_PROJECT.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_TICKET.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_TIMESHEET.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TB_WEEKLY_TIMESHEET.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Repositories\DailyRepo.cs" />
+    <Compile Include="Repositories\DatabaseHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,7 +184,9 @@
     <Compile Include="Models\MonthlyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DataManagementRepo.cs" />
+    <Compile Include="Repositories\EncryptionRepo.cs" />
     <Compile Include="Repositories\HomeRepo.cs" />
+    <Compile Include="Repositories\LoginRepo.cs" />
     <Compile Include="Repositories\MonthlyRepo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,15 +198,15 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\responsive.dataTables.min.css" />
-    <Content Include="EF\Model1.Context.tt">
+    <Content Include="EF\DB_TIMESHEETEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>DB_TIMESHEETEntities.edmx</DependentUpon>
+      <LastGenOutput>DB_TIMESHEETEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EF\Model1.tt">
+    <Content Include="EF\DB_TIMESHEETEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DB_TIMESHEETEntities.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <LastGenOutput>DB_TIMESHEETEntities.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -189,9 +214,18 @@
     <Content Include="fonts\KanitFont.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Picture\ptt-logo-1.png" />
+    <Content Include="Picture\ptt-logo.png" />
+    <Content Include="Picture\ptt_logo_full.png" />
+    <Content Include="Picture\ptt_logo_txt_doc_r.png" />
     <Content Include="Picture\Spinner.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\kanit-regular.otf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
     <EntityDeploy Include="EF\DB_TIMESHEETEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DB_TIMESHEETEntities.Designer.cs</LastGenOutput>
@@ -199,11 +233,6 @@
     <Content Include="EF\DB_TIMESHEETEntities.edmx.diagram">
       <DependentUpon>DB_TIMESHEETEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\kanit-regular.otf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -233,6 +262,7 @@
     <Content Include="Views\Daily\Index.cshtml" />
     <Content Include="Views\DataManagement\Index.cshtml" />
     <Content Include="Views\Monthly\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
