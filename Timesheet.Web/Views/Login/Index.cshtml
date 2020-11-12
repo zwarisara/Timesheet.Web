@@ -13,7 +13,6 @@
     <script>
         $(document).ready(function () {
             $('.navbar-inverse').hide();
-
         });
     </script>
 
@@ -41,8 +40,7 @@
                         @Html.TextBoxFor(i => i.Login_Name, new { required = "required", @class = "form-control", @placeholder = "UserName" })
                         @Html.ValidationMessageFor(model => model.Login_Name)
                     </div>
-                    <div class="input-container" style="        margin-top: 10px;
-        margin-left: 12px;">
+                    <div class="input-container" style="margin-top: 10px; margin-left: 12px;">
                         @Html.PasswordFor(model => model.Login_Password, new { required = "required", @class = "form-control", @placeholder = "Password" })
                         @Html.ValidationMessageFor(model => model.Login_Password)
                     </div>

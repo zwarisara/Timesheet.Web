@@ -14,6 +14,19 @@
             font-style: normal;
             font-weight: 400;
         }
+
+        .container {
+            margin-right: 0px !important;
+            margin-left: 3.5% !important;
+        }
+
+        .navbar-brand {
+            padding: 22px 15px !important;
+        }
+
+        .navbar-nav {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -23,12 +36,16 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <img src="/Picture/ptt-logo.png" style="width: 75%;padding: 4px 0px 4px 0px;">
+            </div>
+            <div class="navbar-header" style=" padding-left: -9px; ">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
+                &nbsp; &nbsp;@Html.ActionLink("PTT TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
+
             </div>
             <div class="navbar-collapse collapse" style="width: 120%;">
                 <ul class="nav navbar-nav">
@@ -37,7 +54,7 @@
                     <li>@Html.ActionLink("Monthly", "Index", "Monthly")</li>
                     <li>@Html.ActionLink("DataManagement", "Index", "DataManagement")</li>
                 </ul>
-                <ul class="nav navbar-nav" style="margin-left: 36%;">
+                <ul class="nav navbar-nav" style="margin-left: 30%;">
                     <li style="color:white; padding-top: 15px; padding-bottom: 15px;"><i class="fa fa-user"></i> @TimeSheetLoginUser.Full_Name_EN</li>
                     <li style="color:white; padding-top: 15px; padding-bottom: 15px;left: 20px;"><a style="display: unset; color:white;" href=@Url.Action("Logout", "Login", new {Area = ""})><i class="fa fa-lg fa-sign-out" title="Log out"></i></a></li>
                 </ul>
