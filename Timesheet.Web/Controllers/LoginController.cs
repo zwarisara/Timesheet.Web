@@ -26,7 +26,7 @@ namespace Timesheet.Web.Controllers
                 {
                     ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
                     ViewBag.Result = "UserName ไม่ถูกต้อง !";
-                    //return RedirectToAction("index");
+                    return RedirectToAction("index");
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace Timesheet.Web.Controllers
                     else
                     {
                         ViewBag.Result = "PassWord ไม่ถูกต้อง !";
-                        //return RedirectToAction("index");
+                        return RedirectToAction("index");
                     }
                 }
             }

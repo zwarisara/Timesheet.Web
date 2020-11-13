@@ -18,15 +18,16 @@
 
 </head>
 
-<body style="background:-webkit-linear-gradient(right,#94b0c8cf,white)">
+@*<body style="background:-webkit-linear-gradient(right,#94b0c8cf,white)">*@
+<body style="background: url('~/../Picture/background1.png') no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;">
     <div class="wrapper" style="text-align: center; left: 17%; margin-left: 34%; margin-top: 6%;">
-        <div class="panel-body" style="width: 50%;
+        <div class="panel-body" style="        width: 50%;
         text-align: center;
         margin-top: 0px;
         border: 1px solid gray;
         border-radius: 8px;
         padding: 35px;
-        background: -webkit-linear-gradient(white,#286090,white);
+        background: white; /*-webkit-linear-gradient(white,#286090,white);*/
         box-shadow: 5px 5px #88888840;">
             @*#7579ff*@
             <img src="~/Picture/ptt-logo-1.png" />
@@ -36,7 +37,7 @@
             {
                 <form>
                     <div class="input-container" style="margin-top: 20px; margin-left: 12px;">
-                        <label for="name" style="color:white;" class="control-label">@ViewBag.Result</label>
+                        <label for="name" style="color:red;" class="control-label">@ViewBag.Result</label>
                         @Html.TextBoxFor(i => i.Login_Name, new { required = "required", @class = "form-control", @placeholder = "UserName" })
                         @Html.ValidationMessageFor(model => model.Login_Name)
                     </div>

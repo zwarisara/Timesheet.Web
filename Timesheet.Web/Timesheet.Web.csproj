@@ -214,6 +214,9 @@
     <Content Include="fonts\KanitFont.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Picture\backgrond2.jpg" />
+    <Content Include="Picture\Background.jpg" />
+    <Content Include="Picture\background1.png" />
     <Content Include="Picture\ptt-logo-1.png" />
     <Content Include="Picture\ptt-logo.png" />
     <Content Include="Picture\ptt_logo_full.png" />
