@@ -36,7 +36,7 @@ namespace Timesheet.Web.Controllers
         public JsonResult InsertData()
         {
             //string[] filePaths = Directory.GetFiles(@"\\pttgrp-fs-s01\pttict2\AOU_P SharePoint\AOU_P SharePoint-DATA\Project Folder\Non SAP\001_รายชื่อพนักงาน Outsource AOUP\Timesheet_Weekly_Activity\Year 2020\10_Oct");
-            string[] filePaths = Directory.GetFiles(@"D:\Test\11_Nov");
+            string[] filePaths = Directory.GetFiles(@"D:\FileTimeSheet\11_Nov");
             List<string> lstString = new List<string>();
             List<string> lstErrorSave = new List<string>();
             List<string> lstErrorCatch = new List<string>();
