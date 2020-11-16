@@ -7,12 +7,12 @@ using Timesheet.Web.Models;
 
 namespace Timesheet.Web.Controllers
 {
-    public class MonthlyController : Controller
+    public class TimesheetController : Controller
     {
-        // GET: Month
+        // GET: Timesheet
         public ActionResult Index()
         {
-            MonthlyModel model = new MonthlyModel();
+            TimesheetModel model = new TimesheetModel();
             return View(model);
         }
     }

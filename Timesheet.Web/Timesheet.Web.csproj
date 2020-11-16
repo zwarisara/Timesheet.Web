@@ -128,11 +128,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DailyController.cs" />
+    <Compile Include="Controllers\TimesheetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\MonthlyController.cs" />
+    <Compile Include="Controllers\JobCodeController.cs" />
     <Compile Include="EF\DB_TIMESHEETEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,22 +172,22 @@
     <Compile Include="EF\TB_WEEKLY_TIMESHEET.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JobCodeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Repositories\DailyRepo.cs" />
+    <Compile Include="Models\TimesheetModel.cs" />
+    <Compile Include="Repositories\TimesheetRepo.cs" />
     <Compile Include="Repositories\DatabaseHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DailyModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\DataManagementModel.cs" />
-    <Compile Include="Models\MonthlyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DataManagementRepo.cs" />
     <Compile Include="Repositories\EncryptionRepo.cs" />
     <Compile Include="Repositories\HomeRepo.cs" />
     <Compile Include="Repositories\LoginRepo.cs" />
-    <Compile Include="Repositories\MonthlyRepo.cs" />
+    <Compile Include="Repositories\JobCodeRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -215,6 +215,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Picture\backgrond2.jpg" />
+    <Content Include="Picture\backgrond4.jpg" />
     <Content Include="Picture\Background.jpg" />
     <Content Include="Picture\background1.png" />
     <Content Include="Picture\ptt-logo-1.png" />
@@ -262,9 +263,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Daily\Index.cshtml" />
+    <Content Include="Views\Timesheet\Index.cshtml" />
     <Content Include="Views\DataManagement\Index.cshtml" />
-    <Content Include="Views\Monthly\Index.cshtml" />
+    <Content Include="Views\JobCode\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

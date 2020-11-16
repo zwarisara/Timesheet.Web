@@ -7,12 +7,12 @@ using Timesheet.Web.Models;
 
 namespace Timesheet.Web.Controllers
 {
-    public class DailyController : Controller
+    public class JobCodeController : Controller
     {
-        // GET: Daily
+        // GET: Job Code
         public ActionResult Index()
         {
-            DailyModel model = new DailyModel();
+            JobCodeModel model = new JobCodeModel();
             return View(model);
         }
     }

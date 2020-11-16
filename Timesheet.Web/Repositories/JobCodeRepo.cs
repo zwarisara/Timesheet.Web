@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Timesheet.Web.Repositories
 {
-    public class MonthlyRepo
+    public class JobCodeRepo
     {
     }
 }

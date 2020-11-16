@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Timesheet.Web.Models;
 using Timesheet.Web.Repositories;
 
@@ -11,8 +12,9 @@ namespace Timesheet.Web.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        public ActionResult Index(String returnUrl)
+        public ActionResult Index(String returnUrl, string strResult)
         {
+            ViewBag.Result = strResult;
             return View(new Timesheet.Web.Models.LoginView() { returnUrl = returnUrl });
         }
 
@@ -26,7 +28,7 @@ namespace Timesheet.Web.Controllers
                 {
                     ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
                     ViewBag.Result = "UserName ไม่ถูกต้อง !";
-                    return RedirectToAction("index");
+                    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName ไม่ถูกต้อง !" }));
                 }
                 else
                 {
@@ -45,7 +47,7 @@ namespace Timesheet.Web.Controllers
                     else
                     {
                         ViewBag.Result = "PassWord ไม่ถูกต้อง !";
-                        return RedirectToAction("index");
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
                     }
                 }
             }

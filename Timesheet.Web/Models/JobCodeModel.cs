@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Timesheet.Web.Models
 {
-    public class MonthlyModel
+    public class JobCodeModel
     {
     }
 }
