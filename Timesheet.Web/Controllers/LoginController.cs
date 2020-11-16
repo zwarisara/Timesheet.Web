@@ -40,7 +40,7 @@ namespace Timesheet.Web.Controllers
                     {
                         initLoginData(LoginUser);
                         if (String.IsNullOrWhiteSpace(fromData.returnUrl))
-                            return RedirectToAction("index", "Home");
+                            return RedirectToAction("index", "DataManagement");
                         else
                             return Redirect(fromData.returnUrl);
                     }
