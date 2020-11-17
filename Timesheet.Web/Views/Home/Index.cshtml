@@ -60,7 +60,7 @@
 <body>
     <label for="month">เดือน :</label>
     <select id="month">
-        <option value="01">มกราคม  </option>
+        @*<option value="01">มกราคม  </option>
         <option value="02">กุมภาพันธ์ </option>
         <option value="03">มีนาคม </option>
         <option value="04">เมษายน</option>
@@ -69,7 +69,7 @@
         <option value="07">กรกฏาคม</option>
         <option value="08">สิงหาคม</option>
         <option value="09">กันยายน </option>
-        <option value="10">ตุลาคม </option>
+        <option value="10">ตุลาคม </option>*@
         <option value="11">พฤศจิกายน </option>
         <option value="12">ธันวาคม </option>
     </select>
@@ -146,8 +146,6 @@
                 GetdayoMonth(d)
             }
 
-
-
             function GenFormatChart() {
                 Chart = $("#chart").val();
                 if (Chart == "1") {
@@ -175,7 +173,6 @@
                     },
                     xAxis: {
                         categories: period_day,
-
                         //categories: [
                         //    'Jan',
                         //    'Feb',
@@ -191,7 +188,6 @@
                         //    'Dec'
 
                         //],
-
                         crosshair: true
                     },
                     yAxis: {
@@ -203,7 +199,7 @@
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.1f}man-day</b></td></tr>',
+                            '<td style="padding:0"><b>{point.y:.1f} man-day</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -238,7 +234,6 @@
             function GenChartPie() {
                 GendayoMonth()
                 ExplainPanel()
-                //GetData(obj);
                 obj = JSON.stringify(obj);
                 Highcharts.chart('container', {
                     chart: {
@@ -276,16 +271,11 @@
                     }]
                 });
             }
-        </script>
-
-        <script>
-
-
-
-
+  
             function GetData(obj) {
                 newArray = $(obj).map(function (i) {
-                    return obj[i].y;
+
+                    return JSON.stringify(obj[i].y);
                 });
             }
             //function GetData2(obj) {
@@ -295,38 +285,28 @@
             //    });
             //}
 
-
-
             function ExplainPanel() {
-            //var Table = $('#tableChart').DataTable({
-            //    columns: [
-            //        {
-            //            data: "name"
-            //        },
-            //        {
-            //            data: "y"
-            //        }
-            //    ]});
+                var param = {
+                    month: $("#month").val()
+            }                
                     $.ajax({
                         url: '@Url.Action("ListChart")',
                         type: 'POST',
-                        data: "",
+                        data: param,
                         success: function (data) {
                             //Table.clear();
                             //Table.rows.add(data).draw();
+                           
                             obj = data;
-                            GetData(obj)
+                            GetData(obj);
                         },
                         error: function () {
                             alert("error");
                         }
                     });
             }
-
         </script>
     }
-
-
 </body>
 
 </html>

@@ -9,11 +9,11 @@ namespace Timesheet.Web.Repositories
 {
     public class HomeRepo
     {
-        public List<ListChartModel> GetListChert()
+        public List<ListChartModel> GetListChert(string month)
         {
             List<ListChartModel> lst = new List<ListChartModel>();
             DatabaseHelper db = new DatabaseHelper();
-            //db.AddParameter("@NAME", name);
+            db.AddParameter("@month", month);
             DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART");
             foreach (DataRow item in dt.Rows)
             {

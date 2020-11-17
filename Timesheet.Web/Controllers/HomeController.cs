@@ -19,9 +19,9 @@ namespace Timesheet.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult ListChart()
+        public JsonResult ListChart(string month)
         {
-            List<ListChartModel> lstModel = _repo.GetListChert();
+            List<ListChartModel> lstModel = _repo.GetListChert(month);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
 
