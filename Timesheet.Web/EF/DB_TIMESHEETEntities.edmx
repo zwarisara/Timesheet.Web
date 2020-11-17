@@ -125,6 +125,9 @@
           <Property Name="UPDATE_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="REMARK" Type="nvarchar" MaxLength="2000" />
         </EntityType>
+        <Function Name="SP_GET_JOB_CODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JOB_CODE" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_GET_LIST_TIMESHEET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NAME" Type="nvarchar" Mode="In" />
         </Function>
@@ -170,9 +173,6 @@
         </EntityType>
         <EntityContainer Name="DB_TIMESHEETEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" />
-          <FunctionImport Name="SP_GET_LIST_TIMESHEET">
-          <Parameter Name="NAME" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="TB_EMPLOYEE" EntityType="DB_TIMESHEETModel.TB_EMPLOYEE" />
           <EntitySet Name="TB_EMPLOYEE_JOBCODE" EntityType="DB_TIMESHEETModel.TB_EMPLOYEE_JOBCODE" />
           <EntitySet Name="TB_JOBCODE" EntityType="DB_TIMESHEETModel.TB_JOBCODE" />
@@ -180,6 +180,12 @@
           <EntitySet Name="TB_PROJECT" EntityType="DB_TIMESHEETModel.TB_PROJECT" />
           <EntitySet Name="TB_TICKET" EntityType="DB_TIMESHEETModel.TB_TICKET" />
           <EntitySet Name="TB_TIMESHEET" EntityType="DB_TIMESHEETModel.TB_TIMESHEET" />
+          <FunctionImport Name="SP_GET_JOB_CODE" ReturnType="Collection(DB_TIMESHEETModel.SP_GET_JOB_CODE_Result)">
+          <Parameter Name="JOB_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_LIST_TIMESHEET" ReturnType="Collection(DB_TIMESHEETModel.SP_GET_LIST_TIMESHEET_Result)">
+            <Parameter Name="NAME" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_EMPLOYEE">
           <Key>
@@ -275,6 +281,20 @@
           <Property Name="WORK_HOUR" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="WORK_LOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="SP_GET_JOB_CODE_Result">
+          <Property Type="Int32" Name="JOBCODE_ID" Nullable="false" />
+          <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_LIST_TIMESHEET_Result">
+          <Property Type="String" Name="EMPLOYEE_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PROJECT_JOB_CODE" Nullable="false" />
+          <Property Type="Decimal" Name="PROJECT_WORK_HOUR" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="SUPPORT_WORK_HOUR" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="PROJECT_PERCENT" Nullable="true" Precision="5" Scale="0" />
+          <Property Type="Decimal" Name="SUPPORT_PERCENT" Nullable="true" Precision="5" Scale="0" />
+          <Property Type="String" Name="LAST_UPDATE_DATE" Nullable="true" MaxLength="86" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -308,7 +328,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET" FunctionName="DB_TIMESHEETModel.Store.SP_GET_LIST_TIMESHEET" />
           <EntitySetMapping Name="TB_EMPLOYEE">
             <EntityTypeMapping TypeName="DB_TIMESHEETModel.TB_EMPLOYEE">
               <MappingFragment StoreEntitySet="TB_EMPLOYEE">
@@ -410,6 +429,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_JOB_CODE" FunctionName="DB_TIMESHEETModel.Store.SP_GET_JOB_CODE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_TIMESHEETModel.SP_GET_JOB_CODE_Result">
+                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET" FunctionName="DB_TIMESHEETModel.Store.SP_GET_LIST_TIMESHEET">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_TIMESHEETModel.SP_GET_LIST_TIMESHEET_Result">
+                <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
+                <ScalarProperty Name="PROJECT_JOB_CODE" ColumnName="PROJECT_JOB_CODE" />
+                <ScalarProperty Name="PROJECT_WORK_HOUR" ColumnName="PROJECT_WORK_HOUR" />
+                <ScalarProperty Name="SUPPORT_WORK_HOUR" ColumnName="SUPPORT_WORK_HOUR" />
+                <ScalarProperty Name="PROJECT_PERCENT" ColumnName="PROJECT_PERCENT" />
+                <ScalarProperty Name="SUPPORT_PERCENT" ColumnName="SUPPORT_PERCENT" />
+                <ScalarProperty Name="LAST_UPDATE_DATE" ColumnName="LAST_UPDATE_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

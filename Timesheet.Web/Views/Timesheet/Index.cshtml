@@ -51,7 +51,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center" is="divType">
+                    <div class="col-md-3 text-center" is="divType">
                         @Html.RadioButtonFor(model => model.TYPE, "Y", new { id = "TYPE_Y", @class = "checkedRadio", @checked = true })
                         &nbsp;&nbsp;
                         @Html.LabelFor(model => model.TYPE, "วันทำงานปกติ", new { @for = "TYPE_Y" })
@@ -60,19 +60,6 @@
                         &nbsp;&nbsp;
                         @Html.LabelFor(model => model.TYPE, "วันลา", new { @for = "TYPE_N" })
                     </div>
-                    @*<div class="col-md-2 text-center">
-                        <input type="radio" name="STATUS" value="Y" checked />
-                        &nbsp;
-                        <label for="name" class="control-label">วันทำงานปกติ</label>
-                    </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
-                        <input type="radio" name="STATUS" value="N" />
-                        &nbsp;
-                        <label for="name" class="control-label">วันลา</label>
-                    </div>
-                    <div class="col-md-1 text-right" style="padding:0px;">
-                        <label for="name" class="control-label">Job Code</label>
-                    </div>*@
                     <div class="col-md-2">
                         @Html.DropDownListFor(m => m.JOB_CODE, Model.JOB_CODE_LIST.Select(i => new SelectListItem()
                        {
@@ -81,7 +68,7 @@
                            Selected = i.JOBCODE_NO == Model.JOB_CODE
                        }), "-Please Select-", new { @class = "form-control" })
                     </div>
-                    <div class="col-md-3" style="padding-left: 0px;">
+                    <div class="col-md-4" style="padding-left: 0px;">
                         @Html.TextBoxFor(i => i.JOB_CODE_NAME, new { @class = "form-control", @disabled = true })
                     </div>
                 </div>
@@ -139,8 +126,14 @@
             </div>
         </div>
         <div class="panel-default" style="margin-top:20%; z-index: 2;">
-            <div class="panel-heading" style="background-color: gray !important; color: white; padding: 9px 15px 5px; margin-top: -1%; border-radius: 5px; z-index: 1;">
-                <i class="fa fa-list-ul"></i>&nbsp;LIST
+            <div class="panel-heading" style="color: white; padding: 5px 5px 5px; text-align: right; margin-top: -2%; border-radius: 5px; z-index: 1;">
+                @*background-color: gray !important;*@
+                @*<i class="fa fa-list-ul"></i>&nbsp;LIST*@
+                <div>
+                    <button type="button" id="btnPre" class="btn btn-primary" style="padding: 4px 5px; width: 120px;"><i class="fa fa-angle-double-left"></i>&nbsp;Previous</button>
+                    <button type="button" id="btnAddToList" class="btn btn-success" style="padding: 4px 5px; width: 120px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                    <button type="button" id="btnNext" class="btn btn-primary" style="padding: 4px 5px; width: 120px;">Next&nbsp;<i class="fa fa-angle-double-right"></i></button>
+                </div>
             </div>
             <div class="panel-body" style="height: 860px;">
                 <div class="table-responsive" style="margin-top: -28px;">
@@ -156,6 +149,7 @@
                                 <th>Customer</th>
                                 <th>Work Hour</th>
                                 <th>Work Location</th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
@@ -255,8 +249,9 @@
         $('#TICKET_NO').val(),
         $('#WORK_HOUR').val(),
         $('#WORK_LOCATION').val(),
-        $('#DESCRIPTION').val()
-
+        $('#DESCRIPTION').val(),
+        '<button class="btn btn-primary editor_edit" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>' +
+        '&nbsp;<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>'
         ]).draw(false);
 
     });

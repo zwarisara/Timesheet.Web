@@ -75,21 +75,19 @@ namespace Timesheet.Web.Repositories
         public List<ListModel> GetList(string name)
         {
             List<ListModel> lst = new List<ListModel>();
-            DatabaseHelper db = new DatabaseHelper();
-            db.AddParameter("@NAME", name);
-            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_TIMESHEET");
-
-            foreach (DataRow item in dt.Rows)
+            using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
-                ListModel model = new ListModel();
-                model.EMPLOYEE_NAME = item["EMPLOYEE_NAME"].ToString();
-                model.COUNT_JOB_CODE_PROJECT = item["PROJECT_JOB_CODE"].ToString();
-                model.HOUR_JOB_CODE_SUPPORT = double.Parse(item["SUPPORT_WORK_HOUR"].ToString());
-                model.HOUR_JOB_CODE_PROJECT = double.Parse(item["PROJECT_WORK_HOUR"].ToString());
-                model.AVERAGE_JOB_CODE_SUPPORT = double.Parse(item["SUPPORT_PERCENT"].ToString());
-                model.AVERAGE_JOB_CODE_PROJECT = double.Parse(item["PROJECT_PERCENT"].ToString());
-                model.LAST_UPDATE_DATE = item["LAST_UPDATE_DATE"].ToString();
-                lst.Add(model);
+                List<SP_GET_LIST_TIMESHEET_Result> data = db.SP_GET_LIST_TIMESHEET(name).ToList();
+                lst = data.Select(i => new ListModel()
+                {
+                    EMPLOYEE_NAME = i.EMPLOYEE_NAME,
+                    COUNT_JOB_CODE_PROJECT = i.PROJECT_JOB_CODE.ToString(),
+                    HOUR_JOB_CODE_SUPPORT = double.Parse(i.SUPPORT_WORK_HOUR.ToString()),
+                    HOUR_JOB_CODE_PROJECT = double.Parse(i.PROJECT_WORK_HOUR.ToString()),
+                    AVERAGE_JOB_CODE_SUPPORT = double.Parse(i.SUPPORT_PERCENT.ToString()),
+                    AVERAGE_JOB_CODE_PROJECT = double.Parse(i.PROJECT_PERCENT.ToString()),
+                    LAST_UPDATE_DATE = i.LAST_UPDATE_DATE.ToString()
+                }).ToList();
             }
 
             return lst;
