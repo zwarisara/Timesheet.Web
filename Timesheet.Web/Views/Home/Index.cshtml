@@ -58,23 +58,49 @@
     </style>
 </head>
 <body>
-    <button type="button" id="btnSearch" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="ExplainPanel();"><i class="fa fa-search"></i>&nbsp;Search</button>
-    <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
-    <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>
+    <label for="month">เดือน :</label>
+    <select id="month">
+        <option value="01">มกราคม  </option>
+        <option value="02">กุมภาพันธ์ </option>
+        <option value="03">มีนาคม </option>
+        <option value="04">เมษายน</option>
+        <option value="05">พฤษภาคม</option>
+        <option value="06">มิถุนายน </option>
+        <option value="07">กรกฏาคม</option>
+        <option value="08">สิงหาคม</option>
+        <option value="09">กันยายน </option>
+        <option value="10">ตุลาคม </option>
+        <option value="11">พฤศจิกายน </option>
+        <option value="12">ธันวาคม </option>
+    </select>
+    <label for="year">ปี :</label>
+    <select id="year">
+        <option value="2020">2020  </option>
+        <option value="2021">2021 </option>
+    </select>
+    <label for="chart">รูปแบบกราฟ :</label>
+    <select id="chart">
+        <option value="1">Chart 1</option>
+        <option value="2">Chart 2</option>
+    </select>
+
+    <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
+    @*<button type="button" id="btnGenChart1" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
+    <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
     <script src="~/Charts/highcharts.js"></script>
     <script src="~/Charts/modules/exporting.js"></script>
     <script src="~/Charts/modules/export-data.js"></script>
     <script src="~/Charts/modules/accessibility.js"></script>
 
     <div class="panel-body">
-        <table id="tableChart" class="display nowrap" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Row Labels</th>
-                    <th>Sum of MAN_DAY</th>
-                </tr>
-            </thead>
-        </table>
+        @*<table id="tableChart" class="display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Row Labels</th>
+                        <th>Sum of MAN_DAY</th>
+                    </tr>
+                </thead>
+            </table>*@
     </div>
 
     <figure class="highcharts-figure">
@@ -92,7 +118,13 @@
             var obj = [];
             var newArray = [];
             var period_day = [];
-            //var newArray2 = [];
+            var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+            ];
+            var txtmonth = "";
+            var Year = "";
+            var Month = "";
+            var Chart = "";
             function GetdayoMonth(maxday) {
                 var textday = "";
                 var i;
@@ -104,14 +136,30 @@
             }
 
             function GendayoMonth() {
+                Month = $("#month").val();
+                txtmonth = monthNames[parseInt(Month) - 1];
+                Year = $("#year").val();
+                //var Month = new Date().getMonth();
+                //var Year = new Date().getFullYear();
+                int_d = new Date(Year, Month + 1);
+                d = new Date(int_d - 1).getDate();
+                GetdayoMonth(d)
+            }
 
-                    var Month = new Date().getMonth();
-                    var Year = new Date().getFullYear();
-                    int_d = new Date(Year, Month + 1);
-                    d = new Date(int_d - 1).getDate();
-                    GetdayoMonth(d)
-             }
 
+
+            function GenFormatChart() {
+                Chart = $("#chart").val();
+                if (Chart == "1") {
+                    GenChartColumn()
+                }
+                else if (Chart == "2") {
+                    GenChartPie()
+                }
+                else {
+                    
+                }
+            }
 
             function GenChartColumn() {
                 GendayoMonth()
@@ -120,10 +168,10 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Monthly Average Rainfall'
+                        text: 'JOB CODE ' + txtmonth + '-' + Year
                     },
                     subtitle: {
-                        text: 'Source: WorldClimate.com'
+                        text: ''
                     },
                     xAxis: {
                         categories: period_day,
@@ -155,7 +203,7 @@
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.1f} day</b></td></tr>',
+                            '<td style="padding:0"><b>{point.y:.1f}man-day</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -167,20 +215,20 @@
                         }
                     },
                     series: [{
-                        name: ['Tokyo'],
+                        name: ['Project'],
                         data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 95.6, 54.4]
 
                     }, {
-                        name: 'New York',
-                            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 95.6, 54.4]
+                        name: 'AOU/P Support',
+                        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 95.6, 54.4]
 
                     }, {
-                        name: 'London',
-                            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2, 95.6, 54.4]
+                        name: 'Supp eBG',
+                        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 0.0, 95.6, 54.4]
 
                     }, {
-                        name: 'Berlin',
-                            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        name: 'Supp RRS',
+                        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
 
                     }]
                 });
@@ -188,7 +236,9 @@
             }
 
             function GenChartPie() {
-                GetData(obj);
+                GendayoMonth()
+                ExplainPanel()
+                //GetData(obj);
                 obj = JSON.stringify(obj);
                 Highcharts.chart('container', {
                     chart: {
@@ -198,7 +248,7 @@
                         type: 'pie'
                     },
                     title: {
-                        text: 'Job Code OCT-2020'
+                        text: 'Job Code ' + txtmonth + '-' + Year
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -225,7 +275,6 @@
 
                     }]
                 });
-
             }
         </script>
 
@@ -249,23 +298,24 @@
 
 
             function ExplainPanel() {
-            var Table = $('#tableChart').DataTable({
-                columns: [
-                    {
-                        data: "name"
-                    },
-                    {
-                        data: "y"
-                    }
-                ]});
+            //var Table = $('#tableChart').DataTable({
+            //    columns: [
+            //        {
+            //            data: "name"
+            //        },
+            //        {
+            //            data: "y"
+            //        }
+            //    ]});
                     $.ajax({
                         url: '@Url.Action("ListChart")',
                         type: 'POST',
                         data: "",
                         success: function (data) {
-                            Table.clear();
-                            Table.rows.add(data).draw();
+                            //Table.clear();
+                            //Table.rows.add(data).draw();
                             obj = data;
+                            GetData(obj)
                         },
                         error: function () {
                             alert("error");
