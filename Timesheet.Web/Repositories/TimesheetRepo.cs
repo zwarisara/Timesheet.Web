@@ -10,7 +10,7 @@ namespace Timesheet.Web.Repositories
 {
     public class TimesheetRepo
     {
-        public List<JobCodeListModel> GetAllJobCode(string job_code)
+        public List<JobCodeListModel> GetAllJobCodeTest(string job_code)
         {
             using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
@@ -44,6 +44,23 @@ namespace Timesheet.Web.Repositories
                 return lst;
             }
 
+        }
+
+        public List<JobCodeListModel> GetAllJobCode(string job_code)
+        {
+            List<JobCodeListModel> lst = new List<JobCodeListModel>();
+            using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
+            {
+                List<SP_GET_JOB_CODE_Result> data = db.SP_GET_JOB_CODE(job_code).ToList();
+                lst = data.Select(i => new JobCodeListModel() {
+                    JOBCODE_ID = i.JOBCODE_ID.ToString(),
+                    JOBCODE_NAME = i.JOBCODE_NAME,
+                    JOBCODE_NO = i.JOBCODE_NO
+                
+                }).ToList();
+            }
+
+            return lst;
         }
     }
 }

@@ -36,13 +36,22 @@ namespace Timesheet.Web.EF
         public virtual DbSet<TB_TICKET> TB_TICKET { get; set; }
         public virtual DbSet<TB_TIMESHEET> TB_TIMESHEET { get; set; }
     
-        public virtual int SP_GET_LIST_TIMESHEET(string nAME)
+        public virtual ObjectResult<SP_GET_JOB_CODE_Result> SP_GET_JOB_CODE(string jOB_CODE)
+        {
+            var jOB_CODEParameter = jOB_CODE != null ?
+                new ObjectParameter("JOB_CODE", jOB_CODE) :
+                new ObjectParameter("JOB_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_JOB_CODE_Result>("SP_GET_JOB_CODE", jOB_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_LIST_TIMESHEET_Result> SP_GET_LIST_TIMESHEET(string nAME)
         {
             var nAMEParameter = nAME != null ?
                 new ObjectParameter("NAME", nAME) :
                 new ObjectParameter("NAME", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GET_LIST_TIMESHEET", nAMEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_TIMESHEET_Result>("SP_GET_LIST_TIMESHEET", nAMEParameter);
         }
     }
 }
