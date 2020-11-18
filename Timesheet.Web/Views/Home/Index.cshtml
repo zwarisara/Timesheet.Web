@@ -61,15 +61,15 @@
     <label for="month">เดือน :</label>
     <select id="month">
         @*<option value="01">มกราคม  </option>
-            <option value="02">กุมภาพันธ์ </option>
-            <option value="03">มีนาคม </option>
-            <option value="04">เมษายน</option>
-            <option value="05">พฤษภาคม</option>
-            <option value="06">มิถุนายน </option>
-            <option value="07">กรกฏาคม</option>
-            <option value="08">สิงหาคม</option>
-            <option value="09">กันยายน </option>
-            <option value="10">ตุลาคม </option>*@
+        <option value="02">กุมภาพันธ์ </option>
+        <option value="03">มีนาคม </option>
+        <option value="04">เมษายน</option>
+        <option value="05">พฤษภาคม</option>
+        <option value="06">มิถุนายน </option>
+        <option value="07">กรกฏาคม</option>
+        <option value="08">สิงหาคม</option>
+        <option value="09">กันยายน </option>
+        <option value="10">ตุลาคม </option>*@
         <option value="11">พฤศจิกายน </option>
         <option value="12">ธันวาคม </option>
     </select>
@@ -86,21 +86,21 @@
 
     <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
     @*<button type="button" id="btnGenChart1" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
-        <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
+    <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
     <script src="~/Charts/highcharts.js"></script>
     <script src="~/Charts/modules/exporting.js"></script>
     <script src="~/Charts/modules/export-data.js"></script>
     <script src="~/Charts/modules/accessibility.js"></script>
 
     <div class="panel-body">
-        <table id="tableChart" class="display nowrap" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Row Labels</th>
-                    <th>Sum of MAN_DAY</th>
-                </tr>
-            </thead>
-        </table>
+        @*<table id="tableChart" class="display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Row Labels</th>
+                        <th>Sum of MAN_DAY</th>
+                    </tr>
+                </thead>
+            </table>*@
     </div>
 
     <figure class="highcharts-figure">
@@ -111,6 +111,8 @@
             </label>
         </p>
     </figure>
+
+
     @section scripts {
         <script type="text/javascript">
             var obj = [];
@@ -123,26 +125,6 @@
             var Year = "";
             var Month = "";
             var Chart = "";
-            var Table =  $('#tableChart').DataTable({
-                    columns: [
-                        {
-                            data: "name"
-                        },
-                        {
-                            data: "y"
-                        }]
-                });
-            var me = $.urlParam('p');
-            $(document).ready(function () {
-                if (me != null) {
-                    console.log("ready!");
-                }
-                else {
-                    console.log("not ready!");
-                }
-            });
-
-
             function GetdayoMonth(maxday) {
                 var textday = "";
                 var i;
@@ -173,7 +155,7 @@
                     GenChartPie()
                 }
                 else {
-
+                    
                 }
             }
 
@@ -277,7 +259,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: "<b><a href='/Home?p={point.name}'>{point.name}</a></b>: {point.percentage:.1f} %"
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
                             }
                         }
                     },
@@ -289,7 +271,7 @@
                     }]
                 });
             }
-
+  
             function GetData(obj) {
                 newArray = $(obj).map(function (i) {
 
@@ -306,15 +288,15 @@
             function ExplainPanel() {
                 var param = {
                     month: $("#month").val()
-                }
+            }                
                     $.ajax({
                         url: '@Url.Action("ListChart")',
                         type: 'POST',
                         data: param,
                         success: function (data) {
-                            Table.clear();
-                            Table.rows.add(data).draw();
-
+                            //Table.clear();
+                            //Table.rows.add(data).draw();
+                           
                             obj = data;
                             GetData(obj);
                         },
