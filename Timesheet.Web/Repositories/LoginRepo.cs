@@ -35,7 +35,7 @@ namespace Timesheet.Web.Repositories
                         START_WORK_DATE = t.START_WORK_DATE,
                         STATUS = t.STATUS
 
-                    }).FirstOrDefault(p => p.EMPLOYEE_ID.ToString().Equals(Login_Name));
+                    }).FirstOrDefault(p => p.MAIL_PTT_DIGITAL.ToLower().Contains(Login_Name.ToLower()));
                     return loginUser;
                 }
             }

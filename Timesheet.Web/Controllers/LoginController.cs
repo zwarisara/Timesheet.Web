@@ -20,39 +20,41 @@ namespace Timesheet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginView fromData)
+        public ActionResult Login(LoginView formData)
         {
             if (ModelState.IsValid)
             {
                 AuthorizeService ad = new AuthorizeService();
-                //var LoginUser1 = LoginRepo.GetUser(fromData.Login_Name);
-                bool result = ad.CheckAuthroize(@"pttdigital\zpakdeeporn.j", "Toei34211");
+                bool result = ad.CheckAuthroize(@"pttdigital\"+ formData.Login_Name, formData.Login_Password);
 
-                var LoginUser = Repositories.LoginRepo.GetUser(fromData.Login_Name);
-                if (LoginUser == null)
+                if (result) 
                 {
-                    ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
-                    ViewBag.Result = "UserName ไม่ถูกต้อง !";
-                    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName ไม่ถูกต้อง !" }));
-                }
-                else
-                {
-                    string LoginPassword = "1234";
-                    var loginResult = false;
-                    if (!String.IsNullOrEmpty(LoginPassword))
-                        loginResult = EncryptionRepo.VerifyHash(fromData.Login_Password, "SHA256", LoginPassword);
-                    if (fromData.Login_Password == LoginPassword) //loginResult
+                    var LoginUser = Repositories.LoginRepo.GetUser(formData.Login_Name);
+                    if (LoginUser == null)
                     {
-                        initLoginData(LoginUser);
-                        if (String.IsNullOrWhiteSpace(fromData.returnUrl))
-                            return RedirectToAction("index", "DataManagement");
-                        else
-                            return Redirect(fromData.returnUrl);
+                        ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
+                        ViewBag.Result = "UserName ไม่ถูกต้อง !";
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName ไม่ถูกต้อง !" }));
                     }
                     else
                     {
-                        ViewBag.Result = "PassWord ไม่ถูกต้อง !";
-                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
+                        //string LoginPassword = formData.Login_Name;
+                        //var loginResult = false;
+                        //if (!String.IsNullOrEmpty(LoginPassword))
+                        //    loginResult = EncryptionRepo.VerifyHash(formData.Login_Password, "SHA256", LoginPassword);
+                        //if (true) //loginResult //formData.Login_Password == LoginPassword
+                        //{
+                        initLoginData(LoginUser);
+                        //    if (String.IsNullOrWhiteSpace(formData.returnUrl))
+                        return RedirectToAction("index", "DataManagement");
+                        //    else
+                        //        return Redirect(formData.returnUrl);
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.Result = "PassWord ไม่ถูกต้อง !";
+                        //    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
+                        //}
                     }
                 }
             }
@@ -81,10 +83,10 @@ namespace Timesheet.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult LoginTest(LoginView fromData)
+        public ActionResult LoginTest(LoginView formData)
         {
             AuthorizeService ad = new AuthorizeService();
-            var LoginUser = LoginRepo.GetUser(fromData.Login_Name);
+            var LoginUser = LoginRepo.GetUser(formData.Login_Name);
             bool result = ad.CheckAuthroize(LoginUser.EMPLOYEE_ID.ToString(), "1234");
 
             var test = "";
