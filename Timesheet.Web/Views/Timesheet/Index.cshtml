@@ -82,11 +82,11 @@
                     </div>
                     <div class="col-md-11">
                         @Html.DropDownListFor(m => m.JOB_CODE, Model.JOB_CODE_LIST.Select(i => new SelectListItem()
-                       {
-                           Text = i.JOBCODE_NO + " " + i.JOBCODE_NAME,
-                           Value = i.JOBCODE_NO,
-                           Selected = i.JOBCODE_NO == Model.JOB_CODE
-                       }), "-Please Select-", new { @class = "form-control" })
+                        {
+                            Text = i.JOBCODE_NO + " " + i.JOBCODE_NAME,
+                            Value = i.JOBCODE_NO,
+                            Selected = i.JOBCODE_NO == Model.JOB_CODE
+                        }), "-Please Select-", new { @class = "form-control selectpicker"})
                     </div>
                     <div class="col-md-4" style="padding-left: 0px; display:none;">
                         @Html.TextBoxFor(i => i.JOB_CODE_NAME, new { @class = "form-control", @disabled = true })
@@ -149,8 +149,8 @@
             </div>
             <div class="panel-body" style="height: 860px;">
                 <div class="table-responsive">
-                    <table id="tableMyTimesheet" class="display nowrap" style="width:100%; margin-top: 2%; margin-top: -8px;">
-                        <thead>
+                    <table id="tableMyTimesheet" class="display nowrap cell-border" style="width:100%; margin-top: 2%; margin-top: -8px;">
+                        <thead class="cell-border">
                             <tr>
                                 <th>Date of</th>
                                 <th>Job Code</th>
@@ -173,6 +173,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+
+            $('.selectpicker').selectpicker({
+        liveSearch: true,
+        showSubtext: true
+    });
 
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);

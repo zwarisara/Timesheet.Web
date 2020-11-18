@@ -15,7 +15,8 @@ namespace Timesheet.Web
                         "~/Scripts/dataTables.responsive.min.js",
                         "~/Scripts/moment.min.js",
                         "~/Scripts/bootstrap-datetimepicker.min.js",
-                        "~/Scripts/toastr.min.js"
+                        "~/Scripts/toastr.min.js",
+                        "~/Scripts/bootstrap-select.min.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -40,7 +41,8 @@ namespace Timesheet.Web
                       "~/Content/responsive.dataTables.min.css",
                       "~/Content/button.datatable.min.css",
                       "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/toastr.min.css"
+                      "~/Content/toastr.min.css",
+                      "~/Content/bootstrap-select.min.css"
                       ));
         }
     }
