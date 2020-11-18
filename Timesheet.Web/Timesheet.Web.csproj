@@ -54,6 +54,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -181,6 +182,7 @@
     <Compile Include="Models\JobCodeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\TimesheetModel.cs" />
+    <Compile Include="Repositories\AuthorizeService.cs" />
     <Compile Include="Repositories\TimesheetRepo.cs" />
     <Compile Include="Repositories\DatabaseHelper.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -23,6 +24,10 @@ namespace Timesheet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                AuthorizeService ad = new AuthorizeService();
+                //var LoginUser1 = LoginRepo.GetUser(fromData.Login_Name);
+                bool result = ad.CheckAuthroize(@"pttdigital\zpakdeeporn.j", "Toei34211");
+
                 var LoginUser = Repositories.LoginRepo.GetUser(fromData.Login_Name);
                 if (LoginUser == null)
                 {
@@ -75,5 +80,133 @@ namespace Timesheet.Web.Controllers
             Session.Abandon();
             return RedirectToAction("Index");
         }
+
+        public ActionResult LoginTest(LoginView fromData)
+        {
+            AuthorizeService ad = new AuthorizeService();
+            var LoginUser = LoginRepo.GetUser(fromData.Login_Name);
+            bool result = ad.CheckAuthroize(LoginUser.EMPLOYEE_ID.ToString(), "1234");
+
+            var test = "";
+            //if (result) //มีตัวตนใน AD
+            //{
+            //    //เช็คจาก Table เราก่อน
+            //    DataSet dsUser = new UserDAO().getUserLogin(txtUserName.Value, Encryption.EncryptPassword(txtPassword.Value));
+            //    DataSet dsPIS = new UserDAO().getUserLoginPIS(txtUserName.Value, Encryption.EncryptPassword(txtPassword.Value));
+            //    if (dsUser.Tables[0].Rows.Count > 0) //ใช้ Password bypass เข้าระบบ
+            //    {
+            //        PageBase pb = new PageBase();
+            //        pb.EmpID = dsUser.Tables[0].Rows[0]["EMP_ID"].ToString();
+            //        pb.UserGroupID = dsUser.Tables[0].Rows[0]["USER_GROUP_ID"].ToString();
+            //        pb.UserName = txtUserName.Value;
+            //        pb.FullName = dsUser.Tables[0].Rows[0]["FULL_NAME"].ToString();
+            //        pb.unitCode = dsUser.Tables[0].Rows[0]["UNIT_CODE"].ToString();
+            //        pb.unitAbbr = dsUser.Tables[0].Rows[0]["UNIT_ABBR"].ToString();
+            //        pb.UserProfile = dsUser.Tables[0].Rows[0];
+            //        pb.Permission = dsUser.Tables[1];
+            //        result = true;
+            //    }
+            //    else if (dsPIS.Tables[0].Rows.Count > 0)//เช็คจาก PTT PIS
+            //    {
+            //        PageBase pb = new PageBase();
+            //        pb.EmpID = dsPIS.Tables[0].Rows[0]["EMP_ID"].ToString();
+            //        //pb.UserGroupID = dsPIS.Tables[0].Rows[0]["USER_GROUP_ID"].ToString();
+            //        pb.UserGroupID = "4";
+            //        pb.UserName = txtUserName.Value;
+            //        pb.FullName = dsPIS.Tables[0].Rows[0]["FULL_NAME"].ToString();
+            //        pb.unitCode = dsPIS.Tables[0].Rows[0]["UNIT_CODE"].ToString();
+            //        pb.unitAbbr = dsPIS.Tables[0].Rows[0]["UNIT_ABBR"].ToString();
+            //        pb.UserProfile = dsPIS.Tables[0].Rows[0];
+            //        pb.Permission = dsPIS.Tables[1];
+            //        result = true;
+            //    }
+            //    else
+            //    {
+            //        result = false;
+            //    }
+            //}
+            //else //ไม่มีตัวตนใน AD
+            //{
+            //    DataSet dsUser = new UserDAO().getUserLogin(txtUserName.Value, Encryption.EncryptPassword(txtPassword.Value));
+            //    if (dsUser.Tables[0].Rows.Count > 0 && (txtPassword.Value == ConfigurationManager.AppSettings["byPassPassword"]))
+            //    //if (dsUser.Tables[0].Rows.Count > 0 && (txtPassword.Value == ConfigurationManager.AppSettings["byPassPassword"]))
+            //    {
+            //        PageBase pb = new PageBase();
+            //        pb.EmpID = dsUser.Tables[0].Rows[0]["EMP_ID"].ToString();
+            //        pb.UserGroupID = dsUser.Tables[0].Rows[0]["USER_GROUP_ID"].ToString();
+            //        pb.UserName = txtUserName.Value;
+            //        pb.FullName = dsUser.Tables[0].Rows[0]["FULL_NAME"].ToString();
+            //        pb.unitCode = dsUser.Tables[0].Rows[0]["UNIT_CODE"].ToString();
+            //        pb.unitAbbr = dsUser.Tables[0].Rows[0]["UNIT_ABBR"].ToString();
+            //        pb.UserProfile = dsUser.Tables[0].Rows[0];
+            //        pb.Permission = dsUser.Tables[1];
+            //        result = true;
+            //    }
+            //    else if (dsUser.Tables[0].Rows.Count > 0 && (dsUser.Tables[0].Rows[0]["USER_GROUP_ID"].ToString() == "3" && txtPassword.Value == dsUser.Tables[0].Rows[0]["EMP_ID"].ToString()))
+            //    {
+            //        PageBase pb = new PageBase();
+            //        pb.EmpID = dsUser.Tables[0].Rows[0]["EMP_ID"].ToString();
+            //        pb.UserGroupID = dsUser.Tables[0].Rows[0]["USER_GROUP_ID"].ToString();
+            //        pb.UserName = txtUserName.Value;
+            //        pb.FullName = dsUser.Tables[0].Rows[0]["FULL_NAME"].ToString();
+            //        pb.unitCode = dsUser.Tables[0].Rows[0]["UNIT_CODE"].ToString();
+            //        pb.unitAbbr = dsUser.Tables[0].Rows[0]["UNIT_ABBR"].ToString();
+            //        pb.UserProfile = dsUser.Tables[0].Rows[0];
+            //        pb.Permission = dsUser.Tables[1];
+            //        result = true;
+            //    }
+            //    else
+            //    {
+            //        if (txtPassword.Value == "" && txtUserName.Value == "")
+            //        {
+            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openOB", "Swal.fire({ icon: 'error',text: 'กรุณากรอก UserName และ Password'})", true);
+            //        }
+
+            //        else if (txtPassword.Value == "" && txtUserName.Value != "")
+            //        {
+            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openOB", "Swal.fire({ icon: 'error',text: 'กรุณกรอก Password'})", true);
+            //        }
+
+            //        else if (txtUserName.Value == "" && txtPassword.Value != "")
+            //        {
+            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openOB", "Swal.fire({ icon: 'error',text: 'กรุณกรอก UserName'})", true);
+            //        }
+            //        else
+            //        {
+            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openOB", "Swal.fire({ icon: 'error',text: 'ขออภัยไม่พบสิทธิ์ในการใช้งานเข้าระบบ!'})", true);
+            //        }
+            //        return;
+            //    }
+            //}
+            //if (result)
+            //{
+            //    PageBase pb = new PageBase();
+            //    try
+            //    {
+            //        if (Query == "")
+            //        {
+            //            rmmsDAO.SP_T_DOC_LOG_Insert("0", "Login SUCCESS", "Login SUCCESS", pb.EmpID, pb.unitAbbr);
+            //            Response.Redirect("Pages/Home.aspx", true);
+            //        }
+            //        else
+            //        {
+            //            Response.Redirect("Pages/Create.aspx" + Query, true);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+
+            //    }
+            //}
+            //else
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openOB", "Swal.fire({ icon: 'error',text: 'Username หรือ Password ไม่ถูกต้อง!'})", true);
+            //    txtUserName.Focus();
+            //    return;
+            //}
+
+            return View();
+        }
+
     }
 }
