@@ -231,6 +231,7 @@
     <Content Include="Picture\backgrond4.jpg" />
     <Content Include="Picture\Background.jpg" />
     <Content Include="Picture\background1.png" />
+    <Content Include="Picture\digital_logo.png" />
     <Content Include="Picture\ptt-logo-1.png" />
     <Content Include="Picture\ptt-logo.png" />
     <Content Include="Picture\ptt_logo_full.png" />
