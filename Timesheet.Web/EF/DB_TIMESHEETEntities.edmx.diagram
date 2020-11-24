@@ -4,15 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f517a42fe83d4b9d9ff3a2cb99694336" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_WEEKLY_TIMESHEET" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_EMPLOYEE" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_EMPLOYEE_JOBCODE" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_JOBCODE" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_POT" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_PROJECT" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_TICKET" Width="1.5" PointX="6.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DB_TIMESHEETModel.TB_TIMESHEET" Width="1.5" PointX="6.75" PointY="6.75" />
+      <Diagram DiagramId="91e1bbaa442b44b4a397cbe09fb3ab0b" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_EMPLOYEE" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_EMPLOYEE_JOBCODE" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_JOBCODE" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_POT" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_TICKET" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_TIMESHEET" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TIMESHEETEntitiesModel.TB_WEEKLY_TIMESHEET" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

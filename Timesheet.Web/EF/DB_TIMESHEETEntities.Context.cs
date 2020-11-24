@@ -27,14 +27,13 @@ namespace Timesheet.Web.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TB_WEEKLY_TIMESHEET> TB_WEEKLY_TIMESHEET { get; set; }
         public virtual DbSet<TB_EMPLOYEE> TB_EMPLOYEE { get; set; }
         public virtual DbSet<TB_EMPLOYEE_JOBCODE> TB_EMPLOYEE_JOBCODE { get; set; }
         public virtual DbSet<TB_JOBCODE> TB_JOBCODE { get; set; }
         public virtual DbSet<TB_POT> TB_POT { get; set; }
-        public virtual DbSet<TB_PROJECT> TB_PROJECT { get; set; }
         public virtual DbSet<TB_TICKET> TB_TICKET { get; set; }
         public virtual DbSet<TB_TIMESHEET> TB_TIMESHEET { get; set; }
+        public virtual DbSet<TB_WEEKLY_TIMESHEET> TB_WEEKLY_TIMESHEET { get; set; }
     
         public virtual ObjectResult<SP_GET_JOB_CODE_Result> SP_GET_JOB_CODE(string jOB_CODE)
         {
@@ -43,6 +42,32 @@ namespace Timesheet.Web.EF
                 new ObjectParameter("JOB_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_JOB_CODE_Result>("SP_GET_JOB_CODE", jOB_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_LIST_CHART_Result> SP_GET_LIST_CHART(string month)
+        {
+            var monthParameter = month != null ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_CHART_Result>("SP_GET_LIST_CHART", monthParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_GET_LIST_CHART_COLUMN(string month, string startday, string endday)
+        {
+            var monthParameter = month != null ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(string));
+    
+            var startdayParameter = startday != null ?
+                new ObjectParameter("startday", startday) :
+                new ObjectParameter("startday", typeof(string));
+    
+            var enddayParameter = endday != null ?
+                new ObjectParameter("endday", endday) :
+                new ObjectParameter("endday", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_GET_LIST_CHART_COLUMN", monthParameter, startdayParameter, enddayParameter);
         }
     
         public virtual ObjectResult<SP_GET_LIST_TIMESHEET_Result> SP_GET_LIST_TIMESHEET(string nAME)

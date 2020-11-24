@@ -17,9 +17,8 @@ namespace Timesheet.Web.EF
         public int TIMESHEET_ID { get; set; }
         public Nullable<System.DateTime> TIMESHEET_DATE { get; set; }
         public Nullable<int> EMPLOYEE_ID { get; set; }
-        public Nullable<int> JOBCODE_NO { get; set; }
-        public string PROJECT_NAME { get; set; }
-        public Nullable<int> TICKET_NO { get; set; }
+        public Nullable<int> JOBCODE_ID { get; set; }
+        public string TICKET_ID { get; set; }
         public string TIMESHEET_REMARK { get; set; }
         public Nullable<decimal> WORK_HOUR { get; set; }
         public string WORK_LOCATION { get; set; }

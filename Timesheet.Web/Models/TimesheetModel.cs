@@ -20,6 +20,7 @@ namespace Timesheet.Web.Models
         public string WORK_LOCATION { get; set; }
         public string DESCRIPTION { get; set; }
         public string STATUS { get; set; }
+        public int EMPLOYEE_ID { get; set; }
 
     }
     public class JobCodeListModel

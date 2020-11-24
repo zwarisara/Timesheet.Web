@@ -15,8 +15,10 @@ namespace Timesheet.Web.EF
     public partial class TB_JOBCODE
     {
         public int JOBCODE_ID { get; set; }
+        public Nullable<int> ITEM_ORDER { get; set; }
+        public string POT_ID { get; set; }
         public string JOBCODE_NO { get; set; }
-        public string JOBCODE_PARENT { get; set; }
+        public Nullable<int> JOBCODE_ID_PARENT { get; set; }
         public string JOBCODE_NAME { get; set; }
         public string PM_NAME { get; set; }
         public string CUSTOMER { get; set; }
@@ -25,6 +27,5 @@ namespace Timesheet.Web.EF
         public Nullable<decimal> BUDGET_AMOUNT { get; set; }
         public string STATUS { get; set; }
         public string REMARK { get; set; }
-        public string POT_NO { get; set; }
     }
 }

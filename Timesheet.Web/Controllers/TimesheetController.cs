@@ -16,7 +16,7 @@ namespace Timesheet.Web.Controllers
             TimesheetModel model = new TimesheetModel();
             model.DATE_OF = DateTime.Now;
             model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode("");
-            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode();
+            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode(model.JOB_CODE);
             return View(model);
         }
 
@@ -25,6 +25,16 @@ namespace Timesheet.Web.Controllers
         {
             JobCodeListModel data  = _TimeSheetRepo.GetAllJobCode(job_code).FirstOrDefault();
             return Json(new { Name = data.JOBCODE_NAME }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveTimeSheet(TimesheetModel param)
+        {
+            var user = LoginRepo.GetOwnerUser();
+            //param.EMPLOYEE_ID = employeeID;
+            bool result = _TimeSheetRepo.Insert(param);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
     }
 }

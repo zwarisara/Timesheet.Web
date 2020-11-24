@@ -10,16 +10,10 @@
 namespace Timesheet.Web.EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_PROJECT
+    public partial class SP_GET_LIST_CHART_Result
     {
-        public int PROJECT_ID { get; set; }
-        public string PROJECT_NAME { get; set; }
-        public Nullable<System.DateTime> START_DATE { get; set; }
-        public Nullable<System.DateTime> END_DATE { get; set; }
-        public string STATUS { get; set; }
-        public string REMARK { get; set; }
-        public string JOBCODE_NO { get; set; }
+        public string name { get; set; }
+        public Nullable<decimal> y { get; set; }
     }
 }

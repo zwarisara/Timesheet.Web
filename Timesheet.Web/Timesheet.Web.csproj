@@ -152,6 +152,9 @@
     <Compile Include="EF\SP_GET_JOB_CODE_Result.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\SP_GET_LIST_CHART_Result.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\SP_GET_LIST_TIMESHEET_Result.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
@@ -165,9 +168,6 @@
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TB_POT.cs">
-      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\TB_PROJECT.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TB_TICKET.cs">

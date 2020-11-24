@@ -14,11 +14,11 @@ namespace Timesheet.Web.EF
     
     public partial class TB_TICKET
     {
-        public int TICKET_NO { get; set; }
+        public string TICKET_ID { get; set; }
+        public Nullable<int> JOBCODE_ID { get; set; }
         public Nullable<System.DateTime> START_DATE { get; set; }
         public Nullable<System.DateTime> END_DATE { get; set; }
         public string STATUS { get; set; }
         public string REMARK { get; set; }
-        public Nullable<int> JOBCODE_NO { get; set; }
     }
 }

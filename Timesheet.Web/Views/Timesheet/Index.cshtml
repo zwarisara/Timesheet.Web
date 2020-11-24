@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin-top: 1%; margin-bottom: 1%">
-                    <button type="button" id="btnAddToList" class="btn btn-success" style="padding: 4px 5px; width: 140px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                    <button type="button" id="btnSave" class="btn btn-success" style="padding: 4px 5px; width: 140px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
                     <button type="button" id="btnClear" class="btn btn-primary" style="padding: 4px 5px; width: 140px;"><i class="fa fa-refresh"></i>&nbsp;Clear</button>
                 </div>
             </div>
@@ -200,7 +200,6 @@
             aData[9] = '<button class="btn btn-primary editor_edit" onclick="EditEmployee("'+iDataIndex+'")" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>&nbsp;<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="DeleteEmployee("' +iDataIndex+ '")" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>'
             console.log('aData[9] ---------->', aData[9]);
             $(nRow).attr('id', iDataIndex); 
-            //$('#tableMyTimesheet').reload();
     }
     });
 
@@ -264,60 +263,39 @@
             //}
         //});
 
-    $("#btnAddToList").on('click', function (e) {
-        Table.row.add( [
-        $('#DATE_OF').val(),
-        $('#JOB_CODE').val(),
-        $('#JOB_CODE_NAME').val(),
-        $('#SUB_JOB_CODE').val(),
-        $('#TICKET_NO').val(),
-        $('#WORK_HOUR').val(),
-        $('#WORK_LOCATION').val(),
-        '<button class="btn btn-primary editor_edit" onclick="EditEmployee('+ this +')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>' +
-        '&nbsp;<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="DeleteEmployee("","")" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>'
-        ]).draw(false);
+            $("#btnSave").on('click', function (e) {
+
+                if (FieldIsExist())
+                { 
+
+                var objDtOf = $('#DATE_OF').val().split('/');
+                var strObjDtOf = objDtOf[1] + '/' + objDtOf[0] + '/' + objDtOf[2];
+                
+                var param = {
+                    DATE_OF : strObjDtOf,
+                    WORK_HOUR : $('#WORK_HOUR').val(),
+                    WORK_LOCATION : $('#WORK_LOCATION').val(),
+                    JOB_CODE: $('#JOB_CODE').val(),
+                    JOB_CODE_NAME: $('#JOB_CODE_NAME').val(),
+                    JOB_CODE: $('#JOB_CODE').val(),
+                    SUB_JOB_CODE: $('#SUB_JOB_CODE').val(),
+                    PROJECT_NAME: $('#PROJECT_NAME').val(),
+                    TICKET_NO: $('#TICKET_NO').val(),
+                    DESCRIPTION: $('#DESCRIPTION').val()
+                };
+
+         $.ajax({
+                url: '@Url.Action("SaveTimeSheet")',
+                type: 'POST',
+                data: param,
+                success: function (data) {
+                    console.log('data.result ------------> ',data.result)
+                    }
+         });
+                    }
 
     });
 
-    //ExplainPanel();
-
-    @*var Table = $('#tableManage').DataTable({
-            data: [],
-            ajax: {
-                url: '@Url.Action("List")',
-                method: "POST",
-                data: {
-                    Name: $('#_Name').val()
-                },
-                dataSrc: function (response) { return response; }
-            },
-            responsive: true,
-            filter: false,
-            retrieve: true,
-            columns: [
-               {
-                   data: "EMPLOYEE_NAME"
-               },
-               {
-                   data: "COUNT_JOB_CODE_PROJECT"
-               },
-               {
-                   data: "HOUR_JOB_CODE_SUPPORT"
-               },
-               {
-                   data: "HOUR_JOB_CODE_PROJECT"
-               },
-               {
-                   data: "AVERAGE_JOB_CODE_SUPPORT"
-               },
-               {
-                   data: "AVERAGE_JOB_CODE_PROJECT"
-               },
-               {
-                   data: "LAST_UPDATE_DATE"
-               }
-            ]
-        });*@
 
         })
 
@@ -371,6 +349,51 @@
 
             let anyDate = new Date();
             return anyDate.toShortFormat();
+        }
+
+        function FieldIsExist()
+        {
+            if ($('#DATE_OF').val() == '')
+            {
+                toastr.warning('Please choose Date Of !');
+                return false;
+            }
+            if ($('#WORK_HOUR').val() == '')
+            {
+                toastr.warning('Please fill Work Hour !');
+                 return false;
+            }
+            if ($('#WORK_LOCATION').val() == '')
+            {
+                toastr.warning('Please select Work Location !');
+                return false;
+            }
+            if ($('#JOB_CODE').val() == '')
+            {
+                toastr.warning('Please select Job Code !');
+                return false;
+            }
+            if ($('#DESCRIPTION').val() == '')
+            {
+                toastr.warning('Please fill Description !');
+                 return false;
+            }
+
+            if ($('#JOB_CODE').val() == '901485000124')
+            {
+                if ($('#SUB_JOB_CODE').val() == '')
+                {
+                    toastr.warning('Please select Sub Job Code !');
+                     return false;
+                }
+                if ($('#SUB_JOB_CODE').val() == 'งาน Support จริง และ Incident' && $('#TICKET_NO').val() == '')
+                {
+                    toastr.warning('Please fill Ticket No !');
+                     return false;
+                }
+            }
+
+            return true;
         }
 
     </script>

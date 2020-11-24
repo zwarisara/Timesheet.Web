@@ -15,6 +15,7 @@ namespace Timesheet.Web.EF
     public partial class TB_EMPLOYEE
     {
         public int EMPLOYEE_ID { get; set; }
+        public Nullable<int> EMPLOYEE_NO { get; set; }
         public string FULLNAME_TH { get; set; }
         public string FULLNAME_EN { get; set; }
         public string NICKNAME { get; set; }

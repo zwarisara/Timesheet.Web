@@ -16,7 +16,7 @@ namespace Timesheet.Web.EF
     {
         public int ID { get; set; }
         public Nullable<int> EMPLOYEE_ID { get; set; }
-        public Nullable<int> JOBCODE_NO { get; set; }
+        public Nullable<int> JOBCODE_ID { get; set; }
         public Nullable<System.DateTime> START_DATE { get; set; }
         public Nullable<System.DateTime> END_DATE { get; set; }
     }
