@@ -9,21 +9,39 @@ namespace Timesheet.Web.Repositories
 {
     public class HomeRepo
     {
-        public List<ListChartModel> GetListChert(string month)
+        public List<ListChartPieModel> GetListChertPie(string month)
         {
-            List<ListChartModel> lst = new List<ListChartModel>();
+            List<ListChartPieModel> lst = new List<ListChartPieModel>();
             DatabaseHelper db = new DatabaseHelper();
             db.AddParameter("@month", month);
             DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART");
             foreach (DataRow item in dt.Rows)
             {
-                ListChartModel model = new ListChartModel();
+                ListChartPieModel model = new ListChartPieModel();
                 model.name = item["name"].ToString();
                 model.y = Convert.ToDecimal(item["y"]);
                 lst.Add(model);
             }
             return lst;
+        }
 
+        public List<ListChartColumnModel> GetListChertColumn(string month,string startday, string endday)
+        {
+            List<ListChartColumnModel> lst = new List<ListChartColumnModel>();
+            DatabaseHelper db = new DatabaseHelper();
+            db.AddParameter("@month", month);
+            db.AddParameter("@startday", startday);
+            db.AddParameter("@endday", endday);
+            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART_COLUMN");
+            foreach (DataRow item in dt.Rows)
+            {
+                ListChartColumnModel model = new ListChartColumnModel();
+                model.DATE_OF = Convert.ToInt32(item["DATE_OF"]);
+                model.JOB_GROUP = item["JOB_GROUP"].ToString();
+                model.MAN_DAY = Convert.ToDecimal(item["MAN_DAY"]);
+                lst.Add(model);
+            }
+            return lst;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Timesheet.Web.Models
 {
     public class HomeModel
     {
-        public class ListChartModel
+        public class ListChartPieModel
         {
             public string name { get; set; }
 
@@ -17,5 +17,13 @@ namespace Timesheet.Web.Models
             //public string JOBCODE_NAME { get; set; }          
             //public string BUDGET_AMOUNT { get; set; }         
         }
+
+        public class ListChartColumnModel
+        {
+            public int DATE_OF { get; set; }
+            public string JOB_GROUP { get; set; }
+            public decimal MAN_DAY { get; set; }
+        }
+
     }
 }

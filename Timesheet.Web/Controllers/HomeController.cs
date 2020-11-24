@@ -19,11 +19,17 @@ namespace Timesheet.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult ListChart(string month)
+        public JsonResult ListChartPie(string month)
         {
-            List<ListChartModel> lstModel = _repo.GetListChert(month);
+            List<ListChartPieModel> lstModel = _repo.GetListChertPie(month);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult ListChartColumn(string month,string startday , string endday)
+        {
+            List<ListChartColumnModel> lstModel = _repo.GetListChertColumn(month,startday, endday);
+            return Json(lstModel, JsonRequestBehavior.AllowGet);
+        }
     }
 }

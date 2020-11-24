@@ -58,18 +58,88 @@
     </style>
 </head>
 <body>
+    <label for="startday">วันที่เริ่มต้น :</label>
+    <select id="startday">
+        <option value="1">1</option>
+        <option value="2">2 </option>
+        <option value="3">3</option>
+        <option value="4">4 </option>
+        <option value="5">5</option>
+        <option value="6">6 </option>
+        <option value="7">7</option>
+        <option value="8">8 </option>
+        <option value="9">9</option>
+        <option value="10">10 </option>
+        <option value="11">11</option>
+        <option value="12">12 </option>
+        <option value="13">13</option>
+        <option value="14">14 </option>
+        <option value="15">15</option>
+        <option value="16">16 </option>
+        <option value="17">17 </option>
+        <option value="18">18 </option>
+        <option value="19">19 </option>
+        <option value="20">20 </option>
+        <option value="21">21 </option>
+        <option value="22">22 </option>
+        <option value="23">23 </option>
+        <option value="24">24 </option>
+        <option value="25">25 </option>
+        <option value="26">26 </option>
+        <option value="27">27 </option>
+        <option value="28">28 </option>
+        <option value="29">29 </option>
+        <option value="30">30 </option>
+        <option value="31">31 </option>
+    </select>
+
+    <label for="endday">วันที่สิ้นสุด :</label>
+    <select id="endday">
+        <option value="1">1</option>
+        <option value="2">2 </option>
+        <option value="3">3</option>
+        <option value="4">4 </option>
+        <option value="5">5</option>
+        <option value="6">6 </option>
+        <option value="7">7</option>
+        <option value="8">8 </option>
+        <option value="9">9</option>
+        <option value="10">10 </option>
+        <option value="11">11</option>
+        <option value="12">12 </option>
+        <option value="13">13</option>
+        <option value="14">14 </option>
+        <option value="15">15</option>
+        <option value="16">16 </option>
+        <option value="17">17 </option>
+        <option value="18">18 </option>
+        <option value="19">19 </option>
+        <option value="20">20 </option>
+        <option value="21">21 </option>
+        <option value="22">22 </option>
+        <option value="23">23 </option>
+        <option value="24">24 </option>
+        <option value="25">25 </option>
+        <option value="26">26 </option>
+        <option value="27">27 </option>
+        <option value="28">28 </option>
+        <option value="29">29 </option>
+        <option value="30">30 </option>
+        <option value="31">31 </option>
+    </select>
+
     <label for="month">เดือน :</label>
     <select id="month">
         @*<option value="01">มกราคม  </option>
-        <option value="02">กุมภาพันธ์ </option>
-        <option value="03">มีนาคม </option>
-        <option value="04">เมษายน</option>
-        <option value="05">พฤษภาคม</option>
-        <option value="06">มิถุนายน </option>
-        <option value="07">กรกฏาคม</option>
-        <option value="08">สิงหาคม</option>
-        <option value="09">กันยายน </option>
-        <option value="10">ตุลาคม </option>*@
+            <option value="02">กุมภาพันธ์ </option>
+            <option value="03">มีนาคม </option>
+            <option value="04">เมษายน</option>
+            <option value="05">พฤษภาคม</option>
+            <option value="06">มิถุนายน </option>
+            <option value="07">กรกฏาคม</option>
+            <option value="08">สิงหาคม</option>
+            <option value="09">กันยายน </option>
+            <option value="10">ตุลาคม </option>*@
         <option value="11">พฤศจิกายน </option>
         <option value="12">ธันวาคม </option>
     </select>
@@ -86,7 +156,7 @@
 
     <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
     @*<button type="button" id="btnGenChart1" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
-    <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
+        <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
     <script src="~/Charts/highcharts.js"></script>
     <script src="~/Charts/modules/exporting.js"></script>
     <script src="~/Charts/modules/export-data.js"></script>
@@ -115,16 +185,28 @@
 
     @section scripts {
         <script type="text/javascript">
-            var obj = [];
-            var newArray = [];
+            var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject;
+            var objChartColumn = [];
+            var objChartPie = [];
+            var JSONChartColumn = [];
+            var JSONChartPie = [];
+            var ArrayChartColumn = [];
+            var ArrayChartPie = [];
             var period_day = [];
             var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
                 "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
             ];
             var txtmonth = "";
             var Year = "";
+            var Startday = "";
+            var Endday = "";
             var Month = "";
             var Chart = "";
+            $(document).ready(function () {
+                GetDataChartPie();
+                GetDataChartColumn();
+            });
+
             function GetdayoMonth(maxday) {
                 var textday = "";
                 var i;
@@ -137,6 +219,8 @@
 
             function GendayoMonth() {
                 Month = $("#month").val();
+                Startday = $("#startday").val();
+                Endday = $("#endday").val();
                 txtmonth = monthNames[parseInt(Month) - 1];
                 Year = $("#year").val();
                 //var Month = new Date().getMonth();
@@ -155,12 +239,63 @@
                     GenChartPie()
                 }
                 else {
-                    
+
                 }
             }
 
             function GenChartColumn() {
                 GendayoMonth()
+                GetDataChartColumn()
+                objSuppORGRP = objChartColumn.filter(function (objChartColumn) {
+                        return objChartColumn.JOB_GROUP == "Supp OR GRP";
+                });
+                objSuppORGRP = $(objSuppORGRP).map(function (i) {
+                    return [objSuppORGRP[i].MAN_DAY];
+                });
+
+                objSuppORMR = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp OR MR";
+                });
+                objSuppORMR = $(objSuppORMR).map(function (i) {
+                    return [objSuppORMR[i].MAN_DAY];
+                });
+
+                objSuppSP = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp SP";
+                });
+                objSuppSP = $(objSuppSP).map(function (i) {
+                    return [objSuppSP[i].MAN_DAY];
+                });
+
+                objSuppRRS = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp RRS";
+                });
+                objSuppRRS = $(objSuppRRS).map(function (i) {
+                    return [objSuppRRS[i].MAN_DAY];
+                });
+
+                objSuppeBG = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp eBG";
+                });
+                objSuppeBG = $(objSuppeBG).map(function (i) {
+                    return [objSuppeBG[i].MAN_DAY];
+                });
+
+                objAOUPSupport = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "AOU/P Support";
+                });
+                objAOUPSupport = $(objAOUPSupport).map(function (i) {
+                    return [objAOUPSupport[i].MAN_DAY];
+                });
+
+                objProject = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Project";
+                });
+                objProject = $(objProject).map(function (i) {
+                    return [objProject[i].MAN_DAY];
+                });
+
+                JSONChartColumn = JSON.stringify(objChartColumn);
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
@@ -211,20 +346,39 @@
                         }
                     },
                     series: [{
-                        name: ['Project'],
-                        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 95.6, 54.4]
+                        name: 'Supp OR GRP',
+                        data: objSuppORGRP
+                        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 95.6, 54.4]
 
                     }, {
-                        name: 'AOU/P Support',
-                        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 95.6, 54.4]
+                        name: 'Supp OR MR',
+                        data: objSuppORMR 
+                        //data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 95.6, 54.4]
 
                     }, {
-                        name: 'Supp eBG',
-                        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 0.0, 95.6, 54.4]
+                        name: 'Supp SP',
+                        data:  objSuppSP
+                        //data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 0.0, 95.6, 54.4]
 
                     }, {
                         name: 'Supp RRS',
-                        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        data: objSuppRRS
+
+                    }, {
+                        name: 'Supp eBG',
+                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        data: objSuppeBG
+
+                    }, {
+                        name: 'AOU/P Support',
+                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        data: objAOUPSupport
+
+                    }, {
+                        name: 'Project',
+                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+                        data: objProject
 
                     }]
                 });
@@ -233,8 +387,7 @@
 
             function GenChartPie() {
                 GendayoMonth()
-                ExplainPanel()
-                obj = JSON.stringify(obj);
+                JSONChartPie = JSON.stringify(objChartPie);
                 Highcharts.chart('container', {
                     chart: {
                         plotBackgroundColor: null,
@@ -266,45 +419,68 @@
                     series: [{
                         name: 'Brands',
                         colorByPoint: true,
-                        data: JSON.parse(obj)
+                        data: JSON.parse(JSONChartPie)
 
                     }]
                 });
             }
-  
-            function GetData(obj) {
-                newArray = $(obj).map(function (i) {
 
-                    return JSON.stringify(obj[i].y);
-                });
-            }
-            //function GetData2(obj) {
-            //    newArray2 = $(obj).map(function (i) {
-            //        //return obj[i], obj[i].BUDGET_AMOUNT;
-            //        return obj[i].JOBCODE_NAME;
+            //function MapDataChartPie(objChartPie) {
+            //        ArrayChartPie = $(objChartPie).map(function (i) {
+            //        return JSON.stringify(objChartPie[i].y);
             //    });
             //}
 
-            function ExplainPanel() {
+            //function MapDataChartColumn(objChartColumn) {
+            //        ArrayChartColumn = $(objChartColumn).map(function (i) {
+            //            return [objChartColumn[i].JOB_GROUP, objChartColumn[i].MAN_DAY];
+            //    });
+            //}
+
+            function GetDataChartPie() {
                 var param = {
                     month: $("#month").val()
-            }                
+            }
                     $.ajax({
-                        url: '@Url.Action("ListChart")',
+                        url: '@Url.Action("ListChartPie")',
                         type: 'POST',
                         data: param,
                         success: function (data) {
                             //Table.clear();
                             //Table.rows.add(data).draw();
-                           
-                            obj = data;
-                            GetData(obj);
+
+                            objChartPie = data;
+                            //MapDataChartPie(objChartPie);
+
                         },
                         error: function () {
                             alert("error");
                         }
                     });
             }
+
+
+            function GetDataChartColumn() {
+                var param = {
+                    month: $("#month").val(),
+                    startday: $("#startday").val(),
+                    endday: $("#endday").val()
+            }
+                    $.ajax({
+                        url: '@Url.Action("ListChartColumn")',
+                        type: 'POST',
+                        data: param,
+                        success: function (data) {
+                            objChartColumn = data;
+                            //MapDataChartColumn(objChartColumn);
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+            }
+
+
         </script>
     }
 </body>
