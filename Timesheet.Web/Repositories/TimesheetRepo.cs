@@ -30,18 +30,16 @@ namespace Timesheet.Web.Repositories
             }
 
         }
-        public List<SubJobCodeListModel> GetAllSubJobCode(string job_code)
+        public List<SubJobCodeListModel> GetAllSubJobCode(string job_code_id)
         {
             using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
-                List<SubJobCodeListModel> lst = new List<SubJobCodeListModel>();
-
-                //List<SubJobCodeListModel> lst = db.TB_PROJECT.Where(i => ).Select(i => new SubJobCodeListModel
-                //{
-                //    PROJECT_ID = i.PROJECT_ID.ToString(),
-                //    PROJECT_NAME = i.PROJECT_NAME,
-                //    JOBCODE_NO = i.JOBCODE_NO
-                //}).ToList();
+                List<SubJobCodeListModel> lst = db.TB_JOBCODE.Where(i => i.JOBCODE_ID_PARENT.Value.ToString().Equals(job_code_id)).Select(i => new SubJobCodeListModel
+                {
+                    SUB_JOBCODE_ID = i.JOBCODE_ID.ToString(),
+                    SUB_JOBCODE_NO = i.JOBCODE_NO,
+                    SUB_JOBCODE_NAME = i.JOBCODE_NAME
+                }).ToList();
 
                 return lst;
             }

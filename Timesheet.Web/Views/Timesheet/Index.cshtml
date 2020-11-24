@@ -99,9 +99,9 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(m => m.SUB_JOB_CODE, Model.SUB_JOB_CODE_LIST.Select(i => new SelectListItem()
                       {
-                          Text = i.PROJECT_NAME,
-                          Value = i.PROJECT_NAME,
-                          Selected = i.PROJECT_NAME == Model.SUB_JOB_CODE
+                          Text = i.SUB_JOBCODE_NAME,
+                          Value = i.SUB_JOBCODE_ID,
+                          Selected = i.SUB_JOBCODE_NO == Model.SUB_JOB_CODE
                       }), "-Please Select-", new { @class = "form-control" })
                     </div>
                     <div class="col-md-1" style="padding: 0px; width: fit-content; display:none;">

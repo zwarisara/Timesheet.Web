@@ -32,9 +32,9 @@ namespace Timesheet.Web.Models
 
     public class SubJobCodeListModel 
     {
-        public string PROJECT_ID { get; set; }
-        public string PROJECT_NAME { get; set; }
-        public string JOBCODE_NO { get; set; }
+        public string SUB_JOBCODE_ID { get; set; }
+        public string SUB_JOBCODE_NO { get; set; }
+        public string SUB_JOBCODE_NAME { get; set; }
     }
 
 }
