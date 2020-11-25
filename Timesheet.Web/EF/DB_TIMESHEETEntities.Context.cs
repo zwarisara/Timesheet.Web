@@ -35,15 +35,6 @@ namespace Timesheet.Web.EF
         public virtual DbSet<TB_TIMESHEET> TB_TIMESHEET { get; set; }
         public virtual DbSet<TB_WEEKLY_TIMESHEET> TB_WEEKLY_TIMESHEET { get; set; }
     
-        public virtual ObjectResult<SP_GET_JOB_CODE_Result> SP_GET_JOB_CODE(string jOB_CODE)
-        {
-            var jOB_CODEParameter = jOB_CODE != null ?
-                new ObjectParameter("JOB_CODE", jOB_CODE) :
-                new ObjectParameter("JOB_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_JOB_CODE_Result>("SP_GET_JOB_CODE", jOB_CODEParameter);
-        }
-    
         public virtual ObjectResult<SP_GET_LIST_CHART_Result> SP_GET_LIST_CHART(string month)
         {
             var monthParameter = month != null ?
@@ -77,6 +68,15 @@ namespace Timesheet.Web.EF
                 new ObjectParameter("NAME", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_TIMESHEET_Result>("SP_GET_LIST_TIMESHEET", nAMEParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_JOB_CODE_Result> SP_GET_JOB_CODE(string jOB_ID)
+        {
+            var jOB_IDParameter = jOB_ID != null ?
+                new ObjectParameter("JOB_ID", jOB_ID) :
+                new ObjectParameter("JOB_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_JOB_CODE_Result>("SP_GET_JOB_CODE", jOB_IDParameter);
         }
     }
 }

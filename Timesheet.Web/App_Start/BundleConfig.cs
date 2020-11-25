@@ -42,7 +42,8 @@ namespace Timesheet.Web
                       "~/Content/button.datatable.min.css",
                       "~/Content/bootstrap-datetimepicker.min.css",
                       "~/Content/toastr.min.css",
-                      "~/Content/bootstrap-select.min.css"
+                      "~/Content/bootstrap-select.min.css",
+                      "~/Content/material-icons.css"
                       ));
         }
     }

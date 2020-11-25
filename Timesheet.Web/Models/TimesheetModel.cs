@@ -8,6 +8,7 @@ namespace Timesheet.Web.Models
     public class TimesheetModel
     {
         public DateTime DATE_OF { get; set; }
+        public string Str_DATE_OF { get; set; }
         public string JOB_CODE { get; set; }
         public List<JobCodeListModel> JOB_CODE_LIST { get; set; }
         public string JOB_CODE_NAME { get; set; }
@@ -21,6 +22,8 @@ namespace Timesheet.Web.Models
         public string DESCRIPTION { get; set; }
         public string STATUS { get; set; }
         public int EMPLOYEE_ID { get; set; }
+        public int JOB_CODE_ID { get; set; }
+        public string TICKET_ID { get; set; }
 
     }
     public class JobCodeListModel

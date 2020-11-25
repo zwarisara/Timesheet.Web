@@ -27,7 +27,7 @@ namespace Timesheet.Web.Controllers
                 AuthorizeService ad = new AuthorizeService();
                 bool result = ad.CheckAuthroize(@"pttdigital\"+ formData.Login_Name, formData.Login_Password);
 
-                if (result) 
+                if (result)
                 {
                     var LoginUser = Repositories.LoginRepo.GetUser(formData.Login_Name);
                     if (LoginUser == null)
@@ -56,6 +56,11 @@ namespace Timesheet.Web.Controllers
                         //    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
                         //}
                     }
+                }
+                else 
+                {
+                    ViewBag.Result = "UserName หรือ PassWord ไม่ถูกต้อง !";
+                    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName หรือ PassWord ไม่ถูกต้อง !" }));
                 }
             }
             return View("Index");

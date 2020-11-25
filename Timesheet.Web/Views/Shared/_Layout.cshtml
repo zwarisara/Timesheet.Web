@@ -17,7 +17,7 @@
 
         .container {
             margin-right: 0px !important;
-            margin-left: 3.5% !important;
+            margin-left: 3% !important;
         }
 
         .navbar-brand {
@@ -36,6 +36,10 @@
             color: #f00;
             font-weight: bolder;
         }
+
+        .navbar-nav {
+            float: unset !important;
+        }
     </style>
 
 </head>
@@ -43,55 +47,50 @@
     @{
         var TimeSheetLoginUser = Timesheet.Web.Repositories.LoginRepo.GetOwnerUser();
     }
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <img src="'~/../Picture/ptt-logo.png" style="width: 75%;padding: 4px 0px 4px 0px;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 55px;">
+        <div class="row col-md-12">
+            <div class="navbar-header col-md-1 text-right">
+                <img src="'~/../Picture/ptt-logo.png" style="width: 40%;padding: 5px 0px 4px 0px;">
             </div>
-            <div class="navbar-header" style=" padding-left: -9px; ">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                &nbsp; &nbsp; @*@Html.ActionLink("PTT DIGITAL", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })*@
+            <div class="navbar-header col-md-1" style="left: -2%">
                 @Html.ActionLink("TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
-
             </div>
-            <div class="navbar-collapse collapse" style="width: 120%;">
+            <div class="navbar-header col-md-5">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
                     <li>@Html.ActionLink("Timesheet", "Index", "Timesheet")</li>
                     <li>@Html.ActionLink("Job Code", "Index", "JobCode")</li>
                     <li>@Html.ActionLink("Employee Data", "Index", "DataManagement")</li>
                 </ul>
-                <ul class="nav navbar-nav" style="margin-left: 30%;">
-                    <li style="color:white; padding-top: 15px; padding-bottom: 15px;"><i class="fa fa-user"></i> @TimeSheetLoginUser.Full_Name_EN</li>
-                    <li style="color:white; padding-top: 15px; padding-bottom: 15px;left: 20px;"><a style="display: unset; color:white;" href=@Url.Action("Logout", "Login", new {Area = ""})><i class="fa fa-lg fa-sign-out" title="Log out"></i></a></li>
+            </div>
+            <div class="navbar-header col-md-5" style="display: flex !important; justify-content: flex-end !important;">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" style="color:white; padding-top: 15px; padding-bottom: 15px;"><i class="fa fa-user"></i> @TimeSheetLoginUser.Full_Name_EN</li>
+                    <li class="nav-item" style="color: white; padding-top: 15px; padding-bottom: 15px; left: 20px;"><a style="display: unset; color:white;" href=@Url.Action("Logout", "Login", new {Area = ""})><i class="fa fa-lg fa-sign-out" title="Log out"></i></a></li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content" style="margin-top:2%;">
+    <div class="container body-content" style="margin-top:1.2%;">
         @RenderBody()
         @*<hr />
             <footer style="position: fixed; bottom: 0;">
                 <p>&copy; @DateTime.Now.Year - Timesheet Application</p>
             </footer>*@
     </div>
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-<script>
-    $(document).ready(function () {
-        $('.nav a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active')
-		$('.nav a').click(function(){
-			$(this).parent().addClass('active').siblings().removeClass('active')	
-		})
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.nav a').filter(function () { return this.href == location.href }).parent().addClass('active').siblings().removeClass('active')
+            $('.nav a').click(function () {
+                $(this).parent().addClass('active').siblings().removeClass('active')
+            })
+        });
+    </script>
 
 </body>
 </html>

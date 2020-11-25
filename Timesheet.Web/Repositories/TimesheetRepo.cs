@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using Timesheet.Web.EF;
@@ -30,7 +31,7 @@ namespace Timesheet.Web.Repositories
             }
 
         }
-        public List<SubJobCodeListModel> GetAllSubJobCode(string job_code_id)
+        public List<SubJobCodeListModel> GetAllSubJobCode(string job_code_id = null)
         {
             using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
@@ -46,12 +47,12 @@ namespace Timesheet.Web.Repositories
 
         }
 
-        public List<JobCodeListModel> GetAllJobCode(string job_code)
+        public List<JobCodeListModel> GetAllJobCode(string job_id = null)
         {
             List<JobCodeListModel> lst = new List<JobCodeListModel>();
             using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
-                List<SP_GET_JOB_CODE_Result> data = db.SP_GET_JOB_CODE(job_code).ToList();
+                List<SP_GET_JOB_CODE_Result> data = db.SP_GET_JOB_CODE(job_id).ToList();
                 lst = data.Select(i => new JobCodeListModel()
                 {
                     JOBCODE_ID = i.JOBCODE_ID.ToString(),
@@ -72,17 +73,18 @@ namespace Timesheet.Web.Repositories
                 TB_TIMESHEET data = new TB_TIMESHEET();
                 using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
                 {
-                    //data.TIMESHEET_DATE = parameter.DATE_OF;
-                    //data.JOBCODE_NO = Int32.Parse(parameter.JOB_CODE);
-                    //data.EMPLOYEE_ID = parameter.EMPLOYEE_ID;
-                    //data.PROJECT_NAME = parameter.PROJECT_NAME;
-                    //data.TICKET_NO = Int32.Parse(parameter.TICKET_NO);
-                    //data.TIMESHEET_REMARK = parameter.DESCRIPTION;
-                    //data.WORK_HOUR = decimal.Parse(parameter.WORK_HOUR);
-                    //data.WORK_LOCATION = parameter.WORK_LOCATION;
+                    var jobCodeID = db.TB_JOBCODE.FirstOrDefault(i => i.JOBCODE_NO.Equals(parameter.JOB_CODE)).JOBCODE_ID; 
 
-                    //db.TB_TIMESHEET.Add(data);
-                    //db.SaveChanges();
+                    data.TIMESHEET_DATE = parameter.DATE_OF;
+                    data.EMPLOYEE_ID = parameter.EMPLOYEE_ID;
+                    data.JOBCODE_ID = jobCodeID;
+                    data.TICKET_ID = parameter.TICKET_ID;
+                    data.TIMESHEET_REMARK = parameter.DESCRIPTION;
+                    data.WORK_HOUR = decimal.Parse(parameter.WORK_HOUR);
+                    data.WORK_LOCATION = parameter.WORK_LOCATION;
+
+                    db.TB_TIMESHEET.Add(data);
+                    db.SaveChanges();
                     result = true;
                 }
             }
@@ -91,6 +93,36 @@ namespace Timesheet.Web.Repositories
 
             }
             return result;
+        }
+
+        public List<TimesheetModel> GetList(int empID)
+        {
+            List<TimesheetModel> lst = new List<TimesheetModel>();
+            try 
+            { 
+                using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
+                {
+                    lst = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(empID))
+                        .Select(i => new TimesheetModel() {
+                            EMPLOYEE_ID = i.EMPLOYEE_ID.Value,
+                            Str_DATE_OF = i.TIMESHEET_DATE.Value.ToString(),
+                            DATE_OF = i.TIMESHEET_DATE.Value,
+                            JOB_CODE = db.TB_JOBCODE.FirstOrDefault(j => j.JOBCODE_ID.Equals(i.JOBCODE_ID.Value)).JOBCODE_NO,
+                            JOB_CODE_NAME = db.TB_JOBCODE.FirstOrDefault(j => j.JOBCODE_ID.Equals(i.JOBCODE_ID.Value)).JOBCODE_NAME,
+                            SUB_JOB_CODE = "",
+                            TICKET_NO = i.TICKET_ID,
+                            WORK_HOUR = i.WORK_HOUR.ToString(),
+                            WORK_LOCATION = i.WORK_LOCATION
+                        }).ToList();
+                }
+            }
+            catch (Exception ex) 
+            {
+            
+            }
+
+            return lst;
+
         }
     }
 }
