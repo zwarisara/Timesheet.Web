@@ -128,6 +128,9 @@
         <Function Name="SP_GET_LIST_TIMESHEET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NAME" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_GET_LIST_TIMESHEET_MONTH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_ID" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="DB_TIMESHEETEntitiesModelStoreContainer">
           <EntitySet Name="TB_EMPLOYEE" EntityType="Self.TB_EMPLOYEE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_EMPLOYEE_JOBCODE" EntityType="Self.TB_EMPLOYEE_JOBCODE" Schema="dbo" store:Type="Tables" />
@@ -270,7 +273,10 @@
           <Parameter Name="NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_JOB_CODE" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_JOB_CODE_Result)">
-            <Parameter Name="JOB_ID" Mode="In" Type="String" />
+          <Parameter Name="JOB_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_LIST_TIMESHEET_MONTH" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result)">
+          <Parameter Name="Employee_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GET_LIST_CHART_Result">
@@ -290,6 +296,17 @@
           <Property Type="Int32" Name="JOBCODE_ID" Nullable="false" />
           <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
           <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_LIST_TIMESHEET_MONTH_Result">
+          <Property Type="Int32" Name="EMPLOYEE_ID" Nullable="true" />
+          <Property Type="DateTime" Name="DATE_OF" Nullable="true" />
+          <Property Type="String" Name="Str_DATE_OF" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SUB_JOBCODE" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="TICKET_ID" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="WORK_HOUR" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="String" Name="WORK_LOCATION" Nullable="false" MaxLength="200" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -441,6 +458,21 @@
                 <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
                 <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
                 <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET_MONTH" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_TIMESHEET_MONTH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="DATE_OF" ColumnName="DATE_OF" />
+                <ScalarProperty Name="Str_DATE_OF" ColumnName="Str_DATE_OF" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+                <ScalarProperty Name="SUB_JOBCODE" ColumnName="SUB_JOBCODE" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+                <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
+                <ScalarProperty Name="WORK_LOCATION" ColumnName="WORK_LOCATION" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

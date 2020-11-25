@@ -155,6 +155,9 @@
     <Compile Include="EF\SP_GET_LIST_CHART_Result.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\SP_GET_LIST_TIMESHEET_MONTH_Result.cs">
+      <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\SP_GET_LIST_TIMESHEET_Result.cs">
       <DependentUpon>DB_TIMESHEETEntities.tt</DependentUpon>
     </Compile>

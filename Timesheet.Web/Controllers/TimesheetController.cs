@@ -11,7 +11,6 @@ namespace Timesheet.Web.Controllers
     public class TimesheetController : Controller
     {
         private static TimesheetRepo _TimeSheetRepo = new TimesheetRepo();
-        private static TimeSheetLoginUser _user = LoginRepo.GetOwnerUser();
         public ActionResult Index()
         {
             TimesheetModel model = new TimesheetModel();
@@ -24,7 +23,8 @@ namespace Timesheet.Web.Controllers
         [HttpPost]
         public JsonResult List(TimesheetModel param)
         {
-            List<TimesheetModel> lstModel = _TimeSheetRepo.GetList(_user.id);
+            TimeSheetLoginUser user = LoginRepo.GetOwnerUser();
+            List<TimesheetModel> lstModel = _TimeSheetRepo.GetList(user.id);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
 
@@ -45,7 +45,7 @@ namespace Timesheet.Web.Controllers
         [HttpPost]
         public JsonResult SaveTimeSheet(TimesheetModel param)
         {
-            param.EMPLOYEE_ID = _user.id;
+            param.EMPLOYEE_ID = LoginRepo.GetOwnerUser().id;
             bool result = _TimeSheetRepo.Insert(param);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);

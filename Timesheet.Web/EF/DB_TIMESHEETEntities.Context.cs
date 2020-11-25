@@ -78,5 +78,14 @@ namespace Timesheet.Web.EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_JOB_CODE_Result>("SP_GET_JOB_CODE", jOB_IDParameter);
         }
+    
+        public virtual ObjectResult<SP_GET_LIST_TIMESHEET_MONTH_Result> SP_GET_LIST_TIMESHEET_MONTH(string employee_ID)
+        {
+            var employee_IDParameter = employee_ID != null ?
+                new ObjectParameter("Employee_ID", employee_ID) :
+                new ObjectParameter("Employee_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_TIMESHEET_MONTH_Result>("SP_GET_LIST_TIMESHEET_MONTH", employee_IDParameter);
+        }
     }
 }
