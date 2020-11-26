@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_TIMESHEETEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_TIMESHEETEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TB_EMPLOYEE">
           <Key>
             <PropertyRef Name="EMPLOYEE_ID" />
@@ -115,7 +115,7 @@
           <Property Name="REMARK" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <Function Name="SP_GET_JOB_CODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="JOB_CODE" Type="nvarchar" Mode="In" />
+          <Parameter Name="JOB_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GET_LIST_CHART" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="month" Type="varchar" Mode="In" />
@@ -128,6 +128,9 @@
         <Function Name="SP_GET_LIST_TIMESHEET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NAME" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_GET_LIST_TIMESHEET_MONTH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_ID" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="DB_TIMESHEETEntitiesModelStoreContainer">
           <EntitySet Name="TB_EMPLOYEE" EntityType="Self.TB_EMPLOYEE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_EMPLOYEE_JOBCODE" EntityType="Self.TB_EMPLOYEE_JOBCODE" Schema="dbo" store:Type="Tables" />
@@ -137,8 +140,7 @@
           <EntitySet Name="TB_TIMESHEET" EntityType="Self.TB_TIMESHEET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_TIMESHEETEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -259,11 +261,8 @@
           <EntitySet Name="TB_TICKET" EntityType="Self.TB_TICKET" />
           <EntitySet Name="TB_TIMESHEET" EntityType="Self.TB_TIMESHEET" />
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" />
-          <FunctionImport Name="SP_GET_JOB_CODE" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_JOB_CODE_Result)">
-            <Parameter Name="JOB_CODE" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_CHART" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_CHART_Result)">
-            <Parameter Name="month" Mode="In" Type="String" />
+          <Parameter Name="month" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_CHART_COLUMN" ReturnType="Collection(String)">
             <Parameter Name="month" Mode="In" Type="String" />
@@ -271,14 +270,15 @@
             <Parameter Name="endday" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_TIMESHEET" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_Result)">
-            <Parameter Name="NAME" Mode="In" Type="String" />
+          <Parameter Name="NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_JOB_CODE" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_JOB_CODE_Result)">
+          <Parameter Name="JOB_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_LIST_TIMESHEET_MONTH" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result)">
+          <Parameter Name="Employee_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="SP_GET_JOB_CODE_Result">
-          <Property Type="Int32" Name="JOBCODE_ID" Nullable="false" />
-          <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
-        </ComplexType>
         <ComplexType Name="SP_GET_LIST_CHART_Result">
           <Property Type="String" Name="name" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="y" Nullable="true" Precision="10" Scale="2" />
@@ -291,6 +291,22 @@
           <Property Type="Decimal" Name="PROJECT_PERCENT" Nullable="true" Precision="5" Scale="0" />
           <Property Type="Decimal" Name="SUPPORT_PERCENT" Nullable="true" Precision="5" Scale="0" />
           <Property Type="String" Name="LAST_UPDATE_DATE" Nullable="true" MaxLength="86" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_JOB_CODE_Result">
+          <Property Type="Int32" Name="JOBCODE_ID" Nullable="false" />
+          <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_LIST_TIMESHEET_MONTH_Result">
+          <Property Type="Int32" Name="EMPLOYEE_ID" Nullable="true" />
+          <Property Type="DateTime" Name="DATE_OF" Nullable="true" />
+          <Property Type="String" Name="Str_DATE_OF" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="JOBCODE_NO" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SUB_JOBCODE" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="TICKET_ID" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="WORK_HOUR" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="String" Name="WORK_LOCATION" Nullable="false" MaxLength="200" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -414,15 +430,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_GET_JOB_CODE" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_JOB_CODE">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_JOB_CODE_Result">
-                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
-                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
-                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_LIST_CHART" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_CHART">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_LIST_CHART_Result">
@@ -442,6 +449,30 @@
                 <ScalarProperty Name="PROJECT_PERCENT" ColumnName="PROJECT_PERCENT" />
                 <ScalarProperty Name="SUPPORT_PERCENT" ColumnName="SUPPORT_PERCENT" />
                 <ScalarProperty Name="LAST_UPDATE_DATE" ColumnName="LAST_UPDATE_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_JOB_CODE" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_JOB_CODE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_JOB_CODE_Result">
+                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET_MONTH" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_TIMESHEET_MONTH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="DATE_OF" ColumnName="DATE_OF" />
+                <ScalarProperty Name="Str_DATE_OF" ColumnName="Str_DATE_OF" />
+                <ScalarProperty Name="JOBCODE_NO" ColumnName="JOBCODE_NO" />
+                <ScalarProperty Name="JOBCODE_NAME" ColumnName="JOBCODE_NAME" />
+                <ScalarProperty Name="SUB_JOBCODE" ColumnName="SUB_JOBCODE" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+                <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
+                <ScalarProperty Name="WORK_LOCATION" ColumnName="WORK_LOCATION" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

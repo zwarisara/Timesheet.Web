@@ -34,7 +34,7 @@
         max-width: unset;
     }
 </style>
-<div class="container" style="margin-top: -5px;">
+<div class="container" style="margin-top: -0.9%;">
     <div class="col-md-12">
         <div class="panel-default" style="background-color: white;z-index: 10;position: fixed;width: 82.3%;">
             <div class="panel-body" id="panelBody" style="border: 2px solid gray; padding: 0px 0px 0px 20px; ">
@@ -84,9 +84,8 @@
                         @Html.DropDownListFor(m => m.JOB_CODE, Model.JOB_CODE_LIST.Select(i => new SelectListItem()
                         {
                             Text = i.JOBCODE_NO + " " + i.JOBCODE_NAME,
-                            Value = i.JOBCODE_NO,
-                            Selected = i.JOBCODE_NO == Model.JOB_CODE
-                        }), "-Please Select-", new { @class = "form-control selectpicker"})
+                            Value = i.JOBCODE_ID
+                        }), "-Please Select-", new { @class = "form-control selectpicker" })
                     </div>
                     <div class="col-md-4" style="padding-left: 0px; display:none;">
                         @Html.TextBoxFor(i => i.JOB_CODE_NAME, new { @class = "form-control", @disabled = true })
@@ -99,9 +98,8 @@
                     <div class="col-md-6">
                         @Html.DropDownListFor(m => m.SUB_JOB_CODE, Model.SUB_JOB_CODE_LIST.Select(i => new SelectListItem()
                       {
-                          Text = i.SUB_JOBCODE_NAME,
-                          Value = i.SUB_JOBCODE_ID,
-                          Selected = i.SUB_JOBCODE_NO == Model.SUB_JOB_CODE
+                          Text = i.SUB_JOBCODE_NO + " " + i.SUB_JOBCODE_NAME,
+                          Value = i.SUB_JOBCODE_ID
                       }), "-Please Select-", new { @class = "form-control" })
                     </div>
                     <div class="col-md-1" style="padding: 0px; width: fit-content; display:none;">
@@ -126,12 +124,21 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin-top: 1%; margin-bottom: 1%">
-                    <button type="button" id="btnSave" class="btn btn-success" style="padding: 4px 5px; width: 140px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                    <button type="button" id="btnClear" class="btn btn-primary" style="padding: 4px 5px; width: 140px;"><i class="fa fa-refresh"></i>&nbsp;Clear</button>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <button type="button" id="btnSave" class="btn btn-success" style="padding: 4px 5px; width: 140px;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                        <button type="button" id="btnClear" class="btn btn-primary" style="padding: 4px 5px; width: 140px;"><i class="fa fa-refresh"></i>&nbsp;Clear</button>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-1" id="divSizeShort">
+                        @*<i class="fa fa-2x fa-check-circle" aria-hidden="true" style=" display: flex !important; justify-content: flex-end !important;"></i>*@
+                        <i class="fa fa-2x fa-angle-double-up" aria-hidden="true" style=" display: flex !important; justify-content: flex-end !important;"></i>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="panel-default" style="margin-top:20%; z-index: 2;">
+        <div class="panel-default" id="divListShow" style="margin-top:20%; z-index: 2;">
+            <div id="divSizeExplain"><i class="fa fa-2x fa-angle-double-down" aria-hidden="true" style=" display: flex !important; justify-content: flex-end !important; padding: 0px 0px 25px 0px;"></i></div>
             <div class="panel-heading" style="color: white; padding: 5px 5px 5px; text-align: right; margin-top: -2%; border-radius: 5px; z-index: 1;">
                 @*background-color: gray !important;*@
                 @*<i class="fa fa-list-ul"></i>&nbsp;LIST*@
@@ -140,14 +147,14 @@
                         <button type="button" id="btnPre" class="form-control" style="padding: 4px 5px; color: black; border: none; width: 90px;"><i class="fa fa-angle-double-left"></i>&nbsp;Previous</button>
                     </div>
                     <div class="col-md-8 text-center" style="margin-top: 8px;">
-                        <label for="name" class="control-label" id="ShowDate" style="color:black; font-size: 15px"/>
+                        <label for="name" class="control-label" id="ShowDate" style="color:black; font-size: 15px" />
                     </div>
                     <div class="col-md-2 text-right">
                         <button type="button" id="btnNext" class="form-control" style="padding: 4px 5px; color: black; border: none; width: 90px; margin-left: 68px;">Next&nbsp;<i class="fa fa-angle-double-right"></i></button>
                     </div>
                 </div>
             </div>
-            <div class="panel-body" style="height: 860px;">
+            <div class="panel-body">
                 <div class="table-responsive">
                     <table id="tableMyTimesheet" class="display nowrap cell-border" style="width:100%; margin-top: 2%; margin-top: -8px;">
                         <thead class="cell-border">
@@ -166,75 +173,145 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 @section scripts {
     <script>
+        var sub_jobcode_exist = false;
         $(document).ready(function () {
 
-            $('.selectpicker').selectpicker({
-        liveSearch: true,
-        showSubtext: true
-    });
+            $('#divSizeExplain').hide();
 
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            $('#divSizeShort').on('click', function () {
+                $('#divSizeExplain').show();
+                $('#panelBody').hide();
+                $('#divListShow').css('margin-top', '0.5%');
+            });
+
+            $('#divSizeExplain').on('click', function () {
+                $('#panelBody').show();
+                $('#divListShow').css('margin-top', '20%');
+                $('#divSizeExplain').hide();
+            });
+
+            $('.selectpicker').selectpicker({
+                liveSearch: true,
+                showSubtext: true
+            });
+
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
             $('#ShowDate').html(GetDate());
 
-    $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false });/*, minDate: firstDay, maxDate: lastDay*/
+            $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false });/*, minDate: firstDay, maxDate: lastDay*/
 
-    var Table = $('#tableMyTimesheet').DataTable({
-        aaSorting: [[0, "asc"]],
-        responsive: true,
-        filter: false,
-        lengthChange: false,
-        retrieve: true,
-        iDisplayLength: 20,
-        className: "dt-center",
-        fnCreatedRow: function (nRow, aData, iDataIndex) {
-            console.log('iDataIndex ---------->', iDataIndex);
-            aData[9] = '<button class="btn btn-primary editor_edit" onclick="EditEmployee("'+iDataIndex+'")" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>&nbsp;<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="DeleteEmployee("' +iDataIndex+ '")" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>'
-            console.log('aData[9] ---------->', aData[9]);
-            $(nRow).attr('id', iDataIndex); 
-    }
-    });
+            var Table = $('#tableMyTimesheet').DataTable({
+                data: [],
+                ajax: {
+                    url: '@Url.Action("List")',
+                    method: "POST",
+                    dataSrc: function (response) { return response; }
+                },
+                aaSorting: [[0, "asc"]],
+                responsive: false,
+                filter: false,
+                lengthChange: false,
+                retrieve: true,
+                iDisplayLength: 20,
+                columnDefs: [ {"className": "dt-center", "targets": "_all"} ],
+                columns: [
+                    {
+                        data: "Str_DATE_OF"
+                        //data: function (data) {
+                        //    var objDate = data.Str_DATE_OF.split('-');
+                        //    return objDate[2] + '/' + objDate[1] + '/' + objDate[0];
+                        //}
+                    },
+                    {
+                        data: "JOB_CODE"
+                    },
+                    {
+                        data: "JOB_CODE_NAME"
+                    },
+                    {
+                        data: "SUB_JOB_CODE"
+                    },
+                    {
+                        data: "TICKET_NO"
+                    },
+                    {
+                        data: "WORK_HOUR"
+                    },
+                    {
+                        data: "WORK_LOCATION"
+                    },
+                    {
+                        data: function (data) {
+                            //return '<button class="btn btn-primary editor_edit" onclick="Edit(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>'
+                            //    + '&nbsp; <button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
 
-        $('#JOB_CODE').on('change', function (e)
-        {
-            $.ajax({
-                url: '@Url.Action("GetJobCodeName")',
-                type: 'POST',
-                data: { job_code : $('#JOB_CODE').val() },
-                success: function (data) {
-                    $('#JOB_CODE_NAME').val(data.Name);
+                            return '<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
+
+                        }
                     }
-             });
+                ]
+            });
 
-        if ($('#JOB_CODE').val() == '901485000124') {
-            $("#divSubJobCode").css("display", "block");
-        }
-        else
-        {
-            $("#divSubJobCode").css("display", "none");
-            $('#SUB_JOB_CODE').val('');
-            $('#PROJECT_NAME').val('');
-            $('#TICKET_NO').val('');
-        }
-        });
+        $('#JOB_CODE').on('change', function (e) {
+                $.ajax({
+                    url: '@Url.Action("GetJobCodeName")',
+                    type: 'POST',
+                    data: { job_id: $('#JOB_CODE').val() },
+                    success: function (data) {
+                        $('#JOB_CODE_NAME').val(data.Name);
+                    }
+                });
 
-        $('#WORK_HOUR').on('change', function (e)
-        {
-            var input = parseFloat($('#WORK_HOUR').val())
-            if (input <= 0 || input > 24)
-            {
-                $('#WORK_HOUR').val('');
-                toastr.warning('กรุณาระบุชั่วโมงการทำงานให้ถูกต้อง !');
-            }
-        });
+            $.ajax({
+                    url: '@Url.Action("GetSubJobCode")',
+                    type: 'POST',
+                    data: { job_id: $('#JOB_CODE').val() },
+                success: function (data) {
+
+                        if (data.Result.length > 0) {
+                            $("#divSubJobCode").css("display", "block");
+
+                            for(var i=0; i < data.Result.length; i++)
+                            {
+                            //creates option tag
+                              jQuery('<option/>', {
+                                    value: data.Result[i].SUB_JOBCODE_ID,
+                                    text: data.Result[i].SUB_JOBCODE_NAME
+                                    }).appendTo('#SUB_JOB_CODE'); //appends to select if parent div has id dropdown
+                            }
+
+                            sub_jobcode_exist = true;
+                        }
+                        else
+                        {
+                            $("#divSubJobCode").css("display", "none");
+                            $('#SUB_JOB_CODE').val('');
+                            $('#PROJECT_NAME').val('');
+                            $('#TICKET_NO').val('');
+
+                            sub_jobcode_exist = false;
+                        }
+
+                    }
+                });
+
+            });
+
+            $('#WORK_HOUR').on('change', function (e) {
+                var input = parseFloat($('#WORK_HOUR').val())
+                if (input <= 0 || input > 24) {
+                    $('#WORK_HOUR').val('');
+                    toastr.warning('กรุณาระบุชั่วโมงการทำงานให้ถูกต้อง !');
+                }
+            });
 
             $('#btnClear').on('click', function () {
                 $('#DATE_OF').val(GetDateFormat());
@@ -246,6 +323,7 @@
                 $('#WORK_HOUR').val('');
                 $('#WORK_LOCATION').val('');
                 $('#DESCRIPTION').val('');
+                $(".selectpicker").selectpicker("refresh");
                 $('input[name=TYPE]').filter('[value=Y]').prop('checked', true);
                 $("#divSubJobCode").css("display", "none");
             });
@@ -254,50 +332,58 @@
             //    debugger;
             //    var checkedRadio = $('input[name="TYPE"]:checked').val();
             //    if (checkedRadio == "Y") {
-            //    console.log('Y')
             //    $('input[name=TYPE]').filter('[value=N]').prop('checked', true);
             //}
             //    else {
-            //        console.log('N')
             //    $('input[name=TYPE]').filter('[value=Y]').prop('checked', true);
             //}
-        //});
+            //});
 
             $("#btnSave").on('click', function (e) {
 
                 if (FieldIsExist())
-                { 
+                {
+                    $.blockUI();
 
-                var objDtOf = $('#DATE_OF').val().split('/');
-                var strObjDtOf = objDtOf[1] + '/' + objDtOf[0] + '/' + objDtOf[2];
-                
-                var param = {
-                    DATE_OF : strObjDtOf,
-                    WORK_HOUR : $('#WORK_HOUR').val(),
-                    WORK_LOCATION : $('#WORK_LOCATION').val(),
-                    JOB_CODE: $('#JOB_CODE').val(),
-                    JOB_CODE_NAME: $('#JOB_CODE_NAME').val(),
-                    JOB_CODE: $('#JOB_CODE').val(),
-                    SUB_JOB_CODE: $('#SUB_JOB_CODE').val(),
-                    PROJECT_NAME: $('#PROJECT_NAME').val(),
-                    TICKET_NO: $('#TICKET_NO').val(),
-                    DESCRIPTION: $('#DESCRIPTION').val()
-                };
+                    var objDtOf = $('#DATE_OF').val().split('/');
+                    var strObjDtOf = objDtOf[1] + '/' + objDtOf[0] + '/' + objDtOf[2];
 
-         $.ajax({
-                url: '@Url.Action("SaveTimeSheet")',
-                type: 'POST',
-                data: param,
-                success: function (data) {
-                    console.log('data.result ------------> ',data.result)
-                    }
-         });
-                    }
+                    var param = {
+                        DATE_OF: strObjDtOf,
+                        WORK_HOUR: $('#WORK_HOUR').val(),
+                        WORK_LOCATION: $('#WORK_LOCATION').val(),
+                        JOB_CODE_ID: $('#SUB_JOB_CODE').val() != '' ? $('#SUB_JOB_CODE').val() : $('#JOB_CODE').val(),
+                        JOB_CODE_NAME: $('#JOB_CODE_NAME').val(),
+                        SUB_JOB_CODE: $('#SUB_JOB_CODE').val(),
+                        PROJECT_NAME: $('#PROJECT_NAME').val(),
+                        TICKET_NO: $('#TICKET_NO').val(),
+                        TICKET_ID: $('#TICKET_NO').val(),
+                        DESCRIPTION: $('#DESCRIPTION').val()
+                    };
 
-    });
+                    $.ajax({
+                        url: '@Url.Action("SaveTimeSheet")',
+                        type: 'POST',
+                        data: param,
+                        success: function (data) {
+                            if (data.result)
+                            {
+                                $.post('@Url.Action("List")', function (data) {
+                                    Table.clear();
+                                    Table.rows.add(data).draw();
+                                    toastr.success('Save successfully !');
+                                });
+
+                            }
+                            $.unblockUI();
+                        }
+                    });
+                }
+
+            });
 
 
-        })
+        });
 
         function GetDateFormat()
         {
@@ -313,7 +399,15 @@
             return output;
         }
 
-        function EditEmployee(id) {
+        function Edit(id) {
+            console.log('id -------------------->',id)
+            @*$.get('@Url.Action("Edit")', { ID: id }, function (data) {
+                $(".Edit").html(data);
+                $("#modalEditDialog").modal();
+            });*@
+        }
+
+        function Delete(id) {
             console.log('id -------------------->',id)
             @*$.get('@Url.Action("Edit")', { ID: id }, function (data) {
                 $(".Edit").html(data);
@@ -336,13 +430,13 @@
             let monthNames =["January","February","March","April",
                               "May","June","July","August",
                               "September", "October","November","December"];
-    
+
             let monthIndex = this.getMonth();
             let monthName = monthNames[monthIndex];
-    
+
             let year = this.getFullYear();
-    
-                return `${monthName}, ${year}`;  
+
+                return `${monthName}, ${year}`;
             }
 
             // Now any Date object can be declared
@@ -379,16 +473,11 @@
                  return false;
             }
 
-            if ($('#JOB_CODE').val() == '901485000124')
+            if (sub_jobcode_exist)
             {
                 if ($('#SUB_JOB_CODE').val() == '')
                 {
                     toastr.warning('Please select Sub Job Code !');
-                     return false;
-                }
-                if ($('#SUB_JOB_CODE').val() == 'งาน Support จริง และ Incident' && $('#TICKET_NO').val() == '')
-                {
-                    toastr.warning('Please fill Ticket No !');
                      return false;
                 }
             }

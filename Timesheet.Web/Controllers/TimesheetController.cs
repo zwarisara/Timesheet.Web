@@ -15,23 +15,37 @@ namespace Timesheet.Web.Controllers
         {
             TimesheetModel model = new TimesheetModel();
             model.DATE_OF = DateTime.Now;
-            model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode("");
-            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode("");
+            model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode();
+            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode();
             return View(model);
         }
 
         [HttpPost]
-        public JsonResult GetJobCodeName(string job_code)
+        public JsonResult List(TimesheetModel param)
         {
-            JobCodeListModel data  = _TimeSheetRepo.GetAllJobCode(job_code).FirstOrDefault();
+            TimeSheetLoginUser user = LoginRepo.GetOwnerUser();
+            List<TimesheetModel> lstModel = _TimeSheetRepo.GetList(user.id);
+            return Json(lstModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetJobCodeName(string job_id)
+        {
+            JobCodeListModel data  = _TimeSheetRepo.GetAllJobCode(job_id).FirstOrDefault();
             return Json(new { Name = data.JOBCODE_NAME }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetSubJobCode(string job_id)
+        {
+            List<SubJobCodeListModel> data = _TimeSheetRepo.GetAllSubJobCode(job_id);
+            return Json(new { Result = data }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult SaveTimeSheet(TimesheetModel param)
         {
-            var user = LoginRepo.GetOwnerUser();
-            //param.EMPLOYEE_ID = employeeID;
+            param.EMPLOYEE_ID = LoginRepo.GetOwnerUser().id;
             bool result = _TimeSheetRepo.Insert(param);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
