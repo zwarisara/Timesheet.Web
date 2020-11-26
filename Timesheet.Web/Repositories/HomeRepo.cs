@@ -9,12 +9,13 @@ namespace Timesheet.Web.Repositories
 {
     public class HomeRepo
     {
-        public List<ListChartPieModel> GetListChertPie(string month)
+        public List<ListChartPieModel> GetListChertPie(string startday, string endday)
         {
             List<ListChartPieModel> lst = new List<ListChartPieModel>();
             DatabaseHelper db = new DatabaseHelper();
-            db.AddParameter("@month", month);
-            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART");
+            db.AddParameter("@startday", startday);
+            db.AddParameter("@endday", endday);
+            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART_PIE");
             foreach (DataRow item in dt.Rows)
             {
                 ListChartPieModel model = new ListChartPieModel();
@@ -25,11 +26,10 @@ namespace Timesheet.Web.Repositories
             return lst;
         }
 
-        public List<ListChartColumnModel> GetListChertColumn(string month,string startday, string endday)
+        public List<ListChartColumnModel> GetListChertColumn(string startday, string endday)
         {
             List<ListChartColumnModel> lst = new List<ListChartColumnModel>();
             DatabaseHelper db = new DatabaseHelper();
-            db.AddParameter("@month", month);
             db.AddParameter("@startday", startday);
             db.AddParameter("@endday", endday);
             DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART_COLUMN");
