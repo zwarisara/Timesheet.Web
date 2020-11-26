@@ -21,16 +21,16 @@ namespace Timesheet.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult ListChartPie(string month)
+        public JsonResult ListChartPie(string startday, string endday)
         {
-            List<ListChartPieModel> lstModel = _repo.GetListChertPie(month);
+            List<ListChartPieModel> lstModel = _repo.GetListChertPie(startday, endday);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult ListChartColumn(string month,string startday , string endday)
+        public JsonResult ListChartColumn(string startday , string endday)
         {
-            List<ListChartColumnModel> lstModel = _repo.GetListChertColumn(month,startday, endday);
+            List<ListChartColumnModel> lstModel = _repo.GetListChertColumn(startday, endday);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
     }
