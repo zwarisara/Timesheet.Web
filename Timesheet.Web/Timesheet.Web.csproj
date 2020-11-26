@@ -814,7 +814,6 @@
     <Content Include="EF\DB_TIMESHEETEntities.edmx.diagram">
       <DependentUpon>DB_TIMESHEETEntities.edmx</DependentUpon>
     </Content>
-<<<<<<< HEAD
     <Content Include="Charts\css\annotations\popup.scss" />
     <Content Include="Charts\css\highcharts.scss" />
     <Content Include="Charts\css\stocktools\gui.scss" />
@@ -901,7 +900,6 @@
     <Content Include="Charts\themes\sand-signika.js.map" />
     <Content Include="Charts\themes\skies.js.map" />
     <Content Include="Charts\themes\sunset.js.map" />
-=======
     <Content Include="Content\fonts\BngMUXZYTXPIvIBgJJSb6ufA5qW54A.woff2" />
     <Content Include="Content\fonts\BngMUXZYTXPIvIBgJJSb6ufB5qW54A.woff2" />
     <Content Include="Content\fonts\BngMUXZYTXPIvIBgJJSb6ufC5qW54A.woff2" />
@@ -949,7 +947,6 @@
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7GxKOzY.woff2" />
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7mxKOzY.woff2" />
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7WxKOzY.woff2" />
->>>>>>> master
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
