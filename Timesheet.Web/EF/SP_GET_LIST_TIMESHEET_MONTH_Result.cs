@@ -22,5 +22,6 @@ namespace Timesheet.Web.EF
         public string TICKET_ID { get; set; }
         public Nullable<decimal> WORK_HOUR { get; set; }
         public string WORK_LOCATION { get; set; }
+        public string DESCRIPTION { get; set; }
     }
 }

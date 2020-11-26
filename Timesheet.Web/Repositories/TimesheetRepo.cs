@@ -110,7 +110,8 @@ namespace Timesheet.Web.Repositories
                         SUB_JOB_CODE = i.SUB_JOBCODE,
                         TICKET_ID = i.TICKET_ID,
                         WORK_HOUR = i.WORK_HOUR.ToString(),
-                        WORK_LOCATION = i.WORK_LOCATION
+                        WORK_LOCATION = i.WORK_LOCATION,
+                        DESCRIPTION = i.DESCRIPTION
 
                     }).ToList();
                 }

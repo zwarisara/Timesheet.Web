@@ -159,6 +159,7 @@
                     <table id="tableMyTimesheet" class="display nowrap cell-border" style="width:100%; margin-top: 2%; margin-top: -8px;">
                         <thead class="cell-border">
                             <tr>
+                                <th></th>
                                 <th>Date of</th>
                                 <th>Job Code</th>
                                 <th>Job Name</th>
@@ -166,7 +167,7 @@
                                 <th>Ticket No.</th>
                                 <th>Hour</th>
                                 <th>Location</th>
-                                <th></th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                     </table>
@@ -224,6 +225,15 @@
                 columnDefs: [ {"className": "dt-center", "targets": "_all"} ],
                 columns: [
                     {
+                        data: function (data) {
+                            //return '<button class="btn btn-primary editor_edit" onclick="Edit(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>'
+                            //    + '&nbsp; <button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
+
+                            return '<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
+
+                        }
+                    },
+                    {
                         data: "Str_DATE_OF"
                         //data: function (data) {
                         //    var objDate = data.Str_DATE_OF.split('-');
@@ -247,16 +257,12 @@
                     },
                     {
                         data: "WORK_LOCATION"
-                    },
-                    {
-                        data: function (data) {
-                            //return '<button class="btn btn-primary editor_edit" onclick="Edit(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>'
-                            //    + '&nbsp; <button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
-
-                            return '<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
-
-                        }
                     }
+                    ,
+                    {
+                        data: "DESCRIPTION"
+                    }
+                    
                 ]
             });
 

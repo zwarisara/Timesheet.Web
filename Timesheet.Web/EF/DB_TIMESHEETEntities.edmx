@@ -276,7 +276,7 @@
           <Parameter Name="JOB_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_TIMESHEET_MONTH" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result)">
-          <Parameter Name="Employee_ID" Mode="In" Type="String" />
+            <Parameter Name="Employee_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GET_LIST_CHART_Result">
@@ -307,6 +307,7 @@
           <Property Type="String" Name="TICKET_ID" Nullable="false" MaxLength="12" />
           <Property Type="Decimal" Name="WORK_HOUR" Nullable="true" Precision="5" Scale="2" />
           <Property Type="String" Name="WORK_LOCATION" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="DESCRIPTION" Nullable="false" MaxLength="2000" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -473,6 +474,7 @@
                 <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
                 <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
                 <ScalarProperty Name="WORK_LOCATION" ColumnName="WORK_LOCATION" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -46,7 +46,7 @@ namespace Timesheet.Web.Controllers
                         //{
                         initLoginData(LoginUser);
                         //    if (String.IsNullOrWhiteSpace(formData.returnUrl))
-                        return RedirectToAction("index", "DataManagement");
+                        return RedirectToAction("index", "Timesheet");
                         //    else
                         //        return Redirect(formData.returnUrl);
                         //}
