@@ -15,6 +15,8 @@ namespace Timesheet.Web.Controllers
         public ActionResult Index()
         {
             HomeModel model = new HomeModel();
+            model.txtstartday = DateTime.Now;
+            model.txtendday = DateTime.Now;
             return View(model);
         }
 

@@ -58,159 +58,199 @@
     </style>
 </head>
 <body>
-    <label for="startday">วันที่เริ่มต้น :</label>
-    <select id="startday">
-        <option value="1">1</option>
-        <option value="2">2 </option>
-        <option value="3">3</option>
-        <option value="4">4 </option>
-        <option value="5">5</option>
-        <option value="6">6 </option>
-        <option value="7">7</option>
-        <option value="8">8 </option>
-        <option value="9">9</option>
-        <option value="10">10 </option>
-        <option value="11">11</option>
-        <option value="12">12 </option>
-        <option value="13">13</option>
-        <option value="14">14 </option>
-        <option value="15">15</option>
-        <option value="16">16 </option>
-        <option value="17">17 </option>
-        <option value="18">18 </option>
-        <option value="19">19 </option>
-        <option value="20">20 </option>
-        <option value="21">21 </option>
-        <option value="22">22 </option>
-        <option value="23">23 </option>
-        <option value="24">24 </option>
-        <option value="25">25 </option>
-        <option value="26">26 </option>
-        <option value="27">27 </option>
-        <option value="28">28 </option>
-        <option value="29">29 </option>
-        <option value="30">30 </option>
-        <option value="31">31 </option>
-    </select>
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <label for="txtstartday">วันที่เริ่มต้น :</label>
+            <div class="input-group">
 
-    <label for="endday">วันที่สิ้นสุด :</label>
-    <select id="endday">
-        <option value="1">1</option>
-        <option value="2">2 </option>
-        <option value="3">3</option>
-        <option value="4">4 </option>
-        <option value="5">5</option>
-        <option value="6">6 </option>
-        <option value="7">7</option>
-        <option value="8">8 </option>
-        <option value="9">9</option>
-        <option value="10">10 </option>
-        <option value="11">11</option>
-        <option value="12">12 </option>
-        <option value="13">13</option>
-        <option value="14">14 </option>
-        <option value="15">15</option>
-        <option value="16">16 </option>
-        <option value="17">17 </option>
-        <option value="18">18 </option>
-        <option value="19">19 </option>
-        <option value="20">20 </option>
-        <option value="21">21 </option>
-        <option value="22">22 </option>
-        <option value="23">23 </option>
-        <option value="24">24 </option>
-        <option value="25">25 </option>
-        <option value="26">26 </option>
-        <option value="27">27 </option>
-        <option value="28">28 </option>
-        <option value="29">29 </option>
-        <option value="30">30 </option>
-        <option value="31">31 </option>
-    </select>
+                @Html.TextBoxFor(i => i.txtstartday, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "txtstartday", autocomplete = "off", placeholder = "Enter Date" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
 
-    <label for="month">เดือน :</label>
-    <select id="month">
-        @*<option value="01">มกราคม  </option>
-            <option value="02">กุมภาพันธ์ </option>
-            <option value="03">มีนาคม </option>
-            <option value="04">เมษายน</option>
-            <option value="05">พฤษภาคม</option>
-            <option value="06">มิถุนายน </option>
-            <option value="07">กรกฏาคม</option>
-            <option value="08">สิงหาคม</option>
-            <option value="09">กันยายน </option>
-            <option value="10">ตุลาคม </option>*@
-        <option value="11">พฤศจิกายน </option>
-        <option value="12">ธันวาคม </option>
-    </select>
-    <label for="year">ปี :</label>
-    <select id="year">
-        <option value="2020">2020  </option>
-        <option value="2021">2021 </option>
-    </select>
-    <label for="chart">รูปแบบกราฟ :</label>
-    <select id="chart">
-        <option value="1">Chart 1</option>
-        <option value="2">Chart 2</option>
-    </select>
+        <div class="col-md-3">
+            <label for="txtendday">วันที่สิ้นสุด :</label>
+            <div class="input-group">
 
-    <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
-    @*<button type="button" id="btnGenChart1" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
-        <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
-    <script src="~/Charts/highcharts.js"></script>
-    <script src="~/Charts/modules/exporting.js"></script>
-    <script src="~/Charts/modules/export-data.js"></script>
-    <script src="~/Charts/modules/accessibility.js"></script>
-
-    <div class="panel-body">
-        @*<table id="tableChart" class="display nowrap" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Row Labels</th>
-                        <th>Sum of MAN_DAY</th>
-                    </tr>
-                </thead>
-            </table>*@
+                @Html.TextBoxFor(i => i.txtendday, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "txtendday", autocomplete = "off", placeholder = "Enter Date" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
     </div>
 
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            <label id="lbchart">
+        @*<label for="startday">วันที่เริ่มต้น :</label>
+            <select id="startday">
+                <option value="1">1</option>
+                <option value="2">2 </option>
+                <option value="3">3</option>
+                <option value="4">4 </option>
+                <option value="5">5</option>
+                <option value="6">6 </option>
+                <option value="7">7</option>
+                <option value="8">8 </option>
+                <option value="9">9</option>
+                <option value="10">10 </option>
+                <option value="11">11</option>
+                <option value="12">12 </option>
+                <option value="13">13</option>
+                <option value="14">14 </option>
+                <option value="15">15</option>
+                <option value="16">16 </option>
+                <option value="17">17 </option>
+                <option value="18">18 </option>
+                <option value="19">19 </option>
+                <option value="20">20 </option>
+                <option value="21">21 </option>
+                <option value="22">22 </option>
+                <option value="23">23 </option>
+                <option value="24">24 </option>
+                <option value="25">25 </option>
+                <option value="26">26 </option>
+                <option value="27">27 </option>
+                <option value="28">28 </option>
+                <option value="29">29 </option>
+                <option value="30">30 </option>
+                <option value="31">31 </option>
+            </select>*@
 
-            </label>
-        </p>
-    </figure>
+        @*<label for="endday">วันที่สิ้นสุด :</label>
+            <select id="endday">
+                <option value="1">1</option>
+                <option value="2">2 </option>
+                <option value="3">3</option>
+                <option value="4">4 </option>
+                <option value="5">5</option>
+                <option value="6">6 </option>
+                <option value="7">7</option>
+                <option value="8">8 </option>
+                <option value="9">9</option>
+                <option value="10">10 </option>
+                <option value="11">11</option>
+                <option value="12">12 </option>
+                <option value="13">13</option>
+                <option value="14">14 </option>
+                <option value="15">15</option>
+                <option value="16">16 </option>
+                <option value="17">17 </option>
+                <option value="18">18 </option>
+                <option value="19">19 </option>
+                <option value="20">20 </option>
+                <option value="21">21 </option>
+                <option value="22">22 </option>
+                <option value="23">23 </option>
+                <option value="24">24 </option>
+                <option value="25">25 </option>
+                <option value="26">26 </option>
+                <option value="27">27 </option>
+                <option value="28">28 </option>
+                <option value="29">29 </option>
+                <option value="30">30 </option>
+                <option value="31">31 </option>
+            </select>*@
+
+        <label for="month">เดือน :</label>
+        <select id="month">
+            @*<option value="01">มกราคม  </option>
+                <option value="02">กุมภาพันธ์ </option>
+                <option value="03">มีนาคม </option>
+                <option value="04">เมษายน</option>
+                <option value="05">พฤษภาคม</option>
+                <option value="06">มิถุนายน </option>
+                <option value="07">กรกฏาคม</option>
+                <option value="08">สิงหาคม</option>
+                <option value="09">กันยายน </option>
+                <option value="10">ตุลาคม </option>*@
+            <option value="11">พฤศจิกายน </option>
+            <option value="12">ธันวาคม </option>
+        </select>
+        <label for="year">ปี :</label>
+        <select id="year">
+            <option value="2020">2020  </option>
+            <option value="2021">2021 </option>
+        </select>
+        <label for="chart">รูปแบบกราฟ :</label>
+        <select id="chart">
+            <option value="1">Chart 1</option>
+            <option value="2">Chart 2</option>
+        </select>
+
+        <button type="button" id="btnGenChart" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
+        @*<button type="button" id="btnGenChart1" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartPie();"><i class="fa fa-search"></i>&nbsp;GenChartPie</button>
+            <button type="button" id="btnGenChart2" class="btn btn-primary" style="padding: 4px 5px; width: 100px;" onclick="GenChartColumn();"><i class="fa fa-search"></i>&nbsp;GenChartColumn</button>*@
+        <script src="~/Charts/highcharts.js"></script>
+        <script src="~/Charts/modules/exporting.js"></script>
+        <script src="~/Charts/modules/export-data.js"></script>
+        <script src="~/Charts/modules/accessibility.js"></script>
+        @*<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+            <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+            <script src="~/Scripts/jquery-3.4.1.js"></script>
+            <script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+        <div class="panel-body">
+            @*<table id="tableChart" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Row Labels</th>
+                            <th>Sum of MAN_DAY</th>
+                        </tr>
+                    </thead>
+                </table>*@
+        </div>
+
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+            <p class="highcharts-description">
+                <label id="lbchart">
+
+                </label>
+            </p>
+        </figure>
 
 
-    @section scripts {
-        <script type="text/javascript">
-            var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject;
-            var objChartColumn = [];
-            var objChartPie = [];
-            var JSONChartColumn = [];
-            var JSONChartPie = [];
-            var ArrayChartColumn = [];
-            var ArrayChartPie = [];
-            var period_day = [];
-            var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-                "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-            ];
-            var txtmonth = "";
-            var Year = "";
-            var Startday = "";
-            var Endday = "";
-            var Month = "";
-            var Chart = "";
-            $(document).ready(function () {
-                GetDataChartPie();
-                GetDataChartColumn();
+        @section scripts {
+            <script type="text/javascript">
+        var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject;
+        var objChartColumn = [];
+        var objChartPie = [];
+        var JSONChartColumn = [];
+        var JSONChartPie = [];
+        var ArrayChartColumn = [];
+        var ArrayChartPie = [];
+        var period_day = [];
+        var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+            "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+        ];
+                var txtmonthmaxday = "";
+        var maxday;
+        var minday;
+        var Year = "";
+        var Startday = "";
+        var Endday = "";
+        var Month = "";
+        var Chart = "";
+        $(document).ready(function () {
+            GetDataChartPie();
+            GetDataChartColumn();
+            $('#txtstartday').datetimepicker({
+                format: "DD/MM/YYYY",
+                useCurrent: false
+            });
+            $('#txtendday').datetimepicker({
+                format: "DD/MM/YYYY",
+                useCurrent: false
             });
 
-            function GetdayoMonth(maxday) {
+        });
+
+
+
+            function GetdayoMonth(minday,maxday) {
                 var textday = "";
                 var i;
-                for (i = 1; i < maxday; i++) {
+                for (i = minday; i < maxday; i++) {
                     textday += i + ",";
                 }
                 textday = textday + maxday;
@@ -219,15 +259,18 @@
 
             function GendayoMonth() {
                 Month = $("#month").val();
-                Startday = $("#startday").val();
-                Endday = $("#endday").val();
-                txtmonth = monthNames[parseInt(Month) - 1];
+                Startday = $("#txtstartday").val();                
+                Endday = $("#txtendday").val();
+                minday = Startday.split('/')
+                maxday = Endday.split('/')
+                txtmonthmaxday = monthNames[parseInt(maxday[1]) - 1];
                 Year = $("#year").val();
                 //var Month = new Date().getMonth();
                 //var Year = new Date().getFullYear();
-                int_d = new Date(Year, Month + 1);
-                d = new Date(int_d - 1).getDate();
-                GetdayoMonth(d)
+                //int_d = new Date(Year, Month + 1);
+                //d = new Date(int_d - 1).getDate();
+
+                GetdayoMonth(minday[0],maxday[0])
             }
 
             function GenFormatChart() {
@@ -295,89 +338,84 @@
                     return [objProject[i].MAN_DAY];
                 });
 
-                JSONChartColumn = JSON.stringify(objChartColumn);
+               
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: 'JOB CODE ' + txtmonth + '-' + Year
-                    },
-                    subtitle: {
-                        text: ''
+                        text: 'JOB CODE ' + minday[0] + " " + txtmonthmaxday + " " + minday[2] + ' - ' + maxday[0] + " " + txtmonthmaxday + " " + maxday[2]
                     },
                     xAxis: {
-                        categories: period_day,
-                        //categories: [
-                        //    'Jan',
-                        //    'Feb',
-                        //    'Mar',
-                        //    'Apr',
-                        //    'May',
-                        //    'Jun',
-                        //    'Jul',
-                        //    'Aug',
-                        //    'Sep',
-                        //    'Oct',
-                        //    'Nov',
-                        //    'Dec'
-
-                        //],
-                        crosshair: true
+                        categories: period_day
                     },
                     yAxis: {
                         min: 0,
                         title: {
                             text: 'Man-days'
+                        },
+                        stackLabels: {
+                            enabled: true,
+                            style: {
+                                fontWeight: 'bold',
+                                color: ( // theme
+                                    Highcharts.defaultOptions.title.style &&
+                                    Highcharts.defaultOptions.title.style.color
+                                ) || 'gray'
+                            }
                         }
                     },
+                    legend: {
+                        align: 'right',
+                        x: -30,
+                        verticalAlign: 'top',
+                        y: 25,
+                        floating: true,
+                        backgroundColor:
+                            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                        borderColor: '#CCC',
+                        borderWidth: 1,
+                        shadow: false
+                    },
                     tooltip: {
-                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.1f} man-day</b></td></tr>',
-                        footerFormat: '</table>',
-                        shared: true,
-                        useHTML: true
+                        headerFormat: '<b>{point.x}</b><br/>',
+                        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
                     },
                     plotOptions: {
                         column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true
+                            }
                         }
                     },
                     series: [{
                         name: 'Supp OR GRP',
-                        data: objSuppORGRP
-                        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 95.6, 54.4]
-
+                       data: objSuppORGRP
                     }, {
                         name: 'Supp OR MR',
-                        data: objSuppORMR 
-                        //data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 95.6, 54.4]
-
+                        data: objSuppORMR
                     }, {
                         name: 'Supp SP',
                         data:  objSuppSP
-                        //data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 0.0, 95.6, 54.4]
-
                     }, {
                         name: 'Supp RRS',
-                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+
                         data: objSuppRRS
 
                     }, {
                         name: 'Supp eBG',
-                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+
                         data: objSuppeBG
 
                     }, {
                         name: 'AOU/P Support',
-                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+
                         data: objAOUPSupport
 
                     }, {
                         name: 'Project',
-                        //data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1, 95.6, 54.4]
+
                         data: objProject
 
                     }]
@@ -463,8 +501,8 @@
             function GetDataChartColumn() {
                 var param = {
                     month: $("#month").val(),
-                    startday: $("#startday").val(),
-                    endday: $("#endday").val()
+                    startday: $("#txtstartday").val(),
+                    endday: $("#txtendday").val()
             }
                     $.ajax({
                         url: '@Url.Action("ListChartColumn")',
@@ -481,8 +519,8 @@
             }
 
 
-        </script>
-    }
+            </script>
+        }
 </body>
 
 </html>

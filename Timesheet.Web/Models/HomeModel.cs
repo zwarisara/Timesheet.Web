@@ -7,6 +7,9 @@ namespace Timesheet.Web.Models
 {
     public class HomeModel
     {
+        public DateTime txtstartday { get; set; }
+        public DateTime txtendday { get; set; }
+
         public class ListChartPieModel
         {
             public string name { get; set; }
@@ -20,7 +23,7 @@ namespace Timesheet.Web.Models
 
         public class ListChartColumnModel
         {
-            public int DATE_OF { get; set; }
+            public string DATE_OF { get; set; }
             public string JOB_GROUP { get; set; }
             public decimal MAN_DAY { get; set; }
         }

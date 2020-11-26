@@ -36,7 +36,7 @@ namespace Timesheet.Web.Repositories
             foreach (DataRow item in dt.Rows)
             {
                 ListChartColumnModel model = new ListChartColumnModel();
-                model.DATE_OF = Convert.ToInt32(item["DATE_OF"]);
+                model.DATE_OF =  item["DATE_OF"].ToString();
                 model.JOB_GROUP = item["JOB_GROUP"].ToString();
                 model.MAN_DAY = Convert.ToDecimal(item["MAN_DAY"]);
                 lst.Add(model);
