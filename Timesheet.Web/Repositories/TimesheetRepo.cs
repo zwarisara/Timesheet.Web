@@ -102,6 +102,7 @@ namespace Timesheet.Web.Repositories
                 {
                     lst = db.SP_GET_LIST_TIMESHEET_MONTH(empID.ToString()).Select(i => new TimesheetModel()
                     {
+                        TIMESHEET_ID = i.TIMESHEET_ID.ToString(),
                         EMPLOYEE_ID = i.EMPLOYEE_ID.Value,
                         DATE_OF = i.DATE_OF.Value,
                         Str_DATE_OF = i.Str_DATE_OF,
@@ -124,5 +125,27 @@ namespace Timesheet.Web.Repositories
             return lst;
 
         }
+
+        public bool Delete(int timesheet_id)
+        {
+            bool result;
+            try
+            {
+                using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
+                {
+                    TB_TIMESHEET data = db.TB_TIMESHEET.FirstOrDefault(i => i.TIMESHEET_ID.Equals(timesheet_id));
+                    db.TB_TIMESHEET.Remove(data);
+                    db.SaveChanges();
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+            return result;
+
+        }
+
     }
 }

@@ -59,68 +59,85 @@
                         &nbsp;&nbsp;
                         @Html.LabelFor(model => model.TYPE, "วันลา", new { @for = "TYPE_N" })
                     </div>
-                    <div class="col-md-1 text-right" style="padding: 0px;">
-                        <label for="name" class="control-label">Hour</label>
+                    <div class="divDayInActive">
+                        <div class="col-md-1" style="width: fit-content;">
+                            <label for="name" class="control-label">จำนวน</label>
+                        </div>
+                        <div class="col-md-2" style="padding-left: 1%;">
+                            @Html.DropDownListFor(model => model.LEAVE, new List<SelectListItem>
+                               {
+                                 new SelectListItem { Text = "ครึ่งวัน (เช้า)", Value = "ครึ่งวัน (เช้า)"},
+                                 new SelectListItem { Text = "ครึ่งวัน (บ่าย)", Value = "ครึ่งวัน (บ่าย"},
+                                 new SelectListItem { Text = "ทั้งวัน", Value = "ทั้งวัน"}
+                              }, "-Please Select-", new { @class = "form-control" })
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(i => i.WORK_HOUR, new { @class = "form-control", @type = "number", @step = "0.5", @min = "0.5", @max = "24" })
-                    </div>
-                    <div class="col-md-1" style="width: fit-content;">
-                        <label for="name" class="control-label">Location</label>
-                    </div>
-                    <div class="col-md-2" style="padding-left: 1%;">
-                        @Html.DropDownListFor(model => model.WORK_LOCATION, new List<SelectListItem>
-                           {
-                             new SelectListItem { Text = "Home", Value = "Home"},
-                             new SelectListItem { Text = "Office", Value = "Office"},
-                          }, "-Please Select-", new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="row col-md-12" style="margin-top: 1%;">
-                    <div class="col-md-1 text-right" style="padding: 0px;">
-                        <label for="name" class="control-label">Job Code</label>
-                    </div>
-                    <div class="col-md-11">
-                        @Html.DropDownListFor(m => m.JOB_CODE, Model.JOB_CODE_LIST.Select(i => new SelectListItem()
-                        {
-                            Text = i.JOBCODE_NO + " " + i.JOBCODE_NAME,
-                            Value = i.JOBCODE_ID
-                        }), "-Please Select-", new { @class = "form-control selectpicker" })
-                    </div>
-                    <div class="col-md-4" style="padding-left: 0px; display:none;">
-                        @Html.TextBoxFor(i => i.JOB_CODE_NAME, new { @class = "form-control", @disabled = true })
-                    </div>
-                </div>
-                <div class="row col-md-12" style="margin-top: 1%; display:none" id="divSubJobCode">
-                    <div class="col-md-1" style="padding: 0px; width: fit-content;">
-                        <label for="name" class="control-label">Sub Job Code</label>
-                    </div>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(m => m.SUB_JOB_CODE, Model.SUB_JOB_CODE_LIST.Select(i => new SelectListItem()
-                      {
-                          Text = i.SUB_JOBCODE_NO + " " + i.SUB_JOBCODE_NAME,
-                          Value = i.SUB_JOBCODE_ID
-                      }), "-Please Select-", new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-1" style="padding: 0px; width: fit-content; display:none;">
-                        <label for="name" class="control-label">Project Name</label>
-                    </div>
-                    <div class="col-md-3" style="display:none;">
-                        @Html.TextBoxFor(i => i.PROJECT_NAME, new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-1 text-right" style="padding: 0px;">
-                        <label for="name" class="control-label">Ticket No.</label>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control" })
+                    <div class="divDayActive">
+                        <div class="col-md-1 text-right" style="padding: 0px;">
+                            <label for="name" class="control-label">Hour</label>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(i => i.WORK_HOUR, new { @class = "form-control", @type = "number", @step = "0.5", @min = "0.5", @max = "24" })
+                        </div>
+                        <div class="col-md-1" style="width: fit-content;">
+                            <label for="name" class="control-label">Location</label>
+                        </div>
+                        <div class="col-md-2" style="padding-left: 1%;">
+                            @Html.DropDownListFor(model => model.WORK_LOCATION, new List<SelectListItem>
+                               {
+                                 new SelectListItem { Text = "Home", Value = "Home"},
+                                 new SelectListItem { Text = "Office", Value = "Office"},
+                              }, "-Please Select-", new { @class = "form-control" })
+                        </div>
                     </div>
                 </div>
-                <div class="row col-md-12" style="margin-top: 1%;">
-                    <div class="col-md-1" style="padding: 0px;">
-                        <label for="name" class="control-label">Description</label>
+                <div class="divDayActive">
+                    <div class="row col-md-12" style="margin-top: 1%;">
+                        <div class="col-md-1 text-right" style="padding: 0px;">
+                            <label for="name" class="control-label">Job Code</label>
+                        </div>
+                        <div class="col-md-11">
+                            @Html.DropDownListFor(m => m.JOB_CODE, Model.JOB_CODE_LIST.Select(i => new SelectListItem()
+                            {
+                                Text = i.JOBCODE_NO + " " + i.JOBCODE_NAME,
+                                Value = i.JOBCODE_ID
+                            }), "-Please Select-", new { @class = "form-control selectpicker" })
+                        </div>
+                        <div class="col-md-4" style="padding-left: 0px; display:none;">
+                            @Html.TextBoxFor(i => i.JOB_CODE_NAME, new { @class = "form-control", @disabled = true })
+                        </div>
                     </div>
-                    <div class="col-md-11">
-                        @Html.TextAreaFor(i => i.DESCRIPTION, new { @class = "form-control", @rows = "1" })
+                    <div class="row col-md-12" style="margin-top: 1%; display:none" id="divSubJobCode">
+                        <div class="col-md-1" style="padding: 0px; width: fit-content;">
+                            <label for="name" class="control-label">Sub Job Code</label>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.SUB_JOB_CODE, Model.SUB_JOB_CODE_LIST.Select(i => new SelectListItem()
+                          {
+                              Text = i.SUB_JOBCODE_NO + " " + i.SUB_JOBCODE_NAME,
+                              Value = i.SUB_JOBCODE_ID
+                          }), "-Please Select-", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-1" style="padding: 0px; width: fit-content; display:none;">
+                            <label for="name" class="control-label">Project Name</label>
+                        </div>
+                        <div class="col-md-3" style="display:none;">
+                            @Html.TextBoxFor(i => i.PROJECT_NAME, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-1 text-right" style="padding: 0px;">
+                            <label for="name" class="control-label">Ticket No.</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row col-md-12" style="margin-top: 1%;">
+                        <div class="col-md-1" style="padding: 0px;">
+                            <label for="name" class="control-label">Description</label>
+                        </div>
+                        <div class="col-md-11">
+                            @Html.TextAreaFor(i => i.DESCRIPTION, new { @class = "form-control", @rows = "1" })
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin-top: 1%; margin-bottom: 1%">
@@ -177,12 +194,35 @@
     </div>
 </div>
 
+<!-- Modal Delete -->
+<div class="modal fade" id="modalDeleteDialog" role="dialog">
+    <div class="modal-dialog" style="margin-top: auto;">
+        <!-- Modal content-->
+        <div class="modal-content Delete" style="top:30px; border-color: gray;">
+            <div class="modal-header custom-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title" style="color:white;"><i class="fa fa-trash"></i>&nbsp;CONFIRM DELETE</h5>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    @Html.Label("aa", new { @id = "txtDelete" })
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:6px;">
+                <button type="button" class="btn btn-primary btn-user btn-sm" id="btnConfirmDelete" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading..."><i class="fa fa-trash"></i> &nbsp;Delete</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> &nbsp;Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts {
     <script>
         var sub_jobcode_exist = false;
         $(document).ready(function () {
 
             $('#divSizeExplain').hide();
+            $('.divDayInActive').hide();
 
             $('#divSizeShort').on('click', function () {
                 $('#divSizeExplain').show();
@@ -194,12 +234,17 @@
                 $('#panelBody').show();
                 $('#divListShow').css('margin-top', '20%');
                 $('#divSizeExplain').hide();
+
+                let checkedRadio = $('input[name="TYPE"]:checked').val();
+                    if (checkedRadio == "Y") {
+                        $('#divListShow').css('margin-top', '20%');
+                    }
+                    else {
+                        $('#divListShow').css('margin-top', '12%');
+                    }
             });
 
-            $('.selectpicker').selectpicker({
-                liveSearch: true,
-                showSubtext: true
-            });
+            $('.selectpicker').selectpicker({ liveSearch: true, showSubtext: true });
 
             var date = new Date();
             var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -216,7 +261,7 @@
                     method: "POST",
                     dataSrc: function (response) { return response; }
                 },
-                aaSorting: [[0, "asc"]],
+                aaSorting: [[1, "asc"]],
                 responsive: false,
                 filter: false,
                 lengthChange: false,
@@ -226,10 +271,12 @@
                 columns: [
                     {
                         data: function (data) {
+                            var strDate = "'" + data.Str_DATE_OF + "'";
+                            var strJobCode = "'"+ data.JOB_CODE +"'";
                             //return '<button class="btn btn-primary editor_edit" onclick="Edit(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-edit"></i> </button>'
                             //    + '&nbsp; <button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
 
-                            return '<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.ID + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
+                            return '<button class="btn btn-danger editor_remove" data-toggle="modal" data-target="#modalDeleteDialog" onclick="Delete(' + data.TIMESHEET_ID + ',' + strDate + ',' + strJobCode + ')" style="width: 28px; height:24px; padding: 2px;"> <i class="fa fa-trash"></i> </button>';
 
                         }
                     },
@@ -250,7 +297,7 @@
                         data: "SUB_JOB_CODE"
                     },
                     {
-                        data: "TICKET_NO"
+                        data: "TICKET_ID"
                     },
                     {
                         data: "WORK_HOUR"
@@ -262,7 +309,7 @@
                     {
                         data: "DESCRIPTION"
                     }
-                    
+
                 ]
             });
 
@@ -280,7 +327,7 @@
                     url: '@Url.Action("GetSubJobCode")',
                     type: 'POST',
                     data: { job_id: $('#JOB_CODE').val() },
-                success: function (data) {
+                    success: function (data) {
 
                         if (data.Result.length > 0) {
                             $("#divSubJobCode").css("display", "block");
@@ -295,6 +342,7 @@
                             }
 
                             sub_jobcode_exist = true;
+                            $('#divListShow').css('margin-top', '24%');
                         }
                         else
                         {
@@ -304,6 +352,7 @@
                             $('#TICKET_NO').val('');
 
                             sub_jobcode_exist = false;
+                            $('#divListShow').css('margin-top', '20%');
                         }
 
                     }
@@ -332,18 +381,26 @@
                 $(".selectpicker").selectpicker("refresh");
                 $('input[name=TYPE]').filter('[value=Y]').prop('checked', true);
                 $("#divSubJobCode").css("display", "none");
+
+                $('.divDayActive').show();
+                $('.divDayInActive').hide();
+                $('#divListShow').css('margin-top', '20%');
             });
 
-            //$('.checkedRadio').on('change', function () {
-            //    debugger;
-            //    var checkedRadio = $('input[name="TYPE"]:checked').val();
-            //    if (checkedRadio == "Y") {
-            //    $('input[name=TYPE]').filter('[value=N]').prop('checked', true);
-            //}
-            //    else {
-            //    $('input[name=TYPE]').filter('[value=Y]').prop('checked', true);
-            //}
-            //});
+            $('.checkedRadio').on('change', function () {
+                var checkedRadio = $('input[name="TYPE"]:checked').val();
+                console.log('checkedRadio ----------->',checkedRadio)
+                    if (checkedRadio == "Y") {
+                        $('.divDayActive').show();
+                        $('.divDayInActive').hide();
+                        $('#divListShow').css('margin-top', '20%');
+                    }
+                    else {
+                        $('.divDayActive').hide();
+                        $('.divDayInActive').show();
+                        $('#divListShow').css('margin-top', '12%');
+                    }
+            });
 
             $("#btnSave").on('click', function (e) {
 
@@ -353,6 +410,8 @@
 
                     var objDtOf = $('#DATE_OF').val().split('/');
                     var strObjDtOf = objDtOf[1] + '/' + objDtOf[0] + '/' + objDtOf[2];
+
+                    var checkedRadio = $('input[name="TYPE"]:checked').val();
 
                     var param = {
                         DATE_OF: strObjDtOf,
@@ -364,7 +423,8 @@
                         PROJECT_NAME: $('#PROJECT_NAME').val(),
                         TICKET_NO: $('#TICKET_NO').val(),
                         TICKET_ID: $('#TICKET_NO').val(),
-                        DESCRIPTION: $('#DESCRIPTION').val()
+                        DESCRIPTION: $('#DESCRIPTION').val(),
+                        TYPE: checkedRadio
                     };
 
                     $.ajax({
@@ -388,6 +448,35 @@
 
             });
 
+             $('#btnConfirmDelete').on('click', function () {
+                var $this = $(this);
+                console.log('$(this).val() ------>',$(this).val())
+                $this.button('loading');
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    type: 'POST',
+                    data: { timesheet_id : $(this).val() },
+                    success: function (data) {
+                        console.log('data', data)
+                        $this.button('reset');
+                        if (data.isSuccess == true) {
+                            $('#modalDeleteDialog').modal('toggle');
+                            toastr.success('Delete Successfully.');
+                           $.post('@Url.Action("List")', function (data) {
+                                    Table.clear();
+                                    Table.rows.add(data).draw();
+                                });
+                        } else
+                        {
+                            toastr.error('กรุณาลองใหม่อีกครั้ง เนื่องจากระบบทำงานผิดพลาด!');
+                        }
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+
+        });
 
         });
 
@@ -413,17 +502,9 @@
             });*@
         }
 
-        function Delete(id) {
-            console.log('id -------------------->',id)
-            @*$.get('@Url.Action("Edit")', { ID: id }, function (data) {
-                $(".Edit").html(data);
-                $("#modalEditDialog").modal();
-            });*@
-        }
-
-        function DeleteEmployee(id, name) {
+        function Delete(id, date, jobCode) {
             if (id != '' || id != null) {
-                var nameConfirm = 'Do you confirm delete Menu name "' + name + '" ?';
+                var nameConfirm = 'Do you confirm delete TimeSheet Date of "' + date + '", Job Code No "'+ jobCode +'" ?';
                 $('#txtDelete').html(nameConfirm);
                 $('#btnConfirmDelete').val(id)
             }
@@ -458,33 +539,45 @@
                 toastr.warning('Please choose Date Of !');
                 return false;
             }
-            if ($('#WORK_HOUR').val() == '')
-            {
-                toastr.warning('Please fill Work Hour !');
-                 return false;
-            }
-            if ($('#WORK_LOCATION').val() == '')
-            {
-                toastr.warning('Please select Work Location !');
-                return false;
-            }
-            if ($('#JOB_CODE').val() == '')
-            {
-                toastr.warning('Please select Job Code !');
-                return false;
-            }
-            if ($('#DESCRIPTION').val() == '')
-            {
-                toastr.warning('Please fill Description !');
-                 return false;
-            }
 
-            if (sub_jobcode_exist)
+            var checkedRadio = $('input[name="TYPE"]:checked').val();
+            if (checkedRadio == "Y")
             {
-                if ($('#SUB_JOB_CODE').val() == '')
+                if ($('#WORK_HOUR').val() == '')
                 {
-                    toastr.warning('Please select Sub Job Code !');
+                    toastr.warning('Please fill Work Hour !');
                      return false;
+                }
+                if ($('#WORK_LOCATION').val() == '')
+                {
+                    toastr.warning('Please select Work Location !');
+                    return false;
+                }
+                if ($('#JOB_CODE').val() == '')
+                {
+                    toastr.warning('Please select Job Code !');
+                    return false;
+                }
+                if ($('#DESCRIPTION').val() == '')
+                {
+                    toastr.warning('Please fill Description !');
+                     return false;
+                }
+                if (sub_jobcode_exist)
+                {
+                    if ($('#SUB_JOB_CODE').val() == '')
+                    {
+                        toastr.warning('Please select Sub Job Code !');
+                         return false;
+                    }
+                }
+            }
+            else
+            {
+                if ($('#LEAVE').val() == '')
+                {
+                    toastr.warning('Please fill Day leave !');
+                    return false;
                 }
             }
 

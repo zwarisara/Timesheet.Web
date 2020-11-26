@@ -46,9 +46,26 @@ namespace Timesheet.Web.Controllers
         public JsonResult SaveTimeSheet(TimesheetModel param)
         {
             param.EMPLOYEE_ID = LoginRepo.GetOwnerUser().id;
+            if (param.TYPE == "N")
+            {
+                //วันลา
+                param.JOB_CODE_ID = 0;
+                param.TICKET_ID = null;
+                param.DESCRIPTION = "Leave";
+                param.WORK_HOUR = "0";
+                param.WORK_LOCATION = "";
+            }
+
             bool result = _TimeSheetRepo.Insert(param);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Delete(int timesheet_id)
+        {
+            bool result = _TimeSheetRepo.Delete(timesheet_id);
+            return Json(new { isSuccess = result }, JsonRequestBehavior.AllowGet);
         }
     }
 }

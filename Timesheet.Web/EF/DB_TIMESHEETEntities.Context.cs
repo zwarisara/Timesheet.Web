@@ -35,13 +35,17 @@ namespace Timesheet.Web.EF
         public virtual DbSet<TB_TIMESHEET> TB_TIMESHEET { get; set; }
         public virtual DbSet<TB_WEEKLY_TIMESHEET> TB_WEEKLY_TIMESHEET { get; set; }
     
-        public virtual ObjectResult<SP_GET_LIST_CHART_Result> SP_GET_LIST_CHART(string month)
+        public virtual ObjectResult<SP_GET_LIST_CHART_Result> SP_GET_LIST_CHART(string startday, string endday)
         {
-            var monthParameter = month != null ?
-                new ObjectParameter("month", month) :
-                new ObjectParameter("month", typeof(string));
+            var startdayParameter = startday != null ?
+                new ObjectParameter("startday", startday) :
+                new ObjectParameter("startday", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_CHART_Result>("SP_GET_LIST_CHART", monthParameter);
+            var enddayParameter = endday != null ?
+                new ObjectParameter("endday", endday) :
+                new ObjectParameter("endday", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_CHART_Result>("SP_GET_LIST_CHART", startdayParameter, enddayParameter);
         }
     
         public virtual ObjectResult<string> SP_GET_LIST_CHART_COLUMN(string month, string startday, string endday)

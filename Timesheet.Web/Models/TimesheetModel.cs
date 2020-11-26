@@ -24,6 +24,8 @@ namespace Timesheet.Web.Models
         public int EMPLOYEE_ID { get; set; }
         public int JOB_CODE_ID { get; set; }
         public string TICKET_ID { get; set; }
+        public string TIMESHEET_ID { get; set; }
+        public string LEAVE { get; set; }
 
     }
     public class JobCodeListModel

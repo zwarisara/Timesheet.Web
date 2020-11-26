@@ -118,7 +118,8 @@
           <Parameter Name="JOB_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GET_LIST_CHART" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="month" Type="varchar" Mode="In" />
+          <Parameter Name="startday" Type="varchar" Mode="In" />
+          <Parameter Name="endday" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GET_LIST_CHART_COLUMN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="month" Type="varchar" Mode="In" />
@@ -262,7 +263,8 @@
           <EntitySet Name="TB_TIMESHEET" EntityType="Self.TB_TIMESHEET" />
           <EntitySet Name="TB_WEEKLY_TIMESHEET" EntityType="Self.TB_WEEKLY_TIMESHEET" />
           <FunctionImport Name="SP_GET_LIST_CHART" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_CHART_Result)">
-          <Parameter Name="month" Mode="In" Type="String" />
+          <Parameter Name="startday" Mode="In" Type="String" />
+            <Parameter Name="endday" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_CHART_COLUMN" ReturnType="Collection(String)">
             <Parameter Name="month" Mode="In" Type="String" />
@@ -298,6 +300,7 @@
           <Property Type="String" Name="JOBCODE_NAME" Nullable="true" MaxLength="500" />
         </ComplexType>
         <ComplexType Name="SP_GET_LIST_TIMESHEET_MONTH_Result">
+          <Property Type="Int32" Name="TIMESHEET_ID" Nullable="false" />
           <Property Type="Int32" Name="EMPLOYEE_ID" Nullable="true" />
           <Property Type="DateTime" Name="DATE_OF" Nullable="true" />
           <Property Type="String" Name="Str_DATE_OF" Nullable="true" MaxLength="10" />
@@ -465,6 +468,7 @@
           <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET_MONTH" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_TIMESHEET_MONTH">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result">
+                <ScalarProperty Name="TIMESHEET_ID" ColumnName="TIMESHEET_ID" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
                 <ScalarProperty Name="DATE_OF" ColumnName="DATE_OF" />
                 <ScalarProperty Name="Str_DATE_OF" ColumnName="Str_DATE_OF" />

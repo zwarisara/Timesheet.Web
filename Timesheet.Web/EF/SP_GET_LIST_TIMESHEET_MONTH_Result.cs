@@ -13,6 +13,7 @@ namespace Timesheet.Web.EF
     
     public partial class SP_GET_LIST_TIMESHEET_MONTH_Result
     {
+        public int TIMESHEET_ID { get; set; }
         public Nullable<int> EMPLOYEE_ID { get; set; }
         public Nullable<System.DateTime> DATE_OF { get; set; }
         public string Str_DATE_OF { get; set; }
