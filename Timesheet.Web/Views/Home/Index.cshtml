@@ -133,7 +133,7 @@
 
     @section scripts {
         <script type="text/javascript">
-        var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject;
+            var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject, objSAP;
         var objChartColumn = [];
         var objChartPie = [];
         var JSONChartColumn = [];
@@ -165,6 +165,7 @@
 
             GetDataChartPie();
             GetDataChartColumn();
+            $("#btnGenChart").trigger("click");
         });
 
 
@@ -248,6 +249,13 @@
                     return [objAOUPSupport[i].MAN_DAY];
                 });
 
+                objSAP = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "SP-PTT-AOU/P-SAP Master";
+                });
+                objSAP = $(objSAP).map(function (i) {
+                    return [objSAP[i].MAN_DAY];
+                });
+
                 objProject = objChartColumn.filter(function (objChartColumn) {
                     return objChartColumn.JOB_GROUP == "Project";
                 });
@@ -275,7 +283,7 @@
                             enabled: true,
                             style: {
                                 fontWeight: 'bold',
-                                color: ( 
+                                color: (
                                     Highcharts.defaultOptions.title.style &&
                                     Highcharts.defaultOptions.title.style.color
                                 ) || 'gray'
@@ -327,6 +335,9 @@
                         name: 'AOU/P Support',
                         data: objAOUPSupport
 
+                    }, {
+                        name: 'SP-PTT-AOU/P-SAP Master',
+                        data: objSAP
                     }, {
                         name: 'Project',
                         data: objProject
