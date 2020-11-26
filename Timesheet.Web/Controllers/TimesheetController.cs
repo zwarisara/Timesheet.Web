@@ -51,7 +51,7 @@ namespace Timesheet.Web.Controllers
                 //วันลา
                 param.JOB_CODE_ID = 0;
                 param.TICKET_ID = null;
-                param.DESCRIPTION = "Leave";
+                param.DESCRIPTION = param.LEAVE;
                 param.WORK_HOUR = "0";
                 param.WORK_LOCATION = "";
             }

@@ -67,7 +67,7 @@
                             @Html.DropDownListFor(model => model.LEAVE, new List<SelectListItem>
                                {
                                  new SelectListItem { Text = "ครึ่งวัน (เช้า)", Value = "ครึ่งวัน (เช้า)"},
-                                 new SelectListItem { Text = "ครึ่งวัน (บ่าย)", Value = "ครึ่งวัน (บ่าย"},
+                                 new SelectListItem { Text = "ครึ่งวัน (บ่าย)", Value = "ครึ่งวัน (บ่าย)"},
                                  new SelectListItem { Text = "ทั้งวัน", Value = "ทั้งวัน"}
                               }, "-Please Select-", new { @class = "form-control" })
                         </div>
@@ -424,7 +424,8 @@
                         TICKET_NO: $('#TICKET_NO').val(),
                         TICKET_ID: $('#TICKET_NO').val(),
                         DESCRIPTION: $('#DESCRIPTION').val(),
-                        TYPE: checkedRadio
+                        TYPE: checkedRadio,
+                        LEAVE: 'ลา'+ $('#LEAVE').val()
                     };
 
                     $.ajax({
