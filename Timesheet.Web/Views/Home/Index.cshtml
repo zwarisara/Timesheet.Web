@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <button type="button" id="btnGenChart" class="btn btn-primary" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;Gen Chert</button>
+                <button type="button" id="btnGenChart" class="btn btn-primary" onclick="GenFormatChart();"><i class="fa fa-search"></i>&nbsp;GenChert</button>
             </div>
         </div>
 
@@ -134,7 +134,9 @@
     @section scripts {
         <script type="text/javascript">
             var objSuppORGRP, objSuppORMR, objSuppSP, objSuppRRS, objSuppeBG, objAOUPSupport, objProject, objSAP;
-        var objChartColumn = [];
+            var objChartColumn = [];
+            var objChartColumn2 = [];
+            var objEmployee = [];
         var objChartPie = [];
         var JSONChartColumn = [];
         var JSONChartPie = [];
@@ -164,8 +166,9 @@
             });
 
             GetDataChartPie();
-           
+            GetDataEmployee();
             GetDataChartColumn();
+            GetDataChartColumn2()
         
             $("#btnGenChart").trigger("click");
         });
@@ -195,11 +198,11 @@
             function GenFormatChart() {
                 Chart = $("#chart").val();
                 if (Chart == "1") {
-                    GenChartColumn()
+                    GetDataChartColumn()
                 }
                 else if (Chart == "2") {
                     GetDataChartPie()
-                    GenChartPie()
+                  
                 }
                 else {
 
@@ -208,7 +211,7 @@
 
             function GenChartColumn() {
                 GendayoMonth()
-                GetDataChartColumn()
+                //GetDataChartColumn()
                 objSuppORGRP = objChartColumn.filter(function (objChartColumn) {
                         return objChartColumn.JOB_GROUP == "Supp OR GRP";
                 });
@@ -351,7 +354,6 @@
 
             function GenChartPie() {
                 GendayoMonth()
-                GetDataChartPie();
                 JSONChartPie = JSON.stringify(objChartPie);
                 Highcharts.chart('container', {
                     chart: {
@@ -413,6 +415,7 @@
                         data: param,
                         success: function (data) {
                             objChartPie = data;
+                            GenChartPie();
                         },
                         error: function () {
                             alert("error");
@@ -432,12 +435,44 @@
                         data: param,
                         success: function (data) {
                             objChartColumn = data;
+                            GenChartColumn();
                         },
                         error: function () {
                             alert("error");
                         }
                     });
             }
+
+            
+            function GetDataChartColumn2() {
+        
+                    $.ajax({
+                        url: '@Url.Action("ListChartColumn2")',
+                        type: 'POST',
+                        data: "",
+                        success: function (data) {
+                            objChartColumn2 = data;
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+            }
+            function GetDataEmployee() {
+        
+                    $.ajax({
+                        url: '@Url.Action("ListEmployee")',
+                        type: 'POST',
+                        data: "",
+                        success: function (data) {
+                            objEmployee = data;
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+            }
+            
         </script>
     }
 </body>

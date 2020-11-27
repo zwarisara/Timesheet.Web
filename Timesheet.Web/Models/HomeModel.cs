@@ -28,5 +28,16 @@ namespace Timesheet.Web.Models
             public decimal MAN_DAY { get; set; }
         }
 
+        public class ListChartColumn2Model
+        {
+            public string FULLNAME_EN { get; set; }
+            public string JOB_GROUP { get; set; }
+            public decimal MAN_DAY { get; set; }
+        }
+
+        public class ListEmployeeModel
+        {
+            public string FULLNAME_EN { get; set; }
+        }
     }
 }
