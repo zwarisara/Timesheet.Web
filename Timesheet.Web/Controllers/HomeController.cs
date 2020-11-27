@@ -33,5 +33,19 @@ namespace Timesheet.Web.Controllers
             List<ListChartColumnModel> lstModel = _repo.GetListChertColumn(startday, endday);
             return Json(lstModel, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult ListChartColumn2()
+        {
+            List<ListChartColumn2Model> lstModel = _repo.GetListChertColumn2();
+            return Json(lstModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ListEmployee()
+        {
+            List<ListEmployeeModel> lstModel = _repo.GetListEmployee();
+            return Json(lstModel, JsonRequestBehavior.AllowGet);
+        }
     }
 }

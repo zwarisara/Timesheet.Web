@@ -43,5 +43,38 @@ namespace Timesheet.Web.Repositories
             }
             return lst;
         }
+
+
+        public List<ListChartColumn2Model> GetListChertColumn2()
+        {
+            List<ListChartColumn2Model> lst = new List<ListChartColumn2Model>();
+            DatabaseHelper db = new DatabaseHelper();
+
+            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_CHART_COLUMN2");
+            foreach (DataRow item in dt.Rows)
+            {
+                ListChartColumn2Model model = new ListChartColumn2Model();
+                model.FULLNAME_EN = item["FULLNAME_EN"].ToString();
+                model.JOB_GROUP = item["JOB_GROUP"].ToString();
+                model.MAN_DAY = Convert.ToDecimal(item["MAN_DAY"]);
+                lst.Add(model);
+            }
+            return lst;
+        }
+
+        public List<ListEmployeeModel> GetListEmployee()
+        {
+            List<ListEmployeeModel> lst = new List<ListEmployeeModel>();
+            DatabaseHelper db = new DatabaseHelper();
+
+            DataTable dt = db.ExecuteDataTable("SP_GET_LIST_EMPLOYEE");
+            foreach (DataRow item in dt.Rows)
+            {
+                ListEmployeeModel model = new ListEmployeeModel();
+                model.FULLNAME_EN = item["FULLNAME_EN"].ToString();
+                lst.Add(model);
+            }
+            return lst;
+        }
     }
 }
