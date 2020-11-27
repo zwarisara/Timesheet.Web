@@ -55,7 +55,7 @@
                         @Html.ValidationMessageFor(model => model.Login_Password)
                     </div>
                     <div class="input-container" style="margin-top: 30px;">
-                        <button class="btn btn-primary btn-block" type="submit">Login</button>
+                        <button class="btn btn-primary btn-block" id="btnLogin" type="submit" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Loading...">Login</button>
                     </div>
                 </form>
             }
@@ -66,5 +66,15 @@
 <footer style="position: fixed; bottom: 0; color:black;">
     <p>&copy; @DateTime.Now.Year - Timesheet Web</p>
 </footer>
+
+<script>
+   $('#btnLogin').on('click', function() {
+    var $this = $(this);
+      $this.button('loading');
+        setTimeout(function() {
+           $this.button('reset');
+       }, 10000);
+    });
+</script>
 
 
