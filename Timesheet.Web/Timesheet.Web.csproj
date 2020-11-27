@@ -947,6 +947,7 @@
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7GxKOzY.woff2" />
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7mxKOzY.woff2" />
     <Content Include="Content\fonts\KFOmCnqEu92Fr1Mu7WxKOzY.woff2" />
+    <None Include="Properties\PublishProfiles\Local_Timesheet_Project.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
