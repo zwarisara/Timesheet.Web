@@ -164,7 +164,9 @@
             });
 
             GetDataChartPie();
+           
             GetDataChartColumn();
+        
             $("#btnGenChart").trigger("click");
         });
 
@@ -181,7 +183,6 @@
             }
 
             function GendayoMonth() {
-                Month = $("#month").val();
                 Startday = $("#txtstartday").val();
                 Endday = $("#txtendday").val();
                 minday = Startday.split('/')
@@ -197,6 +198,7 @@
                     GenChartColumn()
                 }
                 else if (Chart == "2") {
+                    GetDataChartPie()
                     GenChartPie()
                 }
                 else {
@@ -303,8 +305,8 @@
                         shadow: false
                     },
                     tooltip: {
-                        headerFormat: '<b>{point.x}</b><br/>',
-                        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                        headerFormat: '<b>{point.x:,.2f}</b><br/>',
+                        pointFormat: '{series.name}: {point.y:,.2f}<br/>Total:{point.stackTotal:,.2f}'
                     },
                     plotOptions: {
                         column: {
@@ -362,7 +364,7 @@
                         text: 'Job Code ' + minday[0] + " " + txtmonthmaxday + " " + minday[2] + ' - ' + maxday[0] + " " + txtmonthmaxday + " " + maxday[2]
                     },
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
                     },
                     accessibility: {
                         point: {
@@ -375,7 +377,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                format: '<b>{point.name}</b>: {point.percentage:.2f} %'
                             }
                         }
                     },
