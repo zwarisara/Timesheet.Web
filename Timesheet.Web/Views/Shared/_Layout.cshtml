@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Time Sheet Application</title>
+    <link rel="icon" type="image/png" href="../Picture/favicon.png">
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/fonts/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -13,11 +15,6 @@
             font-family: Kanit;
             font-style: normal;
             font-weight: 400;
-        }
-
-        .container {
-            margin-right: 0px !important;
-            margin-left: 3% !important;
         }
 
         .navbar-brand {
@@ -40,6 +37,11 @@
         .navbar-nav {
             float: unset !important;
         }
+
+        div.container {
+            max-width: 1200px;
+        }
+
     </style>
 
 </head>
@@ -50,9 +52,9 @@
     <div class="navbar navbar-inverse navbar-fixed-top" style="height: 55px;">
         <div class="row col-md-12">
             <div class="navbar-header col-md-1 text-right">
-                <img src="'~/../Picture/ptt-logo.png" style="width: 40%;padding: 5px 0px 4px 0px;">
+                <img src="'~/../Picture/digital_logo.png" style="padding: 5px 0px 4px 0px;height: 55px;">
             </div>
-            <div class="navbar-header col-md-1" style="left: -2%">
+            <div class="navbar-header col-md-1">
                 @Html.ActionLink("TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
             </div>
             <div class="navbar-header col-md-5">

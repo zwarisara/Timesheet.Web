@@ -110,7 +110,7 @@ namespace Timesheet.Web.Repositories
                         JOB_CODE_NAME = i.JOBCODE_NAME,
                         SUB_JOB_CODE = i.SUB_JOBCODE,
                         TICKET_ID = i.TICKET_ID,
-                        WORK_HOUR = i.WORK_HOUR.ToString(),
+                        WORK_HOUR = i.WORK_HOUR.ToString() == "0.00" ? "-" : i.WORK_HOUR.ToString(),
                         WORK_LOCATION = i.WORK_LOCATION,
                         DESCRIPTION = i.DESCRIPTION
 

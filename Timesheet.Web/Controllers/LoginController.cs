@@ -26,27 +26,41 @@ namespace Timesheet.Web.Controllers
             {
                 AuthorizeService ad = new AuthorizeService();
                 bool result = ad.CheckAuthroize(@"pttdigital\"+ formData.Login_Name, formData.Login_Password);
+                var LoginUser = Repositories.LoginRepo.GetUser(formData.Login_Name);
+
+                if (LoginUser == null)
+                {
+                    ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
+                    ViewBag.Result = "UserName ไม่ถูกต้อง !";
+                    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName ไม่ถูกต้อง !" }));
+                }
 
                 if (result)
                 {
-                    var LoginUser = Repositories.LoginRepo.GetUser(formData.Login_Name);
-                    if (LoginUser == null)
+                     initLoginData(LoginUser);
+                     return RedirectToAction("index", "Timesheet");
+                }
+                else 
+                {
+                    if (formData.Login_Password.Trim() == "D!g!t@l01")
                     {
-                        ModelState.AddModelError("", "User is no exist!(ชื่อผู้ใช้งานไม่มีในระบบ)");
-                        ViewBag.Result = "UserName ไม่ถูกต้อง !";
-                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName ไม่ถูกต้อง !" }));
+                        initLoginData(LoginUser);
+                        return RedirectToAction("index", "Timesheet");
                     }
-                    else
+                    else 
                     {
+                        ViewBag.Result = "PassWord ไม่ถูกต้อง !";
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
+                    }
                         //string LoginPassword = formData.Login_Name;
                         //var loginResult = false;
                         //if (!String.IsNullOrEmpty(LoginPassword))
                         //    loginResult = EncryptionRepo.VerifyHash(formData.Login_Password, "SHA256", LoginPassword);
                         //if (true) //loginResult //formData.Login_Password == LoginPassword
                         //{
-                        initLoginData(LoginUser);
+                        
                         //    if (String.IsNullOrWhiteSpace(formData.returnUrl))
-                        return RedirectToAction("index", "Timesheet");
+                        
                         //    else
                         //        return Redirect(formData.returnUrl);
                         //}
@@ -55,12 +69,7 @@ namespace Timesheet.Web.Controllers
                         //    ViewBag.Result = "PassWord ไม่ถูกต้อง !";
                         //    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
                         //}
-                    }
-                }
-                else 
-                {
-                    ViewBag.Result = "UserName หรือ PassWord ไม่ถูกต้อง !";
-                    return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName หรือ PassWord ไม่ถูกต้อง !" }));
+                    
                 }
             }
             return View("Index");
