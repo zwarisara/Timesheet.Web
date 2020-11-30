@@ -51,6 +51,7 @@ namespace Timesheet.Web.Models
     public class LoginUser
     {
         public int EMPLOYEE_ID { get; set; }
+        public int? EMPLOYEE_NO { get; set; }
         public string FULLNAME_TH { get; set; }
         public string FULLNAME_EN { get; set; }
         public string NICKNAME { get; set; }
