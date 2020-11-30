@@ -299,10 +299,10 @@
          if (opts.theme)
             lyr2 = $('<div class="blockUI blockOverlay ui-widget-overlay" style="z-index:' + (z++) + ';display:none"></div>');
          else
-            lyr2 = $('<div class="blockUI blockOverlay" style="z-index:' + (z++) + ';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>');
+            lyr2 = $('<div class="blockUI blockOverlay" style="z-index:2000;display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>');
 
          if (opts.theme && full) {
-            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage ui-dialog ui-widget ui-corner-all" style="z-index:' + (z + 10) + ';display:none;position:fixed">';
+            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage ui-dialog ui-widget ui-corner-all" style="z-index:2010;display:none;position:fixed">';
             if (opts.title) {
                s += '<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">' + (opts.title || '&nbsp;') + '</div>';
             }
@@ -318,10 +318,10 @@
             s += '</div>';
          }
          else if (full) {
-            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage" style="z-index:' + (z + 10) + ';display:none;position:fixed"></div>';
+            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage" style="z-index:2010;display:none;position:fixed"></div>';
          }
          else {
-            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement" style="z-index:' + (z + 10) + ';display:none;position:absolute"></div>';
+            s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement" style="z-index:2010;display:none;position:absolute"></div>';
          }
          lyr3 = $(s);
 

@@ -62,9 +62,9 @@
                         <div class="col-md-2" style="padding-left: 1%;">
                             @Html.DropDownListFor(model => model.LEAVE, new List<SelectListItem>
                                {
-                                 new SelectListItem { Text = "ครึ่งวัน (เช้า)", Value = "ครึ่งวัน (เช้า)"},
-                                 new SelectListItem { Text = "ครึ่งวัน (บ่าย)", Value = "ครึ่งวัน (บ่าย)"},
-                                 new SelectListItem { Text = "ทั้งวัน", Value = "ทั้งวัน"}
+                                 new SelectListItem { Text = "ลาครึ่งวัน (เช้า)", Value = "ลาครึ่งวัน (เช้า)"},
+                                 new SelectListItem { Text = "ลาครึ่งวัน (บ่าย)", Value = "ลาครึ่งวัน (บ่าย)"},
+                                 new SelectListItem { Text = "ลาทั้งวัน", Value = "ลาทั้งวัน"}
                               }, "-Please Select-", new { @class = "form-control" })
                         </div>
                     </div>
@@ -429,7 +429,7 @@
                         TICKET_ID: $('#TICKET_NO').val(),
                         DESCRIPTION: $('#DESCRIPTION').val(),
                         TYPE: checkedRadio,
-                        LEAVE: 'ลา'+ $('#LEAVE').val()
+                        LEAVE: $('#LEAVE').val()
                     };
 
                     $.ajax({
@@ -437,8 +437,7 @@
                         type: 'POST',
                         data: param,
                         success: function (data) {
-                            if (data.result)
-                            {
+                            if (data.result) {
                                 $.post('@Url.Action("List")', function (data) {
                                     Table.clear();
                                     Table.rows.add(data).draw();
@@ -446,6 +445,11 @@
                                 });
 
                             }
+                            else
+                            {
+                                toastr.error(data.message);
+                            }
+
                             $.unblockUI();
                         }
                     });
