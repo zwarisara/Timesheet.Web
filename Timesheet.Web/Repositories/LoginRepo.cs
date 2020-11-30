@@ -9,15 +9,17 @@ namespace Timesheet.Web.Repositories
 {
     public class LoginRepo
     {
-        public static LoginUser GetUser(string Login_Name)
+        public static LoginUser GetUser(string Login_Name, bool New_Employee = false)
         {
             try
             {
+                LoginUser user = new LoginUser();
                 using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
                 {
-                    LoginUser loginUser = db.TB_EMPLOYEE.Select(t => new LoginUser
+                    List<LoginUser> loginUser = db.TB_EMPLOYEE.Select(t => new LoginUser
                     {
                         EMPLOYEE_ID = t.EMPLOYEE_ID,
+                        EMPLOYEE_NO = t.EMPLOYEE_NO,
                         FULLNAME_TH = t.FULLNAME_TH,
                         FULLNAME_EN = t.FULLNAME_EN,
                         NICKNAME = t.NICKNAME,
@@ -35,8 +37,18 @@ namespace Timesheet.Web.Repositories
                         START_WORK_DATE = t.START_WORK_DATE,
                         STATUS = t.STATUS
 
-                    }).FirstOrDefault(p => p.MAIL_PTT_DIGITAL.ToLower().Contains(Login_Name.ToLower()));
-                    return loginUser;
+                    }).ToList();
+
+                    if (New_Employee)
+                    {
+                        user = loginUser.FirstOrDefault(p => p.MAIL_PTT_DIGITAL.ToLower().Contains(Login_Name.ToLower()) && p.EMPLOYEE_NO == null);
+                    }
+                    else
+                    {
+                        user = loginUser.FirstOrDefault(p => p.MAIL_PTT_DIGITAL.ToLower().Contains(Login_Name.ToLower()));
+                    }
+
+                    return user;
                 }
             }
             catch (Exception ex)

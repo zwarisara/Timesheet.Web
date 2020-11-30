@@ -152,19 +152,20 @@ namespace Timesheet.Web.Repositories
             bool result = false;
             try
             {
+                decimal sumHour = 0;
                 using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
                 {
-                    var sumHour = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && !i.JOBCODE_ID.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today)).Sum(i => i.WORK_HOUR);
+                    var sumHourWork = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.TIMESHEET_DATE.Value.Equals(today)).Sum(i => i.WORK_HOUR) ?? 0;
+                    var sumHourLeaveLst = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.WORK_HOUR.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today));
 
-                    if (sumHour != null)
+                    if (sumHourLeaveLst.Count() > 0)
                     {
-                        var checkOver = sumHour + decimal.Parse(work_hour);
-                        result = checkOver.Value <= 8 ? true : false;
+                        sumHour += sumHourLeaveLst.Sum(i => i.TIMESHEET_REMARK == "ลาทั้งวัน" ? 8 : 4);
                     }
-                    else 
-                    {
-                        result = true;
-                    }
+
+                    sumHour += (sumHourWork + decimal.Parse(work_hour));
+                    result = sumHour <= 8 ? true : false;
+
                 }
             }
             catch (Exception ex)
@@ -183,20 +184,18 @@ namespace Timesheet.Web.Repositories
             {
                 using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
                 {
-                    var sumHourLst = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.JOBCODE_ID.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today));
+                    var sumHourWork = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.TIMESHEET_DATE.Value.Equals(today)).Sum(i => i.WORK_HOUR) ?? 0;
+                    var sumHourLeaveLst = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.WORK_HOUR.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today));
 
-                    if (sumHourLst.Count() > 0)
+                    if (sumHourLeaveLst.Count() > 0)
                     {
-                        sumHour = sumHourLst.Sum(i => i.TIMESHEET_REMARK == "ลาทั้งวัน" ? 8 : 4);
-                        var leave = strLeave == "ลาทั้งวัน" ? 8 : 4;
+                        sumHour += sumHourLeaveLst.Sum(i => i.TIMESHEET_REMARK == "ลาทั้งวัน" ? 8 : 4);
+                    }
 
-                        var checkOver = sumHour + leave;
-                        result = checkOver <= 8 ? true : false;
-                    }
-                    else
-                    {
-                        result = true;
-                    }
+                    var leave = strLeave == "ลาทั้งวัน" ? 8 : 4;
+                    sumHour += (leave + sumHourWork);
+                    result = sumHour <= 8 ? true : false;
+
                 }
             }
             catch (Exception ex)
