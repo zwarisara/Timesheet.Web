@@ -154,6 +154,7 @@
         var Endday = "";
         var Month = "";
         var Chart = "";
+      
         $(document).ready(function () {
             $('#txtstartday').datetimepicker({
                 format: "DD/MM/YYYY",
@@ -164,13 +165,18 @@
                 format: "DD/MM/YYYY",
                 useCurrent: false
             });
-
+           
+            var today = new Date();
+            var dd = "01";
+            //var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            var yyyy = today.getFullYear();
+            today = dd + '/' + mm + '/' + yyyy;
+            $("#txtstartday").val(today);        
             GetDataChartPie();
             GetDataEmployee();
             GetDataChartColumn();
-            GetDataChartColumn2()
-        
-            $("#btnGenChart").trigger("click");
+            GetDataChartColumn2()      
         });
 
 
