@@ -12,19 +12,16 @@
     <title>Highcharts Example</title>
 
     <style type="text/css">
+        #container {
+            height: 400px;
+        }
+
         .highcharts-figure, .highcharts-data-table table {
             min-width: 310px;
             max-width: 800px;
             margin: 1em auto;
         }
 
-        #container {
-            height: 400px;
-        }
-
-        /*.highcharts-legend {
-            transform: translate(17px, -5px);
-        }*/
         .highcharts-data-table table {
             font-family: Verdana, sans-serif;
             border-collapse: collapse;
@@ -57,6 +54,7 @@
         .highcharts-data-table tr:hover {
             background: #f1f7ff;
         }
+
     </style>
 </head>
 <body>
@@ -64,7 +62,7 @@
         <div class="col-md-1 text-right" style="padding: 0px; padding-top: 7.5px;">
             <label for="txtstartday">วันที่เริ่มต้น :</label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="input-group">
                 @Html.TextBoxFor(i => i.txtstartday, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "txtstartday", autocomplete = "off", placeholder = "Enter Date" })
                 <span class="input-group-addon">
@@ -76,7 +74,7 @@
         <div class="col-md-1 text-right" style="padding: 0px; padding-top: 7.5px;">
             <label for="txtendday">วันที่สิ้นสุด :</label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="input-group">
                 @Html.TextBoxFor(i => i.txtendday, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "txtendday", autocomplete = "off", placeholder = "Enter Date" })
                 <span class="input-group-addon">
@@ -86,16 +84,16 @@
         </div>
 
 
-        <div class="col-md-4">
+        <div class="col-md-6">
 
             <div class="col-md-10">
-                <div class="col-md-5  text-right" style="padding: 0px; padding-top: 7.5px;">
+                <div class="col-md-3  text-right" style="padding: 0px; padding-top: 7.5px;">
                     <label for="chart">รูปแบบกราฟ :</label>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <select id="chart" class="form-control">
-                        <option value="1">Chart 1</option>
-                        <option value="2">Chart 2</option>
+                        <option value="1">Job Code Uitilzation (Summary)</option>
+                        <option value="2">Job Code Utilization (per day)</option>
                     </select>
                 </div>
             </div>
@@ -122,13 +120,13 @@
                 </thead>
             </table>*@
     </div>
-
+    <span  id="lbchart" >
+     
+</span>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
-            <label id="lbchart">
 
-            </label>
         </p>
     </figure>
 
@@ -157,7 +155,7 @@
         var Endday = "";
         var Month = "";
         var Chart = "";
-      
+
         $(document).ready(function () {
             $('#txtstartday').datetimepicker({
                 format: "DD/MM/YYYY",
@@ -168,19 +166,19 @@
                 format: "DD/MM/YYYY",
                 useCurrent: false
             });
-           
+
             var today = new Date();
             var dd = "01";
             //var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
             var yyyy = today.getFullYear();
             today = dd + '/' + mm + '/' + yyyy;
-            $("#txtstartday").val(today);        
-      
+            $("#txtstartday").val(today);
+
             GetDataEmployee();
-            GetDataChartColumn();
-            GetDataChartColumn2()
-            //GetDataChartPie();
+            //GetDataChartColumn();
+            //GetDataChartColumn2()
+            GetDataChartPie();
         });
 
 
@@ -203,17 +201,19 @@
                 txtmonthmaxday = monthNames[parseInt(maxday[1]) - 1];
                 txtmonthminday = monthNames[parseInt(minday[1]) - 1];
                 Year = $("#year").val();
-                GetdayoMonth(minday[0],maxday[0])
+                GetdayoMonth(minday[0], maxday[0])
+               
+               
             }
 
             function GenFormatChart() {
                 Chart = $("#chart").val();
                 if (Chart == "1") {
-                    GetDataChartColumn()
+                    GetDataChartPie()   
                 }
                 else if (Chart == "2") {
-                    GetDataChartPie()
-                  
+                   
+                    GetDataChartColumn()
                 }
                 else {
 
@@ -289,48 +289,34 @@
                     },
                     xAxis: {
                         categories: period_day
+                            //['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
                     },
                     yAxis: {
                         min: 0,
                         title: {
                             text: 'Man-days'
-                        },
-                        stackLabels: {
-                            enabled: true,
-                            style: {
-                                fontWeight: 'bold',
-                                color: (
-                                    Highcharts.defaultOptions.title.style &&
-                                    Highcharts.defaultOptions.title.style.color
-                                ) || 'gray'
-                            }
                         }
                     },
-                    legend: {
-                        align: 'right',
-                        x: -30,
-                        verticalAlign: 'top',
-                        y: 25,
-                        floating: true,
-                        backgroundColor:
-                            Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                        borderColor: '#CCC',
-                        borderWidth: 1,
-                        shadow: false
-                    },
                     tooltip: {
-                        headerFormat: '<b>{point.x:,.2f}</b><br/>',
-                        pointFormat: '{series.name}: {point.y:,.2f}<br/>Total:{point.stackTotal:,.2f}'
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                        shared: true
                     },
                     plotOptions: {
                         column: {
-                            stacking: 'normal',
-                            dataLabels: {
-                                enabled: true
-                            }
+                            stacking: 'percent'
                         }
                     },
-                    series: [{
+                    //series: [{
+                    //    name: 'John',
+                    //    data: [5, 3, 4, 7, 2]
+                    //}, {
+                    //    name: 'Jane',
+                    //    data: [2, 2, 3, 2, 1]
+                    //}, {
+                    //    name: 'Joe',
+                    //    data: [3, 4, 4, 2, 5]
+                    //}]
+                         series: [{
                         name: 'Supp OR GRP',
                         data: objSuppORGRP
                     }, {
@@ -352,7 +338,7 @@
                         data: objAOUPSupport
 
                     }, {
-                        name: 'SP-PTT-AOU/P-SAP Master',
+                        name: 'SAP Master',
                         data: objSAP
                     }, {
                         name: 'Project',
@@ -360,6 +346,88 @@
 
                     }]
                 });
+
+
+                //Highcharts.chart('container', {
+                //    chart: {
+                //        type: 'column'
+                //    },
+                //    title: {
+                //        text: 'JOB CODE ' + minday[0] + " " + txtmonthminday + " " + minday[2] + ' - ' + maxday[0] + " " + txtmonthmaxday + " " + maxday[2] + "<br>"
+                //    },
+                //    xAxis: {
+                //        categories: period_day
+                //    },
+                //    yAxis: {
+                //        min: 0,
+                //        title: {
+                //            text: 'Man-days'
+                //        },
+                //        stackLabels: {
+                //            enabled: true,
+                //            style: {
+                //                fontWeight: 'bold',
+                //                color: (
+                //                    Highcharts.defaultOptions.title.style &&
+                //                    Highcharts.defaultOptions.title.style.color
+                //                ) || 'gray'
+                //            }
+                //        }
+                //    },
+                //    legend: {
+                //        align: 'right',
+                //        x: -30,
+                //        verticalAlign: 'top',
+                //        y: 25,
+                //        floating: true,
+                //        backgroundColor:
+                //            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                //        borderColor: '#CCC',
+                //        borderWidth: 1,
+                //        shadow: false
+                //    },
+                //    tooltip: {
+                //        headerFormat: '<b>{point.x:,.2f}</b><br/>',
+                //        pointFormat: '{series.name}: {point.y:,.2f}<br/>Total:{point.stackTotal:,.2f}'
+                //    },
+                //    plotOptions: {
+                //        column: {
+                //            stacking: 'normal',
+                //            dataLabels: {
+                //                enabled: true
+                //            }
+                //        }
+                //    },
+                //    series: [{
+                //        name: 'Supp OR GRP',
+                //        data: objSuppORGRP
+                //    }, {
+                //        name: 'Supp OR MR',
+                //        data: objSuppORMR
+                //    }, {
+                //        name: 'Supp SP',
+                //        data:  objSuppSP
+                //    }, {
+                //        name: 'Supp RRS',
+                //        data: objSuppRRS
+
+                //    }, {
+                //        name: 'Supp eBG',
+                //        data: objSuppeBG
+
+                //    }, {
+                //        name: 'AOU/P Support',
+                //        data: objAOUPSupport
+
+                //    }, {
+                //        name: 'SAP Master',
+                //        data: objSAP
+                //    }, {
+                //        name: 'Project',
+                //        data: objProject
+
+                //    }]
+                //});
 
             }
 
@@ -454,9 +522,9 @@
                     });
             }
 
-            
+
             function GetDataChartColumn2() {
-        
+
                     $.ajax({
                         url: '@Url.Action("ListChartColumn2")',
                         type: 'POST',
@@ -470,7 +538,7 @@
                     });
             }
             function GetDataEmployee() {
-        
+
                     $.ajax({
                         url: '@Url.Action("ListEmployee")',
                         type: 'POST',
@@ -483,7 +551,7 @@
                         }
                     });
             }
-            
+
         </script>
     }
 </body>
