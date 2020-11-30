@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Timesheet.Web.Models;
 using Timesheet.Web.Repositories;
@@ -45,20 +44,43 @@ namespace Timesheet.Web.Controllers
         [HttpPost]
         public JsonResult SaveTimeSheet(TimesheetModel param)
         {
+            string checkOver = "";
+            bool result = false;
             param.EMPLOYEE_ID = LoginRepo.GetOwnerUser().id;
+
             if (param.TYPE == "N")
             {
-                //วันลา
-                param.JOB_CODE_ID = 0;
-                param.TICKET_ID = null;
-                param.DESCRIPTION = param.LEAVE;
-                param.WORK_HOUR = "0";
-                param.WORK_LOCATION = "";
+                bool checkDayOff = _TimeSheetRepo.CheckDayOff8(param.DATE_OF, param.LEAVE, param.EMPLOYEE_ID);
+                if (checkDayOff)
+                {
+                    //วันลา
+                    param.JOB_CODE_ID = 0;
+                    param.TICKET_ID = null;
+                    param.DESCRIPTION = param.LEAVE;
+                    param.WORK_HOUR = "0";
+                    param.WORK_LOCATION = "";
+
+                    result = _TimeSheetRepo.Insert(param);
+                }
+                else
+                {
+                    checkOver = "Leave hours is over in a day !";
+                }
+            }
+            else 
+            {
+                bool checkWorkDay = _TimeSheetRepo.CheckWorkDay8(param.DATE_OF, param.WORK_HOUR, param.EMPLOYEE_ID);
+                if (checkWorkDay)
+                {
+                    result = _TimeSheetRepo.Insert(param);
+                }
+                else
+                {
+                    checkOver = "Work hours is over in a day !";
+                }
             }
 
-            bool result = _TimeSheetRepo.Insert(param);
-
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = result, message = checkOver }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

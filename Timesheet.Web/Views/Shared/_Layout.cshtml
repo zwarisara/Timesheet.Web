@@ -55,14 +55,14 @@
                 <img src="'~/../Picture/digital_logo.png" style="padding: 5px 0px 4px 0px;height: 55px;">
             </div>
             <div class="navbar-header col-md-1">
-                @Html.ActionLink("TIMESHEET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
+                @Html.ActionLink("TIMESHEET", "Index", "Timesheet", new { area = "" }, new { @class = "navbar-brand", @style = "color:white;" })
             </div>
             <div class="navbar-header col-md-5">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
                     <li>@Html.ActionLink("Timesheet", "Index", "Timesheet")</li>
-                    <li>@Html.ActionLink("Job Code", "Index", "JobCode")</li>
-                    <li>@Html.ActionLink("Employee Data", "Index", "DataManagement")</li>
+                    @*<li>@Html.ActionLink("Job Code", "Index", "JobCode")</li>
+                    <li>@Html.ActionLink("Employee Data", "Index", "DataManagement")</li>*@
                 </ul>
             </div>
             <div class="navbar-header col-md-5" style="display: flex !important; justify-content: flex-end !important;">

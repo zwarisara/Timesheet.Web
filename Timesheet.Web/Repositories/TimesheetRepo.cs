@@ -147,5 +147,65 @@ namespace Timesheet.Web.Repositories
 
         }
 
+        public bool CheckWorkDay8(DateTime today, string work_hour, int emp_id)
+        {
+            bool result = false;
+            try
+            {
+                using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
+                {
+                    var sumHour = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && !i.JOBCODE_ID.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today)).Sum(i => i.WORK_HOUR);
+
+                    if (sumHour != null)
+                    {
+                        var checkOver = sumHour + decimal.Parse(work_hour);
+                        result = checkOver.Value <= 8 ? true : false;
+                    }
+                    else 
+                    {
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        public bool CheckDayOff8(DateTime today, string strLeave, int emp_id)
+        {
+            bool result = false;
+            decimal sumHour = 0;
+            try
+            {
+                using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
+                {
+                    var sumHourLst = db.TB_TIMESHEET.Where(i => i.EMPLOYEE_ID.Value.Equals(emp_id) && i.JOBCODE_ID.Value.Equals(0) && i.TIMESHEET_DATE.Value.Equals(today));
+
+                    if (sumHourLst.Count() > 0)
+                    {
+                        sumHour = sumHourLst.Sum(i => i.TIMESHEET_REMARK == "ลาทั้งวัน" ? 8 : 4);
+                        var leave = strLeave == "ลาทั้งวัน" ? 8 : 4;
+
+                        var checkOver = sumHour + leave;
+                        result = checkOver <= 8 ? true : false;
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+
+            return result;
+
+        }
     }
 }
