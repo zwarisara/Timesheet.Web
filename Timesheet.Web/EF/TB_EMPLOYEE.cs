@@ -32,5 +32,6 @@ namespace Timesheet.Web.EF
         public Nullable<System.DateTime> INTERVIEW_DATE { get; set; }
         public Nullable<System.DateTime> START_WORK_DATE { get; set; }
         public string STATUS { get; set; }
+        public string EMPLOYEE_TYPE { get; set; }
     }
 }

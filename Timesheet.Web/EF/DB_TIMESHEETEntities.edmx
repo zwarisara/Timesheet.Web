@@ -27,6 +27,7 @@
           <Property Name="INTERVIEW_DATE" Type="date" />
           <Property Name="START_WORK_DATE" Type="date" />
           <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEE_TYPE" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="TB_EMPLOYEE_JOBCODE">
           <Key>
@@ -117,12 +118,7 @@
         <Function Name="SP_GET_JOB_CODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JOB_ID" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="SP_GET_LIST_CHART" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="startday" Type="varchar" Mode="In" />
-          <Parameter Name="endday" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="SP_GET_LIST_CHART_COLUMN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="month" Type="varchar" Mode="In" />
           <Parameter Name="startday" Type="varchar" Mode="In" />
           <Parameter Name="endday" Type="varchar" Mode="In" />
         </Function>
@@ -167,6 +163,7 @@
           <Property Name="INTERVIEW_DATE" Type="DateTime" Precision="0" />
           <Property Name="START_WORK_DATE" Type="DateTime" Precision="0" />
           <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEE_TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_EMPLOYEE_JOBCODE">
           <Key>
@@ -267,7 +264,6 @@
             <Parameter Name="endday" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_CHART_COLUMN" ReturnType="Collection(String)">
-            <Parameter Name="month" Mode="In" Type="String" />
             <Parameter Name="startday" Mode="In" Type="String" />
             <Parameter Name="endday" Mode="In" Type="String" />
           </FunctionImport>
@@ -278,7 +274,7 @@
           <Parameter Name="JOB_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GET_LIST_TIMESHEET_MONTH" ReturnType="Collection(DB_TIMESHEETEntitiesModel.SP_GET_LIST_TIMESHEET_MONTH_Result)">
-            <Parameter Name="Employee_ID" Mode="In" Type="String" />
+          <Parameter Name="Employee_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GET_LIST_CHART_Result">
@@ -321,6 +317,7 @@
           <EntitySetMapping Name="TB_EMPLOYEE">
             <EntityTypeMapping TypeName="DB_TIMESHEETEntitiesModel.TB_EMPLOYEE">
               <MappingFragment StoreEntitySet="TB_EMPLOYEE">
+                <ScalarProperty Name="EMPLOYEE_TYPE" ColumnName="EMPLOYEE_TYPE" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
                 <ScalarProperty Name="EMPLOYEE_NO" ColumnName="EMPLOYEE_NO" />
                 <ScalarProperty Name="FULLNAME_TH" ColumnName="FULLNAME_TH" />
@@ -434,14 +431,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_GET_LIST_CHART" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_CHART">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_TIMESHEETEntitiesModel.SP_GET_LIST_CHART_Result">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="y" ColumnName="y" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_LIST_CHART_COLUMN" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_CHART_COLUMN" />
           <FunctionImportMapping FunctionImportName="SP_GET_LIST_TIMESHEET" FunctionName="DB_TIMESHEETEntitiesModel.Store.SP_GET_LIST_TIMESHEET">
             <ResultMapping>

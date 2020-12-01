@@ -38,7 +38,15 @@ namespace Timesheet.Web.Controllers
                     else 
                     {
                         initLoginData(LoginUser);
-                        return RedirectToAction("index", "Timesheet");
+                        if (LoginUser.EMPLOYEE_TYPE == "PTTDIGITAL")
+                        {
+                            return RedirectToAction("index", "Home");
+                        }
+                        else 
+                        {
+                            return RedirectToAction("index", "Timesheet");
+                        }
+                        
                     }
                 }
                 else 
@@ -74,7 +82,7 @@ namespace Timesheet.Web.Controllers
             TimeSheetLoginUser.Full_Name_EN = LoginUser.FULLNAME_EN;
             TimeSheetLoginUser.Full_Name_TH = LoginUser.FULLNAME_TH;
             TimeSheetLoginUser.Customer = "";
-            TimeSheetLoginUser.UserType = "";
+            TimeSheetLoginUser.UserType = LoginUser.EMPLOYEE_TYPE;
             TimeSheetLoginUser.Customer_Group = "";
             string userData = Newtonsoft.Json.JsonConvert.SerializeObject(TimeSheetLoginUser);
             Session["authorized"] = userData;
