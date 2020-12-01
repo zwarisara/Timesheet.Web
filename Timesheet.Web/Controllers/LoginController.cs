@@ -32,8 +32,8 @@ namespace Timesheet.Web.Controllers
                     var LoginUser = LoginRepo.GetUser(formData.Login_Name);
                     if (LoginUser == null)
                     {
-                        ViewBag.Result = "UserName หรือ PassWord ไม่ถูกต้อง !";
-                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName หรือ PassWord ไม่ถูกต้อง !" }));
+                        ViewBag.Result = "Username หรือ Password ไม่ถูกต้อง !";
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "Username หรือ Password ไม่ถูกต้อง !" }));
                     }
                     else 
                     {
@@ -54,8 +54,8 @@ namespace Timesheet.Web.Controllers
                     var LoginUserNew = LoginRepo.GetUser(formData.Login_Name, true);
                     if (LoginUserNew == null)
                     {
-                        ViewBag.Result = "UserName หรือ PassWord ไม่ถูกต้อง !";
-                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "UserName หรือ PassWord ไม่ถูกต้อง !" }));
+                        ViewBag.Result = "Username หรือ Password ไม่ถูกต้อง !";
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "Username หรือ Password ไม่ถูกต้อง !" }));
                     }
                     else if (formData.Login_Password.Trim() == "D!g!t@l01")
                     {
@@ -64,8 +64,8 @@ namespace Timesheet.Web.Controllers
                     }
                     else 
                     {
-                        ViewBag.Result = "PassWord ไม่ถูกต้อง !";
-                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "PassWord ไม่ถูกต้อง !" }));
+                        ViewBag.Result = "Password ไม่ถูกต้อง !";
+                        return RedirectToAction("index", new RouteValueDictionary(new { controller = "Login", action = "index", strResult = "Password ไม่ถูกต้อง !" }));
                     }
                     
                 }
