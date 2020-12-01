@@ -445,7 +445,7 @@
                         text: 'Job Code ' + minday[0] + " " + txtmonthminday + " " + minday[2] + ' - ' + maxday[0] + " " + txtmonthmaxday + " " + maxday[2]
                     },
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+                        pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.2f}%)'
                     },
                     accessibility: {
                         point: {
@@ -463,7 +463,7 @@
                         }
                     },
                     series: [{
-                        name: 'Brands',
+                        name: 'Man-Day',
                         colorByPoint: true,
                         data: JSON.parse(JSONChartPie)
 
