@@ -20,6 +20,7 @@ namespace Timesheet.Web.Repositories
                     {
                         EMPLOYEE_ID = t.EMPLOYEE_ID,
                         EMPLOYEE_NO = t.EMPLOYEE_NO,
+                        EMPLOYEE_TYPE = t.EMPLOYEE_TYPE,
                         FULLNAME_TH = t.FULLNAME_TH,
                         FULLNAME_EN = t.FULLNAME_EN,
                         NICKNAME = t.NICKNAME,

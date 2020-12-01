@@ -48,12 +48,8 @@ namespace Timesheet.Web.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_LIST_CHART_Result>("SP_GET_LIST_CHART", startdayParameter, enddayParameter);
         }
     
-        public virtual ObjectResult<string> SP_GET_LIST_CHART_COLUMN(string month, string startday, string endday)
+        public virtual ObjectResult<string> SP_GET_LIST_CHART_COLUMN(string startday, string endday)
         {
-            var monthParameter = month != null ?
-                new ObjectParameter("month", month) :
-                new ObjectParameter("month", typeof(string));
-    
             var startdayParameter = startday != null ?
                 new ObjectParameter("startday", startday) :
                 new ObjectParameter("startday", typeof(string));
@@ -62,7 +58,7 @@ namespace Timesheet.Web.EF
                 new ObjectParameter("endday", endday) :
                 new ObjectParameter("endday", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_GET_LIST_CHART_COLUMN", monthParameter, startdayParameter, enddayParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_GET_LIST_CHART_COLUMN", startdayParameter, enddayParameter);
         }
     
         public virtual ObjectResult<SP_GET_LIST_TIMESHEET_Result> SP_GET_LIST_TIMESHEET(string nAME)
