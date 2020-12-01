@@ -367,7 +367,8 @@
 
             $('#WORK_HOUR').on('change', function (e) {
                 var inputInt = Number.isInteger(parseFloat($('#WORK_HOUR').val()))
-                if (!inputInt) {
+                if (!inputInt || parseFloat($('#WORK_HOUR').val()) < 1 || parseFloat($('#WORK_HOUR').val()) > 8)
+                {
                     $('#WORK_HOUR').val('');
                     toastr.warning('Please input valid Work Hour(1-8) !');
                 }

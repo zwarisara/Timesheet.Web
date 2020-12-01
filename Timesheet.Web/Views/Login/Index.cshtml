@@ -47,7 +47,7 @@
                 <form>
                     <div class="input-container" style="margin-top: 20px; margin-left: 12px;">
                         <label for="name" style="color:red;" class="control-label">@ViewBag.Result</label>
-                        @Html.TextBoxFor(i => i.Login_Name, new { required = "required", @class = "form-control", @placeholder = "UserName" })
+                        @Html.TextBoxFor(i => i.Login_Name, new { required = "required", @class = "form-control", @placeholder = "Username" })
                         @Html.ValidationMessageFor(model => model.Login_Name)
                     </div>
                     <div class="input-container" style="margin-top: 10px; margin-left: 12px;">
