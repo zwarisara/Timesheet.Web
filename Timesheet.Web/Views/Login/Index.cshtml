@@ -3,38 +3,38 @@
     ViewBag.Title = "Login";
 }
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - Timesheet Web</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Timesheet Web</title>
 
-        <style>
-            .page-header {
-                min-height: 100vh;
-                max-height: 1000px;
-                display: flex !important;
-                padding: 0;
-                margin: 0;
-                border: 0;
-                color: #fff;
-                position: relative;
-                align-items: center;
-            }
+    <style>
+        .page-header {
+            min-height: 100vh;
+            max-height: 1000px;
+            display: flex !important;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            color: #fff;
+            position: relative;
+            align-items: center;
+        }
 
-            input, select, textarea {
-                max-width: 300px !important;
-            }
-        </style>
+        input, select, textarea {
+            max-width: 300px !important;
+        }
+    </style>
 
-        @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery")
 
-        <script>
-            $(document).ready(function () {
-                $('.navbar-inverse').hide();
-            });
-        </script>
+    <script>
+        $(document).ready(function () {
+            $('.navbar-inverse').hide();
+        });
+    </script>
 
-    </head>
+</head>
 
 <body class="page-header" style="background: url('~/../Picture/background1.png') no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;">
     <div class="container" style="margin-top: -2%;">
@@ -68,13 +68,17 @@
 </footer>
 
 <script>
-   $('#btnLogin').on('click', function() {
-    var $this = $(this);
-      $this.button('loading');
-        setTimeout(function() {
-           $this.button('reset');
-       }, 60000);
+    $('#btnLogin').on('click', function () {
+        if ($('#Login_Name').val() != '' && $('#Login_Password').val() != '')
+        {
+            var $this = $(this);
+            $this.button('loading');
+            setTimeout(function () {
+                $this.button('reset');
+            }, 60000);
+        }
     });
+
 </script>
 
 
