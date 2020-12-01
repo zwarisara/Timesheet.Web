@@ -247,7 +247,7 @@
 
             $('#ShowDate').html('Timesheet Records'); //GetDate()
 
-            $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false, minDate: (new Date(date.getFullYear(), 11, 0)) }); /*, minDate: firstDay, maxDate: lastDay*/
+            $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false, minDate: firstDay }); /*, minDate: firstDay, maxDate: lastDay*/
 
             var Table = $('#tableMyTimesheet').DataTable({
                 data: [],
