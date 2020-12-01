@@ -395,7 +395,9 @@
             $('.checkedRadio').on('change', function () {
                 var checkedRadio = $('input[name="TYPE"]:checked').val();
                     if (checkedRadio == "Y") {
-                        $('#btnClear').click();
+                        $('.divDayActive').show();
+                        $('.divDayInActive').hide();
+                        $('#divListShow').css('margin-top', '20%');
                     }
                     else {
                         $('.divDayActive').hide();
