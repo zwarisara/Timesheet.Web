@@ -177,7 +177,7 @@
 
             GetDataEmployee();
             //GetDataChartColumn();
-            //GetDataChartColumn2()
+            GetDataChartColumn2()
             GetDataChartPie();
         });
 
@@ -431,6 +431,135 @@
 
             }
 
+            function GenChartColumn2() {
+                GendayoMonth()
+                objSuppORGRP = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp OR GRP";
+                });
+
+                objSuppORGRP = $(objSuppORGRP).map(function (i) {
+                    return [objSuppORGRP[i].MAN_DAY];
+                });
+
+                objSuppORMR = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp OR MR";
+                });
+                objSuppORMR = $(objSuppORMR).map(function (i) {
+                    return [objSuppORMR[i].MAN_DAY];
+                });
+
+                objSuppSP = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp SP";
+                });
+                objSuppSP = $(objSuppSP).map(function (i) {
+                    return [objSuppSP[i].MAN_DAY];
+                });
+
+                objSuppRRS = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp RRS";
+                });
+                objSuppRRS = $(objSuppRRS).map(function (i) {
+                    return [objSuppRRS[i].MAN_DAY];
+                });
+
+                objSuppeBG = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Supp eBG";
+                });
+                objSuppeBG = $(objSuppeBG).map(function (i) {
+                    return [objSuppeBG[i].MAN_DAY];
+                });
+
+                objAOUPSupport = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "AOU/P Support";
+                });
+                objAOUPSupport = $(objAOUPSupport).map(function (i) {
+                    return [objAOUPSupport[i].MAN_DAY];
+                });
+
+                objSAP = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "SP-PTT-AOU/P-SAP Master";
+                });
+                objSAP = $(objSAP).map(function (i) {
+                    return [objSAP[i].MAN_DAY];
+                });
+
+                objProject = objChartColumn.filter(function (objChartColumn) {
+                    return objChartColumn.JOB_GROUP == "Project";
+                });
+                objProject = $(objProject).map(function (i) {
+                    return [objProject[i].MAN_DAY];
+                });
+
+
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'JOB CODE ' + minday[0] + " " + txtmonthminday + " " + minday[2] + ' - ' + maxday[0] + " " + txtmonthmaxday + " " + maxday[2]
+                    },
+                    xAxis: {
+                        categories: period_day
+                        //['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Man-days'
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.2f}%)<br/>',
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'percent'
+                        }
+                    },
+                    //series: [{
+                    //    name: 'John',
+                    //    data: [5, 3, 4, 7, 2]
+                    //}, {
+                    //    name: 'Jane',
+                    //    data: [2, 2, 3, 2, 1]
+                    //}, {
+                    //    name: 'Joe',
+                    //    data: [3, 4, 4, 2, 5]
+                    //}]
+                    series: [{
+                        name: 'Supp OR GRP',
+                        data: objSuppORGRP
+                    }, {
+                        name: 'Supp OR MR',
+                        data: objSuppORMR
+                    }, {
+                        name: 'Supp SP',
+                        data: objSuppSP
+                    }, {
+                        name: 'Supp RRS',
+                        data: objSuppRRS
+
+                    }, {
+                        name: 'Supp eBG',
+                        data: objSuppeBG
+
+                    }, {
+                        name: 'AOU/P Support',
+                        data: objAOUPSupport
+
+                    }, {
+                        name: 'SAP Master',
+                        data: objSAP
+                    }, {
+                        name: 'Project',
+                        data: objProject
+
+                    }]
+                });
+            }
+
+
             function GenChartPie() {
                 GendayoMonth()
                 JSONChartPie = JSON.stringify(objChartPie);
@@ -537,6 +666,19 @@
                             alert("error");
                         }
                     });
+
+                   $.ajax({
+                        url: '@Url.Action("ListEmployee")',
+                        type: 'POST',
+                        data: "",
+                        success: function (data) {
+                            objEmployee = data;
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+
             }
             function GetDataEmployee() {
 
