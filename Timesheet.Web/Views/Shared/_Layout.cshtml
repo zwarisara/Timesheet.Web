@@ -45,7 +45,6 @@
         .col-form-label {
             padding-top: calc(.8rem - 1px * 2) !important;
         }
-
     </style>
 
 </head>
@@ -106,14 +105,26 @@
                 $(this).parent().addClass('active').siblings().removeClass('active')
             })
         });
-  
+
     //session end
     var sessionTimeoutWarning = @Session.Timeout- 1;
     var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
     setTimeout('SessionEnd()', sTimeout);
     function SessionEnd() {
-        window.location = "/Login";
+            var url = getRootWebSitePath() + "/Login";
+            window.location = url;
+        
     }
+
+    function getRootWebSitePath() {
+            var _location = document.location.toString();
+            var applicationNameIndex = _location.indexOf('/', _location.indexOf('://') + 3);
+            var applicationName = _location.substring(0, applicationNameIndex) + '/';
+            var webFolderIndex = _location.indexOf('/', _location.indexOf(applicationName) + applicationName.length);
+            var webFolderFullPath = _location.substring(0, webFolderIndex);
+            return webFolderFullPath;
+    }
+
     </script>
 
 </body>
