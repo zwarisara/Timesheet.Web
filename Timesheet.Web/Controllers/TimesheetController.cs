@@ -15,7 +15,7 @@ namespace Timesheet.Web.Controllers
             TimesheetModel model = new TimesheetModel();
             model.DATE_OF = DateTime.Now;
             model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode();
-            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode("38");
+            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode();
             return View(model);
         }
 

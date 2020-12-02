@@ -337,14 +337,15 @@
                         if (data.Result.length > 0) {
                             $("#divSubJobCode").css("display", "block");
 
-                            //for(var i=0; i < data.Result.length; i++)
-                            //{
-                            ////creates option tag
-                            //  jQuery('<option/>', {
-                            //        value: data.Result[i].SUB_JOBCODE_ID,
-                            //        text: data.Result[i].SUB_JOBCODE_NAME
-                            //        }).appendTo('#SUB_JOB_CODE'); //appends to select if parent div has id dropdown
-                            //}
+                            for(var i=0; i < data.Result.length; i++)
+                            {
+                            //creates option tag
+                              jQuery('<option/>', {
+                                    value: data.Result[i].SUB_JOBCODE_ID,
+                                    text: data.Result[i].SUB_JOBCODE_NAME
+                              }).appendTo('#SUB_JOB_CODE'); //appends to select if parent div has id dropdown
+                              $('.selectpicker').selectpicker('refresh');
+                            }
 
                             sub_jobcode_exist = true;
                             $('#divListShow').css('margin-top', '24%');
