@@ -124,7 +124,7 @@
                             <label for="name" class="control-label">Ticket ID</label>
                         </div>
                         <div class="col-md-4">
-                            @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control", @type = "number", @pattern = @"/^-?\d+\.?\d*$/" , @onkeypress = "if(this.value.length==12) return false;"})
+                            @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control", @type = "number", @pattern = "[0-9]" , @onkeypress = "if(this.value.length==12) return false;"})
                         </div>
                     </div>
                     <div class="row col-md-12" style="margin-top: 1%;">
