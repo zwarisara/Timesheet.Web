@@ -40,7 +40,7 @@ namespace Timesheet.Web.Repositories
                     SUB_JOBCODE_ID = i.JOBCODE_ID.ToString(),
                     SUB_JOBCODE_NO = i.JOBCODE_NO,
                     SUB_JOBCODE_NAME = i.JOBCODE_NAME
-                }).ToList();
+                }).OrderBy(i => i.SUB_JOBCODE_NAME).ToList();
 
                 return lst;
             }
