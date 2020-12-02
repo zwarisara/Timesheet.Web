@@ -64,7 +64,7 @@ namespace Timesheet.Web.Controllers
                 }
                 else
                 {
-                    checkOver = "Leave hours is over in a day !";
+                    checkOver = "Please input valid leave hours in a day !";
                 }
             }
             else 
@@ -76,7 +76,7 @@ namespace Timesheet.Web.Controllers
                 }
                 else
                 {
-                    checkOver = "Work hours is over in a day !";
+                    checkOver = "Please input valid work hours in a day !";
                 }
             }
 
