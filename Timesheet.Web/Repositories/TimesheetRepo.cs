@@ -190,6 +190,11 @@ namespace Timesheet.Web.Repositories
                     if (sumHourLeaveLst.Count() > 0)
                     {
                         sumHour += sumHourLeaveLst.Sum(i => i.TIMESHEET_REMARK == "ลาทั้งวัน" ? 8 : 4);
+
+                        if (sumHourLeaveLst.FirstOrDefault(i => i.TIMESHEET_REMARK.Contains(strLeave)) != null) 
+                        {
+                            return false;
+                        }
                     }
 
                     var leave = strLeave == "ลาทั้งวัน" ? 8 : 4;

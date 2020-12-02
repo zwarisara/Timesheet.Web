@@ -247,7 +247,7 @@
 
             $('#ShowDate').html('Timesheet Records'); //GetDate()
 
-            $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false, minDate: firstDay }); /*, minDate: firstDay, maxDate: lastDay*/
+            $('#DATE_OF').datetimepicker({ format: "DD/MM/YYYY", useCurrent: false, minDate: (new Date(date.getFullYear(), 11, 1)) }); /*, minDate: firstDay, maxDate: lastDay*/
 
             var Table = $('#tableMyTimesheet').DataTable({
                 data: [],
@@ -334,19 +334,23 @@
                     data: { job_id: $('#JOB_CODE').val() },
                     success: function (data) {
 
-                        if (data.Result.length > 0) {
+                        if (data.Result.length > 0)
+                        {
                             $("#divSubJobCode").css("display", "block");
+                            $('#SUB_JOB_CODE').empty();
+                            jQuery('<option/>', { value: '', text: '-Please Select-' }).appendTo('#SUB_JOB_CODE'); 
+                            $('#SUB_JOB_CODE').val('');
+                            $('.selectpicker').selectpicker('refresh');
 
                             for(var i=0; i < data.Result.length; i++)
                             {
-                            //creates option tag
                               jQuery('<option/>', {
                                     value: data.Result[i].SUB_JOBCODE_ID,
                                     text: data.Result[i].SUB_JOBCODE_NAME
-                              }).appendTo('#SUB_JOB_CODE'); //appends to select if parent div has id dropdown
-                              $('.selectpicker').selectpicker('refresh');
+                              }).appendTo('#SUB_JOB_CODE'); 
                             }
 
+                            $('.selectpicker').selectpicker('refresh');
                             sub_jobcode_exist = true;
                             $('#divListShow').css('margin-top', '24%');
                         }
