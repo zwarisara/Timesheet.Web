@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using Timesheet.Web.Models;
 using Timesheet.Web.Repositories;
 
@@ -91,7 +92,10 @@ namespace Timesheet.Web.Controllers
 
         public ActionResult Logout()
         {
+            Session["User"] = null; 
+            Session.Clear();
             Session.Abandon();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
 

@@ -71,12 +71,12 @@
             <div class="navbar-header col-md-5">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
-                    @if(TimeSheetLoginUser.UserType == "OS")
+                    @if (TimeSheetLoginUser.UserType == "OS")
                     {
                         <li>@Html.ActionLink("Timesheet", "Index", "Timesheet")</li>
                     }
                     @*<li>@Html.ActionLink("Job Code", "Index", "JobCode")</li>
-                    <li>@Html.ActionLink("Employee Data", "Index", "DataManagement")</li>*@
+                        <li>@Html.ActionLink("Employee Data", "Index", "DataManagement")</li>*@
                 </ul>
             </div>
             <div class="navbar-header col-md-5" style="display: flex !important; justify-content: flex-end !important;">
@@ -106,6 +106,14 @@
                 $(this).parent().addClass('active').siblings().removeClass('active')
             })
         });
+  
+    //session end
+    var sessionTimeoutWarning = @Session.Timeout- 1;
+    var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+    setTimeout('SessionEnd()', sTimeout);
+    function SessionEnd() {
+        window.location = "/Login";
+    }
     </script>
 
 </body>
