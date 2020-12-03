@@ -451,6 +451,10 @@
                                 });
 
                             }
+                            else if (data.message == 'Timeout')
+                            {
+                                window.location.href = '@Url.Action("Index", "Login")';
+                            }
                             else
                             {
                                 toastr.error(data.message);
