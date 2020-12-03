@@ -22,5 +22,10 @@ namespace Timesheet.Web.EF
         public string TIMESHEET_REMARK { get; set; }
         public Nullable<decimal> WORK_HOUR { get; set; }
         public string WORK_LOCATION { get; set; }
+        public string PROGRAM_NAME { get; set; }
+        public Nullable<int> CREATED_BY { get; set; }
+        public Nullable<System.DateTime> CREATED_DATE { get; set; }
+        public Nullable<int> UPDATED_BY { get; set; }
+        public Nullable<System.DateTime> UPDATED_DATE { get; set; }
     }
 }
