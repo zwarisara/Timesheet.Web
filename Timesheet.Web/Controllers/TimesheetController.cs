@@ -48,39 +48,46 @@ namespace Timesheet.Web.Controllers
             bool result = false;
             param.EMPLOYEE_ID = LoginRepo.GetOwnerUser().id;
 
-            if (param.TYPE == "N")
-            {
-                bool checkDayOff = _TimeSheetRepo.CheckDayOff8(param.DATE_OF, param.LEAVE, param.EMPLOYEE_ID);
-                if (checkDayOff)
+            if (param.EMPLOYEE_ID != -1) 
+            { 
+                if (param.TYPE == "N")
                 {
-                    //วันลา
-                    param.JOB_CODE_ID = 0;
-                    param.TICKET_ID = null;
-                    param.DESCRIPTION = param.LEAVE;
-                    param.WORK_HOUR = "0";
-                    param.WORK_LOCATION = "";
+                    bool checkDayOff = _TimeSheetRepo.CheckDayOff8(param.DATE_OF, param.LEAVE, param.EMPLOYEE_ID);
+                    if (checkDayOff)
+                    {
+                        //วันลา
+                        param.JOB_CODE_ID = 0;
+                        param.TICKET_ID = null;
+                        param.DESCRIPTION = param.LEAVE;
+                        param.WORK_HOUR = "0";
+                        param.WORK_LOCATION = "";
 
-                    result = _TimeSheetRepo.Insert(param);
+                        result = _TimeSheetRepo.Insert(param);
+                    }
+                    else
+                    {
+                        checkOver = "Please input valid leave hours in a day !";
+                    }
                 }
-                else
+                else 
                 {
-                    checkOver = "Please input valid leave hours in a day !";
+                    bool checkWorkDay = _TimeSheetRepo.CheckWorkDay8(param.DATE_OF, param.WORK_HOUR, param.EMPLOYEE_ID);
+                    if (checkWorkDay)
+                    {
+                        result = _TimeSheetRepo.Insert(param);
+                    }
+                    else
+                    {
+                        checkOver = "Please input valid work hours in a day !";
+                    }
                 }
+
+                return Json(new { result = result, message = checkOver }, JsonRequestBehavior.AllowGet);
             }
             else 
             {
-                bool checkWorkDay = _TimeSheetRepo.CheckWorkDay8(param.DATE_OF, param.WORK_HOUR, param.EMPLOYEE_ID);
-                if (checkWorkDay)
-                {
-                    result = _TimeSheetRepo.Insert(param);
-                }
-                else
-                {
-                    checkOver = "Please input valid work hours in a day !";
-                }
+                return Json(new { result = result, message = "Timeout" }, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(new { result = result, message = checkOver }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
