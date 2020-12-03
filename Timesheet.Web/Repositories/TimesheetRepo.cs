@@ -35,7 +35,7 @@ namespace Timesheet.Web.Repositories
         {
             using (DB_TIMESHEETEntities db = new DB_TIMESHEETEntities())
             {
-                List<SubJobCodeListModel> lst = db.TB_JOBCODE.Where(i => i.JOBCODE_ID_PARENT.Value.ToString().Equals(job_code_id)).Select(i => new SubJobCodeListModel
+                List<SubJobCodeListModel> lst = db.TB_JOBCODE.Where(i => i.JOBCODE_ID_PARENT.Value.ToString().Equals(job_code_id) && i.ACTIVE.Value.Equals(true)).Select(i => new SubJobCodeListModel
                 {
                     SUB_JOBCODE_ID = i.JOBCODE_ID.ToString(),
                     SUB_JOBCODE_NO = i.JOBCODE_NO,

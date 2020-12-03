@@ -27,5 +27,9 @@ namespace Timesheet.Web.EF
         public Nullable<decimal> BUDGET_AMOUNT { get; set; }
         public string STATUS { get; set; }
         public string REMARK { get; set; }
+        public Nullable<int> PM_EMPLOYEE_ID { get; set; }
+        public Nullable<bool> ACTIVE { get; set; }
+        public string PROGRAM_NAME { get; set; }
+        public string CUSTOMER_DEPT { get; set; }
     }
 }

@@ -56,6 +56,10 @@
           <Property Name="BUDGET_AMOUNT" Type="decimal" Precision="18" Scale="3" />
           <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
           <Property Name="REMARK" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PM_EMPLOYEE_ID" Type="int" />
+          <Property Name="ACTIVE" Type="bit" />
+          <Property Name="PROGRAM_NAME" Type="varchar" MaxLength="500" />
+          <Property Name="CUSTOMER_DEPT" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TB_POT">
           <Key>
@@ -88,6 +92,11 @@
           <Property Name="TIMESHEET_REMARK" Type="nvarchar" MaxLength="2000" />
           <Property Name="WORK_HOUR" Type="decimal" Precision="5" Scale="2" />
           <Property Name="WORK_LOCATION" Type="nvarchar" MaxLength="200" />
+          <Property Name="PROGRAM_NAME" Type="varchar" MaxLength="500" />
+          <Property Name="CREATED_BY" Type="int" />
+          <Property Name="CREATED_DATE" Type="datetime" />
+          <Property Name="UPDATED_BY" Type="int" />
+          <Property Name="UPDATED_DATE" Type="datetime" />
         </EntityType>
         <EntityType Name="TB_WEEKLY_TIMESHEET">
           <Key>
@@ -192,6 +201,10 @@
           <Property Name="BUDGET_AMOUNT" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="REMARK" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PM_EMPLOYEE_ID" Type="Int32" />
+          <Property Name="ACTIVE" Type="Boolean" />
+          <Property Name="PROGRAM_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_DEPT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_POT">
           <Key>
@@ -224,6 +237,11 @@
           <Property Name="TIMESHEET_REMARK" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="WORK_HOUR" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="WORK_LOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PROGRAM_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_BY" Type="Int32" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="UPDATED_BY" Type="Int32" />
+          <Property Name="UPDATED_DATE" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TB_WEEKLY_TIMESHEET">
           <Key>
@@ -353,6 +371,10 @@
           <EntitySetMapping Name="TB_JOBCODE">
             <EntityTypeMapping TypeName="DB_TIMESHEETEntitiesModel.TB_JOBCODE">
               <MappingFragment StoreEntitySet="TB_JOBCODE">
+                <ScalarProperty Name="CUSTOMER_DEPT" ColumnName="CUSTOMER_DEPT" />
+                <ScalarProperty Name="PROGRAM_NAME" ColumnName="PROGRAM_NAME" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="PM_EMPLOYEE_ID" ColumnName="PM_EMPLOYEE_ID" />
                 <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
                 <ScalarProperty Name="ITEM_ORDER" ColumnName="ITEM_ORDER" />
                 <ScalarProperty Name="POT_ID" ColumnName="POT_ID" />
@@ -393,6 +415,11 @@
           <EntitySetMapping Name="TB_TIMESHEET">
             <EntityTypeMapping TypeName="DB_TIMESHEETEntitiesModel.TB_TIMESHEET">
               <MappingFragment StoreEntitySet="TB_TIMESHEET">
+                <ScalarProperty Name="UPDATED_DATE" ColumnName="UPDATED_DATE" />
+                <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="PROGRAM_NAME" ColumnName="PROGRAM_NAME" />
                 <ScalarProperty Name="TIMESHEET_ID" ColumnName="TIMESHEET_ID" />
                 <ScalarProperty Name="TIMESHEET_DATE" ColumnName="TIMESHEET_DATE" />
                 <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
