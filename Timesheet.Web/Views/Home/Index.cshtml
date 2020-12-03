@@ -109,6 +109,7 @@
     <script src="~/Charts/modules/exporting.js"></script>
     <script src="~/Charts/modules/export-data.js"></script>
     <script src="~/Charts/modules/accessibility.js"></script>
+    <script src="~/Scripts/IP_generalLib.js"></script>
 
     <div class="panel-body">
         @*<table id="tableChart" class="display nowrap" style="width:100%">
@@ -120,9 +121,9 @@
                 </thead>
             </table>*@
     </div>
-    <span  id="lbchart" >
-     
-</span>
+    <span id="lbchart">
+
+    </span>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
@@ -155,6 +156,7 @@
         var Endday = "";
         var Month = "";
         var Chart = "";
+        var DateDiff = "";
 
         $(document).ready(function () {
             $('#txtstartday').datetimepicker({
@@ -190,7 +192,43 @@
                     textday += i + ",";
                 }
                 textday = textday + maxday;
-                period_day = textday.split(',');
+                period_day = textday.split(','); 
+                
+                //DateDiff = IP_dateDiff($("#txtstartday").val(), $("#txtendday").val(), 'DD-MM-YYYY', false);
+                //textday = GenPeriodDay($("#txtstartday").val(), DateDiff);
+                //period_day = textday.split(','); 
+            }
+
+            function GenPeriodDay(startDay, DateDiff) {
+                var textdate = [];
+                var i; 
+                for (i = 0; i != DateDiff+1; i++) {
+                    var e = startDay.split('/');
+                    var f = e[1] + '/' + e[0] + '/' + e[2];
+                
+                    var d = new Date(f);
+                    var month = d.getMonth() + 1;
+  
+                    //var day = d.setDate(d.getDate()+ i)
+
+                    var day = d.getDate() + i;
+                    var year = d.getFullYear();
+
+                    d = new Date(year, month, day);
+                    var output =
+                        (day < 10 ? '0' : '') + day + '/' +
+                        (month < 10 ? '0' : '') + month + '/' +
+                        year;
+                    if (i != DateDiff) {
+
+                        textdate += output + ' ,';
+                    }
+
+                    else {
+                        textdate += output;
+                    }
+                }
+                return textdate
             }
 
             function GendayoMonth() {
@@ -202,17 +240,17 @@
                 txtmonthminday = monthNames[parseInt(minday[1]) - 1];
                 Year = $("#year").val();
                 GetdayoMonth(minday[0], maxday[0])
-               
-               
+
+
             }
 
             function GenFormatChart() {
                 Chart = $("#chart").val();
                 if (Chart == "1") {
-                    GetDataChartPie()   
+                    GetDataChartPie()
                 }
                 else if (Chart == "2") {
-                   
+
                     GetDataChartColumn()
                 }
                 else {

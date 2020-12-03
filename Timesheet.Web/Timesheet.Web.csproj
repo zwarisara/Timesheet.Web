@@ -952,6 +952,7 @@
     <None Include="Properties\PublishProfiles\Local_Timesheet_Project.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
+    <Content Include="Scripts\IP_generalLib.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
