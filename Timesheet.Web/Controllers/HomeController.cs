@@ -14,10 +14,17 @@ namespace Timesheet.Web.Controllers
         public HomeRepo _repo = new HomeRepo();
         public ActionResult Index()
         {
-            HomeModel model = new HomeModel();
-            model.txtstartday = DateTime.Now;
-            model.txtendday = DateTime.Now;
-            return View(model);
+            if (string.IsNullOrEmpty(Session["authorized"] as string))
+            {
+                return RedirectToAction("index", "Login");
+            }
+            else
+            {
+                HomeModel model = new HomeModel();
+                model.txtstartday = DateTime.Now;
+                model.txtendday = DateTime.Now;
+                return View(model);
+            }
         }
 
         [HttpPost]

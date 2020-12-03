@@ -12,11 +12,18 @@ namespace Timesheet.Web.Controllers
         private static TimesheetRepo _TimeSheetRepo = new TimesheetRepo();
         public ActionResult Index()
         {
-            TimesheetModel model = new TimesheetModel();
-            model.DATE_OF = DateTime.Now;
-            model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode();
-            model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode();
-            return View(model);
+            if (string.IsNullOrEmpty(Session["authorized"] as string))
+            {
+                return RedirectToAction("index", "Login");
+            }
+            else 
+            {
+                TimesheetModel model = new TimesheetModel();
+                model.DATE_OF = DateTime.Now;
+                model.JOB_CODE_LIST = _TimeSheetRepo.GetAllJobCode();
+                model.SUB_JOB_CODE_LIST = _TimeSheetRepo.GetAllSubJobCode();
+                return View(model);
+            }
         }
 
         [HttpPost]
