@@ -124,7 +124,8 @@
                             <label for="name" class="control-label">Ticket ID</label>
                         </div>
                         <div class="col-md-4">
-                            @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control", @type = "number", @pattern = "[0-9]" , @onkeypress = "if(this.value.length==12) return false;"})
+                            @*@Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control", @type = "number", @pattern = "[0-9]" , @onkeypress = "if(this.value.length==12) return false;"})*@
+                            @Html.TextBoxFor(i => i.TICKET_NO, new { @class = "form-control", @role = "tagsinput" })
                         </div>
                     </div>
                     <div class="row col-md-12" style="margin-top: 1%;">
@@ -214,6 +215,7 @@
         var sub_jobcode_exist = false;
         $(document).ready(function () {
 
+            $('#TICKET_NO').tagsinput({ maxChars: 12 });
             $('[data-toggle="tooltip"]').tooltip();
 
             $('#divSizeExplain').hide();
@@ -318,6 +320,27 @@
                 ]
             });
 
+            $('#TICKET_NO').on('change', function (e)
+            {
+                console.log('change')
+                var lastObj = $("#TICKET_NO").tagsinput('items').length - 1;
+                if (lastObj > -1)
+                { 
+                    var strLast = $("#TICKET_NO").tagsinput('items')[lastObj];
+                    if ($.isNumeric(strLast) && strLast.length == 12)
+                    {
+                        console.log('if')
+                    }
+                    else
+                    {
+                        console.log('else')
+                        $('#TICKET_NO').tagsinput('remove', strLast);
+                    }
+                }
+                
+
+            });
+
         $('#JOB_CODE').on('change', function (e) {
                 $.ajax({
                     url: '@Url.Action("GetJobCodeName")',
@@ -338,7 +361,7 @@
                         {
                             $("#divSubJobCode").css("display", "block");
                             $('#SUB_JOB_CODE').empty();
-                            jQuery('<option/>', { value: '', text: '-Please Select-' }).appendTo('#SUB_JOB_CODE'); 
+                            jQuery('<option/>', { value: '', text: '-Please Select-' }).appendTo('#SUB_JOB_CODE');
                             $('#SUB_JOB_CODE').val('');
                             $('.selectpicker').selectpicker('refresh');
 
@@ -347,7 +370,7 @@
                               jQuery('<option/>', {
                                     value: data.Result[i].SUB_JOBCODE_ID,
                                     text: data.Result[i].SUB_JOBCODE_NAME
-                              }).appendTo('#SUB_JOB_CODE'); 
+                              }).appendTo('#SUB_JOB_CODE');
                             }
 
                             $('.selectpicker').selectpicker('refresh');
@@ -612,7 +635,7 @@
                          return false;
                     }
                 }
-                
+
             }
             else
             {
