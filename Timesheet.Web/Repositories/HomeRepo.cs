@@ -30,6 +30,7 @@ namespace Timesheet.Web.Repositories
         {
             startday = Convert.ToDateTime(startday).ToString("yyyy-MM-dd");
             endday = Convert.ToDateTime(endday).ToString("yyyy-MM-dd");
+
             List<ListChartColumnModel> lst = new List<ListChartColumnModel>();
             DatabaseHelper db = new DatabaseHelper();
             db.AddParameter("@startday", startday);
