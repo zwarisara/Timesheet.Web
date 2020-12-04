@@ -156,7 +156,8 @@
         var Endday = "";
         var Month = "";
         var Chart = "";
-        var DateDiff = "";
+            var DateDiff = "";
+            var text;
 
         $(document).ready(function () {
             $('#txtstartday').datetimepicker({
@@ -183,45 +184,34 @@
             GetDataChartPie();
         });
 
-
-
-            function GetdayoMonth(minday,maxday) {
-                var textday = "";
-                var i;
-                for (i = minday; i < maxday; i++) {
-                    textday += i + ",";
-                }
-                textday = textday + maxday;
-                period_day = textday.split(','); 
-                
-                //DateDiff = IP_dateDiff($("#txtstartday").val(), $("#txtendday").val(), 'DD-MM-YYYY', false);
-                //textday = GenPeriodDay($("#txtstartday").val(), DateDiff);
-                //period_day = textday.split(','); 
+            function addDays(date, days) {
+                const copy = new Date(Number(date))
+                copy.setDate(date.getDate() + days)
+                return copy
             }
+
 
             function GenPeriodDay(startDay, DateDiff) {
                 var textdate = [];
                 var i; 
-                for (i = 0; i != DateDiff+1; i++) {
-                    var e = startDay.split('/');
-                    var f = e[1] + '/' + e[0] + '/' + e[2];
-                
-                    var d = new Date(f);
-                    var month = d.getMonth() + 1;
-  
-                    //var day = d.setDate(d.getDate()+ i)
-
-                    var day = d.getDate() + i;
-                    var year = d.getFullYear();
-
-                    d = new Date(year, month, day);
+                var ArrayDate = startDay.split('/');
+                var formatDate = ArrayDate[1] + '/' + ArrayDate[0] + '/' + ArrayDate[2];
+                var d = new Date(formatDate);
+               
+                for (i = 0; i != DateDiff + 1; i++) {     
+                    var NewdDate = addDays(d, i);
+                    day = NewdDate.getDate();
+                    var month = NewdDate.getMonth() + 1; 
+                   // var day = d.getDate() + i;
+                    var year = NewdDate.getFullYear();
+                    NewdDate = new Date(year, month, day);
                     var output =
                         (day < 10 ? '0' : '') + day + '/' +
                         (month < 10 ? '0' : '') + month + '/' +
                         year;
-                    if (i != DateDiff) {
 
-                        textdate += output + ' ,';
+                    if (i != DateDiff) {
+                        textdate += output + ',';
                     }
 
                     else {
@@ -231,7 +221,9 @@
                 return textdate
             }
 
-            function GendayoMonth() {
+            function GendayofMonth() {
+                var textday = "";
+                var i;
                 Startday = $("#txtstartday").val();
                 Endday = $("#txtendday").val();
                 minday = Startday.split('/')
@@ -239,9 +231,12 @@
                 txtmonthmaxday = monthNames[parseInt(maxday[1]) - 1];
                 txtmonthminday = monthNames[parseInt(minday[1]) - 1];
                 Year = $("#year").val();
-                GetdayoMonth(minday[0], maxday[0])
-
-
+                for (i = minday; i < maxday; i++) {
+                    textday += i + ",";
+                }
+                DateDiff = IP_dateDiff(Startday, Endday, 'DD-MM-YYYY', false);
+                textday = GenPeriodDay(Startday, DateDiff);
+                period_day = textday.split(','); 
             }
 
             function GenFormatChart() {
@@ -259,7 +254,7 @@
             }
 
             function GenChartColumn() {
-                GendayoMonth()
+                GendayofMonth()
                 //GetDataChartColumn()
                 objSuppORGRP = objChartColumn.filter(function (objChartColumn) {
                         return objChartColumn.JOB_GROUP == "Supp OR GRP";
@@ -470,7 +465,7 @@
             }
 
             function GenChartColumn2() {
-                GendayoMonth()
+                GendayofMonth()
                 objSuppORGRP = objChartColumn.filter(function (objChartColumn) {
                     return objChartColumn.JOB_GROUP == "Supp OR GRP";
                 });
@@ -599,7 +594,7 @@
 
 
             function GenChartPie() {
-                GendayoMonth()
+                GendayofMonth()
                 JSONChartPie = JSON.stringify(objChartPie);
                 Highcharts.chart('container', {
                     chart: {
